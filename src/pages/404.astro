@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getEntry } from "astro:content";
+
+const page = await getEntry("pages", "404");
+if (!page) throw new Error("Missing pages/404 entry — create src/content/pages/404.json");
+---
+
+<BaseLayout title={page.data.title} description={page.data.description} noindex={page.data.noindex ?? true}>
+    <main>
+        <!-- TODO: implement the 404 page -->
+    </main>
+</BaseLayout>

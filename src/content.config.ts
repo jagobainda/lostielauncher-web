@@ -1,5 +1,6 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const iconItem = z.object({
     icon: z.string(),
@@ -50,6 +51,8 @@ const pages = defineCollection({
         landing: landingSchema.optional(),
         notFound: z
             .object({
+                title: z.string(),
+                description: z.string(),
                 heading: z.string(),
                 message: z.string(),
                 backHome: z.string(),

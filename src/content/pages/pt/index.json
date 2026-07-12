@@ -52,5 +52,12 @@
             "sourceCode": "Código-fonte",
             "disclaimer": "O LostieLauncher é um projeto de fãs. Não é afiliado à Nintendo, à Game Freak nem à The Pokémon Company."
         }
+    },
+    "notFound": {
+        "title": "404 — LostieLauncher",
+        "description": "Página não encontrada",
+        "heading": "404",
+        "message": "Esta página não existe. O link pode estar partido ou a página pode ter sido movida.",
+        "backHome": "Voltar ao início"
     }
 }

@@ -1,0 +1,27 @@
+---
+import { getEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../ui/Button.astro";
+import { localeHref, type Locale } from "../../lib/i18n";
+
+interface Props {
+    locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const page = await getEntry("pages", locale);
+if (!page?.data.notFound) {
+    throw new Error(`Missing notFound copy — add a "notFound" block to src/content/pages/${locale}/index.json`);
+}
+const { title, description, heading, message, backHome } = page.data.notFound;
+---
+
+<BaseLayout title={title} description={description} lang={locale} noindex>
+    <main class="flex min-h-screen flex-col items-center justify-center gap-6 px-4 text-center">
+        <img src="/imgs/favicon/favicon.png" alt="" class="size-16 opacity-60" />
+        <h1 class="text-7xl font-bold text-(--accent)">{heading}</h1>
+        <p class="max-w-md text-(--text-dim)">{message}</p>
+        <Button href={localeHref(locale)} variant="primary">{backHome}</Button>
+    </main>
+</BaseLayout>

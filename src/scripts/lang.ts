@@ -14,8 +14,7 @@ export function rememberLocale(locale: string): void {
     if (!SUPPORTED.includes(locale)) return;
     try {
         localStorage.setItem(STORAGE_KEY, locale);
-    } catch {
-    }
+    } catch {}
 }
 
 export function redirectToPreferredLocale(currentLocale: string): void {

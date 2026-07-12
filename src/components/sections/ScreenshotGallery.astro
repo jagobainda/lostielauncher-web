@@ -1,0 +1,125 @@
+---
+import { SCREENSHOTS } from "../../lib/screenshots";
+import type { LandingData } from "../../lib/types";
+
+interface Props {
+    screenshots: LandingData["screenshots"];
+}
+
+const { screenshots } = Astro.props;
+
+const first = SCREENSHOTS[0];
+if (!first) throw new Error("SCREENSHOTS must not be empty");
+
+const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", theme);
+---
+
+<section id="screenshots" class="bg-(--bg-secondary) py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl" data-fade-in>
+            {screenshots.heading}
+        </h2>
+
+        <div class="mt-12" data-gallery data-alt-template={screenshots.screenshotAlt} data-fade-in>
+            <img
+                src={first.src}
+                alt={altFor(first.theme)}
+                class="block h-auto w-full border border-(--overlay-subtle) shadow-2xl"
+                width="1000"
+                height="650"
+                data-gallery-image
+            />
+
+            <div class="mt-6 flex flex-wrap justify-center gap-2" role="group">
+                {
+                    SCREENSHOTS.map((shot, i) => (
+                        <button
+                            type="button"
+                            data-gallery-thumb
+                            data-src={shot.src}
+                            data-theme={shot.theme}
+                            aria-pressed={i === 0 ? "true" : "false"}
+                            class="cursor-pointer rounded-full bg-(--overlay-subtle) px-4 py-1.5 text-sm text-(--text-dim) transition-colors duration-150 hover:bg-(--overlay-light) hover:text-(--text-color) aria-pressed:bg-(--accent) aria-pressed:text-white"
+                        >
+                            {shot.theme}
+                        </button>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    import { animate } from "animejs";
+    import { fadeInOnScroll, motionOK } from "../../scripts/animations";
+
+    fadeInOnScroll("#screenshots [data-fade-in]");
+
+    const root = document.querySelector<HTMLElement>("[data-gallery]");
+    const img = root?.querySelector<HTMLImageElement>("[data-gallery-image]");
+    const thumbs = root ? [...root.querySelectorAll<HTMLButtonElement>("[data-gallery-thumb]")] : [];
+
+    if (root && img && thumbs.length) {
+        const altTemplate = root.getAttribute("data-alt-template") ?? "{theme}";
+        let current = 0;
+
+        const swap = (index: number) => {
+            const thumb = thumbs[index];
+            if (!thumb) return;
+            img.src = thumb.dataset.src ?? "";
+            img.alt = altTemplate.replace("{theme}", thumb.dataset.theme ?? "");
+        };
+
+        const show = (index: number) => {
+            if (index === current) return;
+            current = index;
+            thumbs.forEach((t, i) => t.setAttribute("aria-pressed", String(i === index)));
+            if (motionOK()) {
+                animate(img, {
+                    opacity: [1, 0],
+                    duration: 150,
+                    ease: "linear",
+                    onComplete: () => {
+                        swap(index);
+                        animate(img, { opacity: [0, 1], duration: 300, ease: "linear" });
+                    },
+                });
+            } else {
+                swap(index);
+            }
+        };
+
+        let timer: ReturnType<typeof setInterval> | null = null;
+        let stopped = !motionOK();
+        const stopRotation = () => {
+            stopped = true;
+            if (timer) clearInterval(timer);
+            timer = null;
+        };
+        const io = new IntersectionObserver(
+            entries => {
+                const visible = entries.some(e => e.isIntersecting);
+                if (visible && !stopped && !timer) {
+                    timer = setInterval(() => show((current + 1) % thumbs.length), 5000);
+                } else if (!visible && timer) {
+                    clearInterval(timer);
+                    timer = null;
+                }
+            },
+            { threshold: 0.3 },
+        );
+        io.observe(root);
+
+        thumbs.forEach((thumb, index) =>
+            thumb.addEventListener("click", () => {
+                stopRotation();
+                show(index);
+            }),
+        );
+
+        const preload = () => thumbs.slice(1).forEach(t => t.dataset.src && (new Image().src = t.dataset.src));
+        if ("requestIdleCallback" in window) requestIdleCallback(preload);
+        else setTimeout(preload, 2000);
+    }
+</script>

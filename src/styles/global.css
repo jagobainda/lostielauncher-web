@@ -1,21 +1,40 @@
 @import "tailwindcss";
 
-/* Theme tokens. Light is the default; `body.dark` flips them. */
 :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f0f0f0;
-    --text-color: #1a1a1a;
-    /* TODO: define your palette */
+    --bg-primary: #4d4949;
+    --bg-secondary: #3a3737;
+    --bg-tertiary: #2e2c2c;
+
+    --accent: #f08058;
+    --accent-hover: #d06038;
+    --accent-pressed: #b04020;
+
+    --text-color: #f3f7fa;
+    --text-dim: rgba(243, 247, 250, 0.53);
+
+    --success: #2e7d32;
+
+    --overlay-subtle: rgba(255, 255, 255, 0.1);
+    --overlay-light: rgba(255, 255, 255, 0.13);
+    --overlay-muted: rgba(255, 255, 255, 0.2);
+    --overlay-medium: rgba(255, 255, 255, 0.33);
+    --overlay-strong: rgba(255, 255, 255, 0.53);
 }
 
-body.dark {
-    --bg-primary: #161616;
-    --bg-secondary: #242424;
-    --text-color: #f5f5f5;
-    /* TODO: define your dark palette */
+@theme {
+    --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
-/* astro-icon renders inline SVGs; keep them aligned with the text baseline. */
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
 svg[data-icon] {
     display: inline-block;
     vertical-align: -0.125em;

@@ -1,10 +1,9 @@
 ---
-// Base layout: shared <head> (SEO, Open Graph, JSON-LD) and <body> shell.
-// TODO: add your global chrome here (nav, theme toggle, footer...) as the project grows.
-
 interface Props {
     title: string;
     description: string;
+    lang?: string;
+    alternates?: { hreflang: string; href: string }[];
     ogImage?: string;
     ogType?: string;
     noindex?: boolean;
@@ -14,6 +13,8 @@ interface Props {
 const {
     title,
     description,
+    lang = "es",
+    alternates = [],
     ogImage = "/imgs/favicon/og-image.png",
     ogType = "website",
     noindex = false,
@@ -27,7 +28,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,6 +39,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
         <meta name="description" content={description} />
 
         {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalURL} />}
+        {alternates.map(alt => <link rel="alternate" hreflang={alt.hreflang} href={new URL(alt.href, Astro.site)} />)}
 
         <meta property="og:type" content={ogType} />
         <meta property="og:title" content={title} />
@@ -58,12 +60,6 @@ const ogImageURL = new URL(ogImage, Astro.site);
 
     <body class="bg-(--bg-primary) text-(--text-color) transition-colors duration-300">
         <slot />
-        <!--
-            No global bootstrap script. Each component owns its client logic:
-            inline <script> for self-contained behaviour, or a per-domain
-            module under src/scripts/ (animations.ts, forms.ts, ...) imported
-            directly from the component that needs it. See /astro-implement.
-        -->
     </body>
 </html>
 

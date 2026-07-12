@@ -1,0 +1,51 @@
+---
+import { Icon } from "astro-icon/components";
+import Button from "../ui/Button.astro";
+import StepCard from "../cards/StepCard.astro";
+import { INSTALLER_URL } from "../../lib/launcher";
+import type { LandingData } from "../../lib/types";
+
+interface Props {
+    install: LandingData["install"];
+    downloadCta: string;
+}
+
+const { install, downloadCta } = Astro.props;
+---
+
+<section id="install" class="py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl" data-fade-in>{install.heading}</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-center text-(--text-dim)" data-fade-in>{install.subheading}</p>
+
+        <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-steps>
+            {
+                install.steps.map((step, i) => (
+                    <StepCard step={i + 1} icon={step.icon} title={step.title} description={step.description} />
+                ))
+            }
+        </ol>
+
+        <p
+            class="mx-auto mt-8 flex max-w-3xl items-start gap-3 rounded-lg border border-(--overlay-subtle) bg-(--overlay-subtle) p-4 text-sm text-(--text-dim)"
+            data-fade-in
+        >
+            <Icon name="bi:info-circle" class="mt-0.5 size-4 shrink-0 text-(--accent)" />
+            <span>{install.smartScreenNote}</span>
+        </p>
+
+        <div class="mt-12 text-center" data-fade-in>
+            <Button href={INSTALLER_URL} variant="primary" class="text-lg">
+                <Icon name="bi:download" class="size-5" />
+                {downloadCta}
+            </Button>
+        </div>
+    </div>
+</section>
+
+<script>
+    import { fadeInOnScroll, staggerInOnScroll } from "../../scripts/animations";
+
+    fadeInOnScroll("#install [data-fade-in]");
+    staggerInOnScroll("[data-steps]", "[data-step-card]");
+</script>

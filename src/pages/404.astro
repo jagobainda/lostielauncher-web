@@ -1,13 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
 import { getEntry } from "astro:content";
 
 const page = await getEntry("pages", "404");
-if (!page) throw new Error("Missing pages/404 entry — create src/content/pages/404.json");
+if (!page?.data.notFound) {
+    throw new Error('Missing pages/404 entry — create src/content/pages/404.json with a "notFound" block');
+}
+const { notFound } = page.data;
 ---
 
-<BaseLayout title={page.data.title} description={page.data.description} noindex={page.data.noindex ?? true}>
-    <main>
-        <!-- TODO: implement the 404 page -->
+<BaseLayout title={page.data.title} description={page.data.description} noindex={page.data.noindex}>
+    <main class="flex min-h-screen flex-col items-center justify-center gap-6 px-4 text-center">
+        <img src="/imgs/favicon/favicon.png" alt="" class="size-16 opacity-60" />
+        <h1 class="text-7xl font-bold text-(--accent)">{notFound.heading}</h1>
+        <p class="max-w-md text-(--text-dim)">{notFound.message}</p>
+        <Button href="/" variant="primary">{notFound.backHome}</Button>
     </main>
 </BaseLayout>

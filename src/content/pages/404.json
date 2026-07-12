@@ -1,5 +1,10 @@
 {
-    "title": "404",
-    "description": "Page not found",
-    "noindex": true
+    "title": "404 — LostieLauncher",
+    "description": "Página no encontrada",
+    "noindex": true,
+    "notFound": {
+        "heading": "404",
+        "message": "Esta página no existe. Puede que el enlace esté roto o que la página se haya movido.",
+        "backHome": "Volver al inicio"
+    }
 }

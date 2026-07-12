@@ -1,0 +1,56 @@
+{
+    "title": "LostieLauncher, todos os jogos do EricLostie num só lugar",
+    "description": "Baixe o LostieLauncher para Windows: instale, atualize e jogue os fangames do EricLostie a partir de uma única interface. Downloads retomáveis, atualizações automáticas e 10 temas visuais.",
+    "landing": {
+        "hero": {
+            "tagline": "Todos os jogos do EricLostie, num só lugar",
+            "subtitle": "Explore o catálogo, baixe os seus jogos e mantenha-os sempre atualizados numa interface limpa e rápida, feita para Windows.",
+            "downloadCta": "Baixar para Windows",
+            "downloadNote": "Grátis · Windows · Atualiza-se sozinho",
+            "githubCta": "Ver no GitHub",
+            "versionPrefix": "Versão",
+            "features": [
+                { "icon": "bi:collection-play", "text": "Biblioteca de jogos completa" },
+                { "icon": "bi:cloud-arrow-down", "text": "Downloads com pausa e retoma" },
+                { "icon": "bi:arrow-repeat", "text": "Atualizações automáticas" },
+                { "icon": "bi:translate", "text": "8 idiomas disponíveis" }
+            ]
+        },
+        "screenshots": {
+            "heading": "Explore o launcher visualmente",
+            "screenshotAlt": "Captura de ecrã do LostieLauncher com o tema {theme}"
+        },
+        "install": {
+            "heading": "Como baixar e instalar",
+            "subheading": "Em menos de um minuto está a jogar. Sem configurações estranhas.",
+            "steps": [
+                {
+                    "icon": "bi:download",
+                    "title": "Baixe o instalador",
+                    "description": "Clique no botão de download e guarde o LostieLauncher-win-Setup.exe no seu computador."
+                },
+                {
+                    "icon": "bi:filetype-exe",
+                    "title": "Execute o instalador",
+                    "description": "Faça duplo clique no ficheiro baixado. O launcher instala-se e abre automaticamente quando terminar."
+                },
+                {
+                    "icon": "bi:controller",
+                    "title": "Escolha o seu jogo",
+                    "description": "Abra a Biblioteca, clique em Baixar no jogo que quiser e aguarde o fim do download."
+                },
+                {
+                    "icon": "bi:play-fill",
+                    "title": "A jogar!",
+                    "description": "Clique em Jogar em Os meus jogos. O launcher atualiza-se sozinho e mantém os seus jogos em dia."
+                }
+            ],
+            "smartScreenNote": "Se o Windows SmartScreen mostrar um aviso, clique em «Mais informações» e depois em «Executar mesmo assim». O instalador está assinado com uma assinatura de programador independente que o Windows ainda conhece pouco — não é perigoso."
+        },
+        "footer": {
+            "tagline": "Feito com ❤️ para a comunidade do EricLostie",
+            "sourceCode": "Código-fonte",
+            "disclaimer": "O LostieLauncher é um projeto de fãs. Não é afiliado à Nintendo, à Game Freak nem à The Pokémon Company."
+        }
+    }
+}

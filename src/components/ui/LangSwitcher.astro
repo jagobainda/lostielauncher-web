@@ -1,0 +1,56 @@
+---
+import { Icon } from "astro-icon/components";
+import { LOCALES, LOCALE_LABELS, localeHref, type Locale } from "../../lib/i18n";
+
+interface Props {
+    currentLocale: Locale;
+}
+
+const { currentLocale } = Astro.props;
+---
+
+<details class="relative" data-lang-switcher>
+    <summary
+        class="flex cursor-pointer list-none items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm text-(--text-dim) transition-colors duration-150 hover:bg-(--overlay-subtle) hover:text-(--text-color) [&::-webkit-details-marker]:hidden"
+        aria-label="Language"
+    >
+        <Icon name="bi:globe2" class="size-4" />
+        <span class="uppercase">{currentLocale}</span>
+        <Icon name="bi:chevron-down" class="size-3" />
+    </summary>
+    <ul
+        class="absolute right-0 z-50 mt-2 min-w-36 overflow-hidden rounded-md border border-(--overlay-subtle) bg-(--bg-tertiary) py-1 shadow-xl"
+    >
+        {
+            LOCALES.map(locale => (
+                <li>
+                    <a
+                        href={localeHref(locale)}
+                        data-lang-option={locale}
+                        aria-current={locale === currentLocale ? "true" : undefined}
+                        class:list={[
+                            "block px-4 py-2 text-sm transition-colors duration-150 hover:bg-(--overlay-subtle)",
+                            locale === currentLocale ? "font-semibold text-(--accent)" : "text-(--text-color)",
+                        ]}
+                    >
+                        {LOCALE_LABELS[locale]}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</details>
+
+<script>
+    import { rememberLocale } from "../../scripts/lang";
+
+    const switcher = document.querySelector<HTMLDetailsElement>("[data-lang-switcher]");
+    if (switcher) {
+        switcher.querySelectorAll<HTMLAnchorElement>("[data-lang-option]").forEach(link => {
+            link.addEventListener("click", () => rememberLocale(link.dataset.langOption ?? ""));
+        });
+        document.addEventListener("click", e => {
+            if (switcher.open && !switcher.contains(e.target as Node)) switcher.open = false;
+        });
+    }
+</script>

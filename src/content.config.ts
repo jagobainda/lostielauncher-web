@@ -11,7 +11,7 @@ const landingSchema = z.object({
     hero: z.object({
         tagline: z.string(),
         subtitle: z.string(),
-        downloadCta: z.string(),
+        installCta: z.string(),
         downloadNote: z.string(),
         githubCta: z.string(),
         versionPrefix: z.string(),
@@ -34,6 +34,7 @@ const landingSchema = z.object({
             )
             .min(1),
         smartScreenNote: z.string(),
+        downloadCta: z.string(),
     }),
     footer: z.object({
         tagline: z.string(),

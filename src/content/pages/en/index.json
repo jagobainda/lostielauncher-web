@@ -5,13 +5,13 @@
         "hero": {
             "tagline": "All of EricLostie's games, in one place",
             "subtitle": "Browse the catalog, download your games and keep them always up to date from a clean, fast interface built for Windows.",
-            "downloadCta": "Download for Windows",
-            "downloadNote": "Free · Windows · Updates itself",
+            "installCta": "Install for Windows",
+            "downloadNote": "Free · Open source · Updates itself",
             "githubCta": "View on GitHub",
             "versionPrefix": "Version",
             "features": [
                 { "icon": "bi:collection-play", "text": "Full game library" },
-                { "icon": "bi:cloud-arrow-down", "text": "Pause & resume downloads" },
+                { "icon": "bi:magic", "text": "One click, no accounts or sign-ups" },
                 { "icon": "bi:arrow-repeat", "text": "Automatic updates" },
                 { "icon": "bi:translate", "text": "8 languages available" }
             ]
@@ -45,7 +45,8 @@
                     "description": "Hit Play from My games. The launcher updates itself and keeps your games up to date."
                 }
             ],
-            "smartScreenNote": "If Windows SmartScreen shows a warning, click \"More info\" and then \"Run anyway\". The installer is signed with an independent developer signature that Windows doesn't know well yet — it isn't dangerous."
+            "smartScreenNote": "If Windows SmartScreen shows a warning, click \"More info\" and then \"Run anyway\". The installer is signed with an independent developer signature that Windows doesn't know well yet — it isn't dangerous.",
+            "downloadCta": "Download installer"
         },
         "footer": {
             "tagline": "Made with ❤️ for the EricLostie community",

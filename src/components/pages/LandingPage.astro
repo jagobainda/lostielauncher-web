@@ -39,7 +39,7 @@ const version = await getLatestVersion();
         <main>
             <Hero hero={landing.hero} version={version} />
             <ScreenshotGallery screenshots={landing.screenshots} />
-            <InstallSteps install={landing.install} downloadCta={landing.hero.downloadCta} />
+            <InstallSteps install={landing.install} />
         </main>
         <Footer footer={landing.footer} />
     </div>

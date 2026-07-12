@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import Button from "../ui/Button.astro";
-import { GITHUB_URL, INSTALLER_URL } from "../../lib/launcher";
+import { GITHUB_URL } from "../../lib/launcher";
 import type { LandingData } from "../../lib/types";
 
 interface Props {
@@ -46,9 +46,9 @@ const { hero, version } = Astro.props;
         }
 
         <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row" data-fade>
-            <Button href={INSTALLER_URL} variant="primary" class="w-full text-lg sm:w-auto">
-                <Icon name="bi:download" class="size-5" />
-                {hero.downloadCta}
+            <Button href="#install" variant="primary" class="w-full text-lg sm:w-auto">
+                <Icon name="bi:box-arrow-in-down" class="size-5" />
+                {hero.installCta}
             </Button>
             <Button
                 href={GITHUB_URL}

@@ -5,13 +5,13 @@
         "hero": {
             "tagline": "Tous les jeux d'EricLostie, au même endroit",
             "subtitle": "Parcourez le catalogue, téléchargez vos jeux et gardez-les toujours à jour depuis une interface propre et rapide, conçue pour Windows.",
-            "downloadCta": "Télécharger pour Windows",
-            "downloadNote": "Gratuit · Windows · Se met à jour tout seul",
+            "installCta": "Installer pour Windows",
+            "downloadNote": "Gratuit · Open source · Se met à jour tout seul",
             "githubCta": "Voir sur GitHub",
             "versionPrefix": "Version",
             "features": [
                 { "icon": "bi:collection-play", "text": "Bibliothèque de jeux complète" },
-                { "icon": "bi:cloud-arrow-down", "text": "Téléchargements avec pause et reprise" },
+                { "icon": "bi:magic", "text": "Un clic, sans compte ni inscription" },
                 { "icon": "bi:arrow-repeat", "text": "Mises à jour automatiques" },
                 { "icon": "bi:translate", "text": "8 langues disponibles" }
             ]
@@ -45,7 +45,8 @@
                     "description": "Cliquez sur Jouer depuis Mes jeux. Le launcher se met à jour tout seul et garde vos jeux à jour."
                 }
             ],
-            "smartScreenNote": "Si Windows SmartScreen affiche un avertissement, cliquez sur « Informations complémentaires » puis « Exécuter quand même ». L'installateur est signé avec une signature de développeur indépendant encore peu connue de Windows — il n'est pas dangereux."
+            "smartScreenNote": "Si Windows SmartScreen affiche un avertissement, cliquez sur « Informations complémentaires » puis « Exécuter quand même ». L'installateur est signé avec une signature de développeur indépendant encore peu connue de Windows — il n'est pas dangereux.",
+            "downloadCta": "Télécharger l'installateur"
         },
         "footer": {
             "tagline": "Fait avec ❤️ pour la communauté d'EricLostie",

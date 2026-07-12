@@ -2,12 +2,6 @@
 
 Pending setup tasks for this fresh template. Delete each line once done.
 
-## Assets (not shipped with the template — create these)
-
-- [ ] `public/imgs/favicon/favicon.ico`
-- [ ] `public/imgs/favicon/favicon.png`
-- [ ] `public/imgs/favicon/og-image.png` (Open Graph / Twitter card image)
-
 ## Configuration
 
 - [ ] Set the real production URL in `astro.config.mjs` (`site`) and in `src/lib/seo.ts` (`SITE_URL`).

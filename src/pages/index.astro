@@ -1,17 +1,5 @@
 ---
-// Static by default under `output: "static"`.
-// To make this route server-rendered on demand instead, add: export const prerender = false;
-
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { getEntry } from "astro:content";
-
-const page = await getEntry("pages", "index");
-if (!page) throw new Error("Missing pages/index entry — create src/content/pages/index.json");
+import LandingPage from "../components/pages/LandingPage.astro";
 ---
 
-<BaseLayout title={page.data.title} description={page.data.description}>
-    <main>
-        <h1>{page.data.heading ?? page.data.title}</h1>
-        <!-- TODO: build the home page -->
-    </main>
-</BaseLayout>
+<LandingPage locale="es" />

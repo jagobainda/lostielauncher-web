@@ -1,0 +1,53 @@
+---
+import { getEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LangSwitcher from "../ui/LangSwitcher.astro";
+import Hero from "../sections/Hero.astro";
+import ScreenshotGallery from "../sections/ScreenshotGallery.astro";
+import InstallSteps from "../sections/InstallSteps.astro";
+import Footer from "../sections/Footer.astro";
+import { landingAlternates, type Locale } from "../../lib/i18n";
+import { getLatestVersion } from "../../lib/launcher";
+import { softwareApplicationSchema } from "../../lib/seo";
+
+interface Props {
+    locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const page = await getEntry("pages", locale);
+if (!page?.data.landing) {
+    throw new Error(`Missing landing copy — create src/content/pages/${locale}/index.json with a "landing" block`);
+}
+const { title, description, landing } = page.data;
+
+const version = await getLatestVersion();
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    lang={locale}
+    alternates={landingAlternates()}
+    jsonLd={softwareApplicationSchema({ description, inLanguage: locale, version })}
+>
+    <div data-locale={locale}>
+        <div class="absolute top-3 right-3 z-50 sm:top-4 sm:right-5">
+            <LangSwitcher currentLocale={locale} />
+        </div>
+        <main>
+            <Hero hero={landing.hero} version={version} />
+            <ScreenshotGallery screenshots={landing.screenshots} />
+            <InstallSteps install={landing.install} downloadCta={landing.hero.downloadCta} />
+        </main>
+        <Footer footer={landing.footer} />
+    </div>
+</BaseLayout>
+
+<script>
+    import { redirectToPreferredLocale } from "../../scripts/lang";
+
+    const locale = document.querySelector("[data-locale]")?.getAttribute("data-locale");
+    if (locale) redirectToPreferredLocale(locale);
+</script>

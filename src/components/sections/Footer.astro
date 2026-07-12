@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+import { GITHUB_URL } from "../../lib/launcher";
+import type { LandingData } from "../../lib/types";
+
+interface Props {
+    footer: LandingData["footer"];
+}
+
+const { footer } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-(--overlay-subtle) bg-(--bg-tertiary) py-10">
+    <div class="mx-auto flex max-w-5xl flex-col items-center gap-4 px-4 text-center sm:px-6">
+        <div class="flex items-center gap-2.5">
+            <img src="/imgs/favicon/favicon.png" alt="" class="size-5" />
+            <span class="font-semibold">LostieLauncher</span>
+        </div>
+        <p class="text-sm text-(--text-dim)">{footer.tagline}</p>
+        <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm text-(--text-dim) transition-colors duration-150 hover:text-(--accent)"
+        >
+            <Icon name="bi:github" class="size-4" />
+            {footer.sourceCode}
+        </a>
+        <p class="max-w-xl text-xs text-(--text-dim)">{footer.disclaimer}</p>
+        <p class="text-xs text-(--text-dim)">© {year} EricLostie · jagobainda</p>
+    </div>
+</footer>

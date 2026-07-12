@@ -1,8 +1,24 @@
-// SEO helpers: central place for site constants and JSON-LD / structured-data builders.
-// TODO: fill these in and use them from BaseLayout + pages (canonical, Open Graph, schema.org).
+import { GITHUB_URL, INSTALLER_URL } from "./launcher";
 
-export const SITE_URL = "https://example.com"; // TODO: match astro.config `site`
+export const SITE_URL = "https://lostielauncher.jagoba.dev";
 
-export class Seo {
-    // TODO: structured-data builders, e.g. personSchema(), pageSchema(), breadcrumb()...
+export function softwareApplicationSchema(opts: {
+    description: string;
+    inLanguage: string;
+    version: string | null;
+}): object {
+    return {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "LostieLauncher",
+        description: opts.description,
+        inLanguage: opts.inLanguage,
+        operatingSystem: "Windows",
+        applicationCategory: "GameApplication",
+        downloadUrl: INSTALLER_URL,
+        url: SITE_URL,
+        sameAs: [GITHUB_URL],
+        offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+        ...(opts.version ? { softwareVersion: opts.version.replace(/^v/, "") } : {}),
+    };
 }

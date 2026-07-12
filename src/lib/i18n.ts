@@ -15,6 +15,11 @@ export function localeHref(locale: Locale): string {
     return locale === DEFAULT_LOCALE ? "/" : `/${locale}/`;
 }
 
+export function localeFromPath(pathname: string): Locale {
+    const segment = pathname.split("/").filter(Boolean)[0];
+    return (LOCALES as readonly string[]).includes(segment ?? "") ? (segment as Locale) : DEFAULT_LOCALE;
+}
+
 export function landingAlternates(): { hreflang: string; href: string }[] {
     return [
         ...LOCALES.map(locale => ({ hreflang: locale, href: localeHref(locale) })),

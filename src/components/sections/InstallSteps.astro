@@ -7,10 +7,9 @@ import type { LandingData } from "../../lib/types";
 
 interface Props {
     install: LandingData["install"];
-    downloadCta: string;
 }
 
-const { install, downloadCta } = Astro.props;
+const { install } = Astro.props;
 ---
 
 <section id="install" class="py-20">
@@ -37,7 +36,7 @@ const { install, downloadCta } = Astro.props;
         <div class="mt-12 text-center" data-fade-in>
             <Button href={INSTALLER_URL} variant="primary" class="text-lg">
                 <Icon name="bi:download" class="size-5" />
-                {downloadCta}
+                {install.downloadCta}
             </Button>
         </div>
     </div>

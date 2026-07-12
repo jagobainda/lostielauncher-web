@@ -5,13 +5,13 @@
         "hero": {
             "tagline": "Todos os jogos do EricLostie, num só lugar",
             "subtitle": "Explore o catálogo, baixe os seus jogos e mantenha-os sempre atualizados numa interface limpa e rápida, feita para Windows.",
-            "downloadCta": "Baixar para Windows",
-            "downloadNote": "Grátis · Windows · Atualiza-se sozinho",
+            "installCta": "Instalar para Windows",
+            "downloadNote": "Grátis · Open source · Atualiza-se sozinho",
             "githubCta": "Ver no GitHub",
             "versionPrefix": "Versão",
             "features": [
                 { "icon": "bi:collection-play", "text": "Biblioteca de jogos completa" },
-                { "icon": "bi:cloud-arrow-down", "text": "Downloads com pausa e retoma" },
+                { "icon": "bi:magic", "text": "Um clique, sem contas nem registos" },
                 { "icon": "bi:arrow-repeat", "text": "Atualizações automáticas" },
                 { "icon": "bi:translate", "text": "8 idiomas disponíveis" }
             ]
@@ -45,12 +45,20 @@
                     "description": "Clique em Jogar em Os meus jogos. O launcher atualiza-se sozinho e mantém os seus jogos em dia."
                 }
             ],
-            "smartScreenNote": "Se o Windows SmartScreen mostrar um aviso, clique em «Mais informações» e depois em «Executar mesmo assim». O instalador está assinado com uma assinatura de programador independente que o Windows ainda conhece pouco — não é perigoso."
+            "smartScreenNote": "Se o Windows SmartScreen mostrar um aviso, clique em «Mais informações» e depois em «Executar mesmo assim». O instalador está assinado com uma assinatura de programador independente que o Windows ainda conhece pouco — não é perigoso.",
+            "downloadCta": "Baixar o instalador"
         },
         "footer": {
             "tagline": "Feito com ❤️ para a comunidade do EricLostie",
             "sourceCode": "Código-fonte",
             "disclaimer": "O LostieLauncher é um projeto de fãs. Não é afiliado à Nintendo, à Game Freak nem à The Pokémon Company."
         }
+    },
+    "notFound": {
+        "title": "404 — LostieLauncher",
+        "description": "Página não encontrada",
+        "heading": "404",
+        "message": "Esta página não existe. O link pode estar partido ou a página pode ter sido movida.",
+        "backHome": "Voltar ao início"
     }
 }

@@ -1,0 +1,43 @@
+---
+import { Icon } from "astro-icon/components";
+import type { DownloadTarget } from "../../lib/stats";
+import { formatNumber } from "../../lib/stats";
+import type { DashboardData } from "../../lib/types";
+import BarList from "../ui/BarList.astro";
+
+interface Props {
+    stats: DownloadTarget;
+    copy: DashboardData["launcher"];
+}
+
+const { stats, copy } = Astro.props;
+---
+
+<section class="mt-16" aria-labelledby="launcher-stats-heading">
+    <h2 id="launcher-stats-heading" class="text-2xl font-bold tracking-tight" data-fade-in>{copy.heading}</h2>
+    <p class="mt-2 max-w-2xl text-sm text-(--text-dim)" data-fade-in>{copy.subheading}</p>
+
+    <div
+        class="mt-6 flex flex-col gap-8 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-6 sm:flex-row sm:items-center"
+        data-fade-in
+    >
+        <div class="flex flex-col items-center gap-2 text-center sm:w-64 sm:shrink-0">
+            <span class="flex size-11 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
+                <Icon name="bi:rocket-takeoff" class="size-5" />
+            </span>
+            <span class="text-5xl font-semibold">{formatNumber(stats.totalDownloads)}</span>
+            <span class="text-sm text-(--text-dim)">{copy.totalLabel}</span>
+        </div>
+
+        {
+            stats.topCountries.length > 0 && (
+                <div class="min-w-0 flex-1">
+                    <h3 class="mb-3 text-xs font-semibold tracking-wide text-(--text-dim) uppercase">
+                        {copy.countriesLabel}
+                    </h3>
+                    <BarList items={stats.topCountries} label={`${copy.countriesLabel} — ${copy.heading}`} />
+                </div>
+            )
+        }
+    </div>
+</section>

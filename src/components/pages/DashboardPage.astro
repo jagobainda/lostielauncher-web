@@ -1,0 +1,122 @@
+---
+import { getEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import GameStatsCard from "../cards/GameStatsCard.astro";
+import LauncherStats from "../sections/LauncherStats.astro";
+import Button from "../ui/Button.astro";
+import { formatGeneratedAt, formatNumber, getDownloadStats } from "../../lib/stats";
+
+const page = await getEntry("pages", "dashboard");
+if (!page?.data.dashboard) {
+    throw new Error('Missing dashboard copy — create src/content/pages/dashboard.json with a "dashboard" block');
+}
+const { title, description, noindex, dashboard } = page.data;
+
+const stats = await getDownloadStats();
+
+const games = stats ? Object.entries(stats.byGame).sort(([, a], [, b]) => b.totalDownloads - a.totalDownloads) : [];
+const gamesTotal = games.reduce((sum, [, game]) => sum + game.totalDownloads, 0);
+
+const kpis = stats
+    ? [
+          { label: dashboard.kpis.gamesTotal, value: formatNumber(gamesTotal), icon: "bi:controller" },
+          { label: dashboard.kpis.gamesCount, value: formatNumber(games.length), icon: "bi:collection-play" },
+          {
+              label: dashboard.kpis.launcherTotal,
+              value: formatNumber(stats.byLauncher.totalDownloads),
+              icon: "bi:rocket-takeoff",
+          },
+      ]
+    : [];
+---
+
+<BaseLayout title={title} description={description} lang="es" noindex={noindex}>
+    <main class="mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6">
+        <header data-dashboard-header>
+            <a
+                href="/"
+                class="inline-flex items-center gap-2 text-sm text-(--text-dim) transition-colors duration-150 hover:text-(--accent)"
+                data-fade
+            >
+                <Icon name="bi:arrow-left" class="size-4" />
+                {dashboard.backHome}
+            </a>
+            <div class="mt-6 flex items-center gap-3" data-fade>
+                <img src="/imgs/favicon/favicon.png" alt="" class="size-10" width="40" height="40" />
+                <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{dashboard.heading}</h1>
+            </div>
+            <p class="mt-3 text-(--text-dim)" data-fade>{dashboard.subtitle}</p>
+            {
+                stats && (
+                    <p
+                        class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-(--overlay-subtle) px-3 py-1 text-xs text-(--text-dim)"
+                        data-fade
+                    >
+                        <Icon name="bi:clock-history" class="size-3" />
+                        {dashboard.updatedPrefix} {formatGeneratedAt(stats.generatedAt)}
+                    </p>
+                )
+            }
+        </header>
+
+        {
+            !stats && (
+                <div class="mt-16 flex flex-col items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-10 text-center">
+                    <Icon name="bi:cloud-slash" class="size-10 text-(--text-dim)" />
+                    <h2 class="text-xl font-semibold">{dashboard.error.heading}</h2>
+                    <p class="max-w-md text-sm text-(--text-dim)">{dashboard.error.message}</p>
+                    <Button href="/dashboard" variant="secondary">
+                        <Icon name="bi:arrow-clockwise" class="size-4" />
+                        {dashboard.error.retry}
+                    </Button>
+                </div>
+            )
+        }
+
+        {
+            stats && (
+                <>
+                    <ul class="mt-10 grid gap-5 sm:grid-cols-3" data-kpis>
+                        {kpis.map(kpi => (
+                            <li
+                                class="flex items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-5"
+                                data-kpi
+                            >
+                                <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
+                                    <Icon name={kpi.icon} class="size-5" />
+                                </span>
+                                <span class="flex flex-col">
+                                    <span class="text-2xl font-semibold">{kpi.value}</span>
+                                    <span class="text-sm text-(--text-dim)">{kpi.label}</span>
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <section class="mt-16" aria-labelledby="games-stats-heading">
+                        <h2 id="games-stats-heading" class="text-2xl font-bold tracking-tight" data-fade-in>
+                            {dashboard.games.heading}
+                        </h2>
+                        <ul class="mt-6 grid items-start gap-5 md:grid-cols-2" data-game-cards>
+                            {games.map(([slug, game]) => (
+                                <GameStatsCard slug={slug} stats={game} copy={dashboard.games} />
+                            ))}
+                        </ul>
+                    </section>
+
+                    <LauncherStats stats={stats.byLauncher} copy={dashboard.launcher} />
+                </>
+            )
+        }
+    </main>
+</BaseLayout>
+
+<script>
+    import { fadeInOnScroll, staggerInOnScroll } from "../../scripts/animations";
+
+    staggerInOnScroll("[data-dashboard-header]", "[data-fade]");
+    staggerInOnScroll("[data-kpis]", "[data-kpi]");
+    staggerInOnScroll("[data-game-cards]", "[data-stats-card]");
+    fadeInOnScroll("[data-fade-in]");
+</script>

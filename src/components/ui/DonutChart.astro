@@ -1,0 +1,118 @@
+---
+import type { DonutSlice } from "../../lib/charts";
+import { formatNumber } from "../../lib/stats";
+
+interface Props {
+    slices: DonutSlice[];
+    total: number;
+    centerLabel: string;
+    legendLabel: string;
+}
+
+const { slices, total, centerLabel, legendLabel } = Astro.props;
+
+const SIZE = 160;
+const CX = SIZE / 2;
+const R_OUTER = 76;
+const R_INNER = 52;
+const R_MID = (R_OUTER + R_INNER) / 2;
+
+const segLabel = (slice: DonutSlice) => `${slice.label}: ${formatNumber(slice.value)} (${slice.percent.toFixed(1)}%)`;
+---
+
+<div class="flex flex-wrap items-center gap-x-6 gap-y-4" data-donut-root>
+    <div class="relative shrink-0">
+        <svg width="144" height="144" viewBox={`0 0 ${SIZE} ${SIZE}`} role="img" aria-label={legendLabel} class="block">
+            {
+
+                slices.map((slice, i) =>
+                    slice.path === "" ? null : slice.path === null ? (
+                        <circle
+                            cx={CX}
+                            cy={CX}
+                            r={R_MID}
+                            fill="none"
+                            stroke={slice.color}
+                            stroke-width={R_OUTER - R_INNER}
+                            tabindex="0"
+                            role="graphics-symbol"
+                            aria-label={segLabel(slice)}
+                            data-seg
+                            data-index={i}
+                            data-label={slice.label}
+                            data-value={formatNumber(slice.value)}
+                            data-percent={slice.percent.toFixed(1)}
+                        />
+                    ) : (
+                        <path
+                            d={slice.path}
+                            fill={slice.color}
+                            tabindex="0"
+                            role="graphics-symbol"
+                            aria-label={segLabel(slice)}
+                            data-seg
+                            data-index={i}
+                            data-label={slice.label}
+                            data-value={formatNumber(slice.value)}
+                            data-percent={slice.percent.toFixed(1)}
+                        />
+                    ),
+                )
+            }
+        </svg>
+        <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
+            <span class="text-2xl font-semibold">{formatNumber(total)}</span>
+            <span class="max-w-20 text-[0.65rem] leading-tight text-(--text-dim)">{centerLabel}</span>
+        </div>
+    </div>
+
+    <ul class="grow basis-40 space-y-1.5" aria-label={legendLabel}>
+        {
+            slices.map((slice, i) => (
+                <li
+                    class="flex items-center gap-2 rounded-md px-1.5 py-0.5 text-sm transition-colors duration-150"
+                    data-legend-row
+                    data-index={i}
+                >
+                    <span class="size-2.5 shrink-0 rounded-sm" style={`background:${slice.color}`} aria-hidden="true" />
+                    <span class="truncate">{slice.label}</span>
+                    <span class="ml-auto shrink-0 tabular-nums">{formatNumber(slice.value)}</span>
+                    <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
+                        {slice.percent.toFixed(1)}%
+                    </span>
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<style>
+    [data-seg] {
+        transition:
+            opacity 150ms ease,
+            filter 150ms ease;
+        outline: none;
+        cursor: default;
+    }
+    [data-seg]:hover,
+    [data-seg]:focus-visible {
+        filter: brightness(1.12);
+    }
+
+    path[data-seg]:focus-visible {
+        stroke: var(--overlay-strong);
+        stroke-width: 1.5;
+    }
+    [data-seg].donut-dim {
+        opacity: 0.4;
+    }
+    [data-legend-row].legend-active {
+        background: var(--overlay-subtle);
+    }
+</style>
+
+<script>
+    import { initDonutCharts } from "../../scripts/charts";
+
+    initDonutCharts();
+</script>

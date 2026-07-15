@@ -1,0 +1,34 @@
+{
+    "title": "Panel de descargas",
+    "description": "Estadísticas de descargas de LostieLauncher y de los juegos de EricLostie.",
+    "noindex": true,
+    "dashboard": {
+        "heading": "Panel de descargas",
+        "subtitle": "Estadísticas de descargas de los juegos y del launcher",
+        "updatedPrefix": "Actualizado el",
+        "backHome": "Volver al inicio",
+        "kpis": {
+            "gamesTotal": "Descargas de juegos",
+            "gamesCount": "Juegos publicados",
+            "launcherTotal": "Descargas del launcher"
+        },
+        "games": {
+            "heading": "Juegos",
+            "versionsLabel": "Descargas por versión",
+            "countriesLabel": "Top países",
+            "downloadsLabel": "descargas",
+            "othersLabel": "Otras"
+        },
+        "launcher": {
+            "heading": "Launcher",
+            "subheading": "Descargas totales del launcher, sumando todas las versiones y formatos.",
+            "totalLabel": "Descargas totales",
+            "countriesLabel": "Top países"
+        },
+        "error": {
+            "heading": "No se pudieron cargar las estadísticas",
+            "message": "El endpoint de estadísticas no responde ahora mismo. Vuelve a intentarlo en unos minutos.",
+            "retry": "Reintentar"
+        }
+    }
+}

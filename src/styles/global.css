@@ -19,6 +19,14 @@
     --overlay-muted: rgba(255, 255, 255, 0.2);
     --overlay-medium: rgba(255, 255, 255, 0.33);
     --overlay-strong: rgba(255, 255, 255, 0.53);
+
+    --chart-1: #d06038;
+    --chart-2: #3987e5;
+    --chart-3: #c98500;
+    --chart-4: #199e70;
+    --chart-5: #9085e9;
+    --chart-6: #d55181;
+    --chart-other: #8b8683;
 }
 
 @theme {

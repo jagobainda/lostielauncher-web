@@ -1,5 +1,3 @@
-
-
 let tooltip: HTMLDivElement | null = null;
 
 function getTooltip(): HTMLDivElement {

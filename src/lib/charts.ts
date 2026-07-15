@@ -1,5 +1,3 @@
-
-
 export const CHART_SERIES = [
     "var(--chart-1)",
     "var(--chart-2)",

@@ -17,32 +17,32 @@ const max = Math.max(...items.map(item => item.count), 1);
         items.map(item => {
             const code = countryCode(item.country);
             return (
-            <li class="flex items-center gap-3 text-sm">
-                <span class="flex w-24 shrink-0 items-center gap-2 truncate" title={item.country}>
-                    {code && (
-                        <img
-                            src={`https://flagcdn.com/16x12/${code}.png`}
-                            srcset={`https://flagcdn.com/32x24/${code}.png 2x, https://flagcdn.com/48x36/${code}.png 3x`}
-                            width="16"
-                            height="12"
-                            alt=""
-                            loading="lazy"
-                            class="shrink-0 rounded-xs"
+                <li class="flex items-center gap-3 text-sm">
+                    <span class="flex w-24 shrink-0 items-center gap-2 truncate" title={item.country}>
+                        {code && (
+                            <img
+                                src={`https://flagcdn.com/16x12/${code}.png`}
+                                srcset={`https://flagcdn.com/32x24/${code}.png 2x, https://flagcdn.com/48x36/${code}.png 3x`}
+                                width="16"
+                                height="12"
+                                alt=""
+                                loading="lazy"
+                                class="shrink-0 rounded-xs"
+                            />
+                        )}
+                        <span class="truncate">{item.country}</span>
+                    </span>
+                    <span class="h-2 flex-1 overflow-hidden rounded-full bg-(--overlay-subtle)">
+                        <span
+                            class="block h-full rounded-full bg-(--chart-1)"
+                            style={`width:${((item.count / max) * 100).toFixed(1)}%`}
                         />
-                    )}
-                    <span class="truncate">{item.country}</span>
-                </span>
-                <span class="h-2 flex-1 overflow-hidden rounded-full bg-(--overlay-subtle)">
-                    <span
-                        class="block h-full rounded-full bg-(--chart-1)"
-                        style={`width:${((item.count / max) * 100).toFixed(1)}%`}
-                    />
-                </span>
-                <span class="w-12 shrink-0 text-right tabular-nums">{formatNumber(item.count)}</span>
-                <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
-                    {item.percent.toFixed(1)}%
-                </span>
-            </li>
+                    </span>
+                    <span class="w-12 shrink-0 text-right tabular-nums">{formatNumber(item.count)}</span>
+                    <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
+                        {item.percent.toFixed(1)}%
+                    </span>
+                </li>
             );
         })
     }

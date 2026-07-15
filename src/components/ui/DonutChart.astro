@@ -24,7 +24,6 @@ const segLabel = (slice: DonutSlice) => `${slice.label}: ${formatNumber(slice.va
     <div class="relative shrink-0">
         <svg width="144" height="144" viewBox={`0 0 ${SIZE} ${SIZE}`} role="img" aria-label={legendLabel} class="block">
             {
-
                 slices.map((slice, i) =>
                     slice.path === "" ? null : slice.path === null ? (
                         <circle

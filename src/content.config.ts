@@ -43,6 +43,36 @@ const landingSchema = z.object({
     }),
 });
 
+const dashboardSchema = z.object({
+    heading: z.string(),
+    subtitle: z.string(),
+    updatedPrefix: z.string(),
+    backHome: z.string(),
+    kpis: z.object({
+        gamesTotal: z.string(),
+        gamesCount: z.string(),
+        launcherTotal: z.string(),
+    }),
+    games: z.object({
+        heading: z.string(),
+        versionsLabel: z.string(),
+        countriesLabel: z.string(),
+        downloadsLabel: z.string(),
+        othersLabel: z.string(),
+    }),
+    launcher: z.object({
+        heading: z.string(),
+        subheading: z.string(),
+        totalLabel: z.string(),
+        countriesLabel: z.string(),
+    }),
+    error: z.object({
+        heading: z.string(),
+        message: z.string(),
+        retry: z.string(),
+    }),
+});
+
 const pages = defineCollection({
     loader: glob({ pattern: "**/*.json", base: "./src/content/pages" }),
     schema: z.object({
@@ -50,6 +80,7 @@ const pages = defineCollection({
         description: z.string(),
         noindex: z.boolean().optional().default(false),
         landing: landingSchema.optional(),
+        dashboard: dashboardSchema.optional(),
         notFound: z
             .object({
                 title: z.string(),

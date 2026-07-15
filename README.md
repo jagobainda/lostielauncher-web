@@ -1,34 +1,29 @@
 # lostielauncher-web
 
-Astro project scaffolded from the `init-astro-project` template.
+LostieLauncher website built with Astro.
 
 ## Stack
 
 Astro (static + per-route SSR) · Tailwind CSS · TypeScript strict · astro-icon · animejs ·
-Content Collections + Zod · `@astrojs/node` (standalone) · `@astrojs/sitemap` · Prettier ·
-GitHub Actions CI (build / format / audit) · Dependabot.
+Content Collections + Zod · `@astrojs/node` · `@astrojs/sitemap` · Prettier.
 
-## Local development
+## Development
 
 ```bash
 npm install
 npm run dev       # http://localhost:4321
-npm run format    # Prettier (CI runs format:check)
-npm run build     # static build + on-demand routes
+npm run build
+npm run format
 ```
 
 ## Conventions
 
-All project conventions live in the project-scoped skill:
+Any change (pages, components, collections, scripts…) must follow the project-scoped skill:
 
 ```
 /astro-implement
 ```
 
-Use it whenever you add or modify a page, component, content collection, script or any other
-piece of this codebase so the result stays consistent with the established style.
+## Pending tasks
 
-## Setup checklist
-
-See `TODO.md` for the remaining setup tasks (assets, production URL, page-level copy schema,
-home / 404 page implementation, SEO helpers, ...).
+See `TODO.md`.

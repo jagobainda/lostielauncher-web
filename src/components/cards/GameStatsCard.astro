@@ -1,0 +1,48 @@
+---
+import type { DownloadTarget } from "../../lib/stats";
+import { formatGameName } from "../../lib/stats";
+import { buildDonutSlices } from "../../lib/charts";
+import DonutChart from "../ui/DonutChart.astro";
+import BarList from "../ui/BarList.astro";
+import type { DashboardData } from "../../lib/types";
+
+interface Props {
+    slug: string;
+    stats: DownloadTarget;
+    copy: DashboardData["games"];
+}
+
+const { slug, stats, copy } = Astro.props;
+
+const slices = buildDonutSlices(stats.byVersion, {
+    cx: 80,
+    cy: 80,
+    rOuter: 76,
+    rInner: 52,
+    othersLabel: copy.othersLabel,
+});
+---
+
+<li class="rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-6" data-stats-card>
+    <h3 class="text-lg font-semibold">{formatGameName(slug)}</h3>
+
+    <div class="mt-5">
+        <DonutChart
+            slices={slices}
+            total={stats.totalDownloads}
+            centerLabel={copy.downloadsLabel}
+            legendLabel={copy.versionsLabel}
+        />
+    </div>
+
+    {
+        stats.topCountries.length > 0 && (
+            <div class="mt-6 border-t border-(--overlay-subtle) pt-5">
+                <h4 class="mb-3 text-xs font-semibold tracking-wide text-(--text-dim) uppercase">
+                    {copy.countriesLabel}
+                </h4>
+                <BarList items={stats.topCountries} label={`${copy.countriesLabel} — ${formatGameName(slug)}`} />
+            </div>
+        )
+    }
+</li>

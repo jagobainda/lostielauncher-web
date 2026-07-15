@@ -20,7 +20,7 @@ export default defineConfig({
     integrations: [
         icon(),
         sitemap({
-            filter: page => !page.endsWith("/404/"),
+            filter: page => !page.endsWith("/404/") && !page.endsWith("/dashboard/"),
         }),
     ],
     vite: {

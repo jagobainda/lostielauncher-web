@@ -56,6 +56,7 @@ const dashboardSchema = z.object({
     games: z.object({
         heading: z.string(),
         versionsLabel: z.string(),
+        osLabel: z.string(),
         countriesLabel: z.string(),
         downloadsLabel: z.string(),
         othersLabel: z.string(),

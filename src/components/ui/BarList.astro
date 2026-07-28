@@ -1,49 +1,71 @@
 ---
-import type { CountryStat } from "../../lib/stats";
-import { formatNumber, countryCode } from "../../lib/stats";
+import { Icon } from "astro-icon/components";
+import type { CountryStat, OsStat } from "../../lib/stats";
+import { formatNumber, countryCode, osIcon } from "../../lib/stats";
 
-interface Props {
-    items: CountryStat[];
-    label: string;
+type Props = { label: string } & ({ kind: "country"; items: CountryStat[] } | { kind: "os"; items: OsStat[] });
+
+const props = Astro.props;
+const { label } = props;
+
+interface Row {
+    name: string;
+    count: number;
+    percent: number;
+    flag: string | null;
+    icon: string | null;
 }
 
-const { items, label } = Astro.props;
+const rows: Row[] =
+    props.kind === "country"
+        ? props.items.map(item => ({
+              name: item.country,
+              count: item.count,
+              percent: item.percent,
+              flag: countryCode(item.country),
+              icon: null,
+          }))
+        : props.items.map(item => ({
+              name: item.os,
+              count: item.count,
+              percent: item.percent,
+              flag: null,
+              icon: osIcon(item.os),
+          }));
 
-const max = Math.max(...items.map(item => item.count), 1);
+const max = Math.max(...rows.map(row => row.count), 1);
 ---
 
 <ul class="space-y-1.5" aria-label={label}>
     {
-        items.map(item => {
-            const code = countryCode(item.country);
-            return (
-                <li class="flex items-center gap-3 text-sm">
-                    <span class="flex w-24 shrink-0 items-center gap-2 truncate" title={item.country}>
-                        {code && (
-                            <img
-                                src={`https://flagcdn.com/16x12/${code}.png`}
-                                srcset={`https://flagcdn.com/32x24/${code}.png 2x, https://flagcdn.com/48x36/${code}.png 3x`}
-                                width="16"
-                                height="12"
-                                alt=""
-                                loading="lazy"
-                                class="shrink-0 rounded-xs"
-                            />
-                        )}
-                        <span class="truncate">{item.country}</span>
-                    </span>
-                    <span class="h-2 flex-1 overflow-hidden rounded-full bg-(--overlay-subtle)">
-                        <span
-                            class="block h-full rounded-full bg-(--chart-1)"
-                            style={`width:${((item.count / max) * 100).toFixed(1)}%`}
+        rows.map(row => (
+            <li class="flex items-center gap-3 text-sm">
+                <span class="flex w-24 shrink-0 items-center gap-2 truncate" title={row.name}>
+                    {row.flag && (
+                        <img
+                            src={`https://flagcdn.com/16x12/${row.flag}.png`}
+                            srcset={`https://flagcdn.com/32x24/${row.flag}.png 2x, https://flagcdn.com/48x36/${row.flag}.png 3x`}
+                            width="16"
+                            height="12"
+                            alt=""
+                            loading="lazy"
+                            class="shrink-0 rounded-xs"
                         />
-                    </span>
-                    <span class="w-12 shrink-0 text-right tabular-nums">{formatNumber(item.count)}</span>
-                    <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
-                        {item.percent.toFixed(1)}%
-                    </span>
-                </li>
-            );
-        })
+                    )}
+                    {row.icon && <Icon name={row.icon} class="size-3.5 shrink-0 text-(--text-dim)" />}
+                    <span class="truncate">{row.name}</span>
+                </span>
+                <span class="h-2 flex-1 overflow-hidden rounded-full bg-(--overlay-subtle)">
+                    <span
+                        class="block h-full rounded-full bg-(--chart-1)"
+                        style={`width:${((row.count / max) * 100).toFixed(1)}%`}
+                    />
+                </span>
+                <span class="w-12 shrink-0 text-right tabular-nums">{formatNumber(row.count)}</span>
+                <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
+                    {row.percent.toFixed(1)}%
+                </span>
+            </li>
+        ))
     }
 </ul>

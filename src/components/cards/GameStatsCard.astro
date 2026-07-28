@@ -36,12 +36,25 @@ const slices = buildDonutSlices(stats.byVersion, {
     </div>
 
     {
+        stats.byOs && stats.byOs.length > 0 && (
+            <div class="mt-6 border-t border-(--overlay-subtle) pt-5">
+                <h4 class="mb-3 text-xs font-semibold tracking-wide text-(--text-dim) uppercase">{copy.osLabel}</h4>
+                <BarList kind="os" items={stats.byOs} label={`${copy.osLabel} — ${formatGameName(slug)}`} />
+            </div>
+        )
+    }
+
+    {
         stats.topCountries.length > 0 && (
             <div class="mt-6 border-t border-(--overlay-subtle) pt-5">
                 <h4 class="mb-3 text-xs font-semibold tracking-wide text-(--text-dim) uppercase">
                     {copy.countriesLabel}
                 </h4>
-                <BarList items={stats.topCountries} label={`${copy.countriesLabel} — ${formatGameName(slug)}`} />
+                <BarList
+                    kind="country"
+                    items={stats.topCountries}
+                    label={`${copy.countriesLabel} — ${formatGameName(slug)}`}
+                />
             </div>
         )
     }

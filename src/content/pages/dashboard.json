@@ -15,6 +15,7 @@
         "games": {
             "heading": "Juegos",
             "versionsLabel": "Descargas por versión",
+            "osLabel": "Descargas por plataforma",
             "countriesLabel": "Top países",
             "downloadsLabel": "descargas",
             "othersLabel": "Otras"

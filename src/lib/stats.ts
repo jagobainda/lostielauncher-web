@@ -6,10 +6,17 @@ export interface CountryStat {
     percent: number;
 }
 
+export interface OsStat {
+    os: string;
+    count: number;
+    percent: number;
+}
+
 export interface DownloadTarget {
     totalDownloads: number;
     byVersion: Record<string, number>;
     topCountries: CountryStat[];
+    byOs?: OsStat[];
 }
 
 export interface DownloadStats {
@@ -169,6 +176,21 @@ const COUNTRY_CODES: Record<string, string> = {
 
 export function countryCode(country: string): string | null {
     return COUNTRY_CODES[country.trim()] ?? null;
+}
+
+const OS_ICONS: Record<string, string> = {
+    launcher: "bi:rocket-takeoff",
+    windows: "bi:windows",
+    linux: "bi:tux",
+    mac: "bi:apple",
+    macos: "bi:apple",
+    ios: "bi:apple",
+    ipados: "bi:apple",
+    android: "bi:android2",
+};
+
+export function osIcon(os: string): string {
+    return OS_ICONS[os.trim().toLowerCase()] ?? "bi:question-circle";
 }
 
 const numberFormat = new Intl.NumberFormat("es-ES");

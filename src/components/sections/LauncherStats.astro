@@ -35,7 +35,11 @@ const { stats, copy } = Astro.props;
                     <h3 class="mb-3 text-xs font-semibold tracking-wide text-(--text-dim) uppercase">
                         {copy.countriesLabel}
                     </h3>
-                    <BarList items={stats.topCountries} label={`${copy.countriesLabel} — ${copy.heading}`} />
+                    <BarList
+                        kind="country"
+                        items={stats.topCountries}
+                        label={`${copy.countriesLabel} — ${copy.heading}`}
+                    />
                 </div>
             )
         }

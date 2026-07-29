@@ -98,7 +98,7 @@ const kpis = stats
                         <h2 id="games-stats-heading" class="text-2xl font-bold tracking-tight" data-fade-in>
                             {dashboard.games.heading}
                         </h2>
-                        <ul class="mt-6 grid items-start gap-5 md:grid-cols-2" data-game-cards>
+                        <ul class="mt-6 grid gap-5 md:grid-cols-2" data-game-cards>
                             {games.map(([slug, game]) => (
                                 <GameStatsCard slug={slug} stats={game} copy={dashboard.games} />
                             ))}

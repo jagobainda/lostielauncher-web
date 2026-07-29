@@ -63,7 +63,6 @@ const dashboardSchema = z.object({
     }),
     launcher: z.object({
         heading: z.string(),
-        subheading: z.string(),
         totalLabel: z.string(),
         countriesLabel: z.string(),
     }),

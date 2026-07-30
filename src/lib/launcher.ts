@@ -4,12 +4,7 @@ export const RELEASES_URL = `${GITHUB_URL}/releases/latest`;
 
 let latestVersion: Promise<string | null> | undefined;
 
-export function getLatestVersion(): Promise<string | null> {
-    latestVersion ??= fetchLatestVersion();
-    return latestVersion;
-}
-
-async function fetchLatestVersion(): Promise<string | null> {
+const fetchLatestVersion = async (): Promise<string | null> => {
     try {
         const res = await fetch("https://api.github.com/repos/jagobainda/LostieLauncher/releases/latest", {
             headers: { Accept: "application/vnd.github+json" },
@@ -20,4 +15,9 @@ async function fetchLatestVersion(): Promise<string | null> {
     } catch {
         return null;
     }
-}
+};
+
+export const getLatestVersion = (): Promise<string | null> => {
+    latestVersion ??= fetchLatestVersion();
+    return latestVersion;
+};

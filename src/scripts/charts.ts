@@ -1,6 +1,6 @@
 let tooltip: HTMLDivElement | null = null;
 
-function getTooltip(): HTMLDivElement {
+const getTooltip = (): HTMLDivElement => {
     if (tooltip) return tooltip;
     tooltip = document.createElement("div");
     tooltip.setAttribute("role", "status");
@@ -20,9 +20,9 @@ function getTooltip(): HTMLDivElement {
     });
     document.body.appendChild(tooltip);
     return tooltip;
-}
+};
 
-function showTooltip(seg: Element, x: number, y: number): void {
+const showTooltip = (seg: Element, x: number, y: number): void => {
     const el = getTooltip();
 
     el.replaceChildren();
@@ -39,13 +39,13 @@ function showTooltip(seg: Element, x: number, y: number): void {
     const top = Math.min(Math.max(y - rect.height - 10, 8), window.innerHeight - rect.height - 8);
     el.style.left = `${left}px`;
     el.style.top = `${top}px`;
-}
+};
 
-function hideTooltip(): void {
+const hideTooltip = (): void => {
     if (tooltip) tooltip.style.display = "none";
-}
+};
 
-function initRoot(root: HTMLElement): void {
+const initRoot = (root: HTMLElement): void => {
     const segs = Array.from(root.querySelectorAll<SVGGraphicsElement>("[data-seg]"));
     const rows = Array.from(root.querySelectorAll<HTMLElement>("[data-legend-row]"));
 
@@ -78,8 +78,8 @@ function initRoot(root: HTMLElement): void {
         row.addEventListener("pointerenter", () => setActive(index));
         row.addEventListener("pointerleave", () => setActive(null));
     }
-}
+};
 
-export function initDonutCharts(): void {
+export const initDonutCharts = (): void => {
     document.querySelectorAll<HTMLElement>("[data-donut-root]").forEach(initRoot);
-}
+};

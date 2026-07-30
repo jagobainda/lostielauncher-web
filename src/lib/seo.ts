@@ -2,11 +2,11 @@ import { GITHUB_URL, INSTALLER_URL } from "./launcher";
 
 export const SITE_URL = "https://lostielauncher.jagoba.dev";
 
-export function softwareApplicationSchema(opts: {
+export const softwareApplicationSchema = (opts: {
     description: string;
     inLanguage: string;
     version: string | null;
-}): object {
+}): object => {
     return {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
@@ -21,4 +21,4 @@ export function softwareApplicationSchema(opts: {
         offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
         ...(opts.version ? { softwareVersion: opts.version.replace(/^v/, "") } : {}),
     };
-}
+};

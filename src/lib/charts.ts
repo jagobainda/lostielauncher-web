@@ -18,10 +18,22 @@ export interface DonutSlice {
     path: string | null;
 }
 
-export function buildDonutSlices(
+const annularSectorPath = (cx: number, cy: number, rO: number, rI: number, start: number, end: number): string => {
+    const largeArc = end - start > Math.PI ? 1 : 0;
+    const p = (r: number, a: number) => `${(cx + r * Math.cos(a)).toFixed(2)} ${(cy + r * Math.sin(a)).toFixed(2)}`;
+    return [
+        `M ${p(rO, start)}`,
+        `A ${rO} ${rO} 0 ${largeArc} 1 ${p(rO, end)}`,
+        `L ${p(rI, end)}`,
+        `A ${rI} ${rI} 0 ${largeArc} 0 ${p(rI, start)}`,
+        "Z",
+    ].join(" ");
+};
+
+export const buildDonutSlices = (
     entries: Record<string, number>,
     opts: { cx: number; cy: number; rOuter: number; rInner: number; othersLabel: string },
-): DonutSlice[] {
+): DonutSlice[] => {
     const sorted = Object.entries(entries)
         .filter(([, value]) => value > 0)
         .sort((a, b) => b[1] - a[1]);
@@ -65,16 +77,4 @@ export function buildDonutSlices(
         });
     }
     return slices;
-}
-
-function annularSectorPath(cx: number, cy: number, rO: number, rI: number, start: number, end: number): string {
-    const largeArc = end - start > Math.PI ? 1 : 0;
-    const p = (r: number, a: number) => `${(cx + r * Math.cos(a)).toFixed(2)} ${(cy + r * Math.sin(a)).toFixed(2)}`;
-    return [
-        `M ${p(rO, start)}`,
-        `A ${rO} ${rO} 0 ${largeArc} 1 ${p(rO, end)}`,
-        `L ${p(rI, end)}`,
-        `A ${rI} ${rI} 0 ${largeArc} 0 ${p(rI, start)}`,
-        "Z",
-    ].join(" ");
-}
+};

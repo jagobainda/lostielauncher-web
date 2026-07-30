@@ -25,7 +25,7 @@ export interface DownloadStats {
     generatedAt: string;
 }
 
-export async function getDownloadStats(): Promise<DownloadStats | null> {
+export const getDownloadStats = async (): Promise<DownloadStats | null> => {
     try {
         const res = await fetch(STATS_URL, { headers: { Accept: "application/json" } });
         if (!res.ok) return null;
@@ -33,7 +33,7 @@ export async function getDownloadStats(): Promise<DownloadStats | null> {
     } catch {
         return null;
     }
-}
+};
 
 const GAME_NAME_OVERRIDES: Record<string, string> = {
     "pokemon-z": "Pokémon Z",
@@ -46,7 +46,7 @@ const GAME_NAME_OVERRIDES: Record<string, string> = {
     "pokemon-titan": "Pokémon Titán",
 };
 
-export function formatGameName(slug: string): string {
+export const formatGameName = (slug: string): string => {
     const override = GAME_NAME_OVERRIDES[slug];
     if (override) return override;
     return slug
@@ -57,7 +57,7 @@ export function formatGameName(slug: string): string {
             return part.charAt(0).toUpperCase() + part.slice(1);
         })
         .join(" ");
-}
+};
 
 const COUNTRY_CODES: Record<string, string> = {
     Afghanistan: "af",
@@ -174,9 +174,7 @@ const COUNTRY_CODES: Record<string, string> = {
     Vietnam: "vn",
 };
 
-export function countryCode(country: string): string | null {
-    return COUNTRY_CODES[country.trim()] ?? null;
-}
+export const countryCode = (country: string): string | null => COUNTRY_CODES[country.trim()] ?? null;
 
 const OS_ICONS: Record<string, string> = {
     launcher: "bi:rocket-takeoff",
@@ -189,17 +187,13 @@ const OS_ICONS: Record<string, string> = {
     android: "bi:android2",
 };
 
-export function osIcon(os: string): string {
-    return OS_ICONS[os.trim().toLowerCase()] ?? "bi:question-circle";
-}
+export const osIcon = (os: string): string => OS_ICONS[os.trim().toLowerCase()] ?? "bi:question-circle";
 
 const numberFormat = new Intl.NumberFormat("es-ES");
 
-export function formatNumber(value: number): string {
-    return numberFormat.format(value);
-}
+export const formatNumber = (value: number): string => numberFormat.format(value);
 
-export function formatGeneratedAt(iso: string): string {
+export const formatGeneratedAt = (iso: string): string => {
     const date = new Date(iso);
     if (Number.isNaN(date.getTime())) return iso;
     return new Intl.DateTimeFormat("es-ES", {
@@ -207,4 +201,4 @@ export function formatGeneratedAt(iso: string): string {
         timeStyle: "short",
         timeZone: "Europe/Madrid",
     }).format(date);
-}
+};

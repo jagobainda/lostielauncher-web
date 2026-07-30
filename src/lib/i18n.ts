@@ -11,18 +11,14 @@ export const LOCALE_LABELS: Record<Locale, string> = {
     pt: "Português",
 };
 
-export function localeHref(locale: Locale): string {
-    return locale === DEFAULT_LOCALE ? "/" : `/${locale}/`;
-}
+export const localeHref = (locale: Locale): string => (locale === DEFAULT_LOCALE ? "/" : `/${locale}/`);
 
-export function localeFromPath(pathname: string): Locale {
+export const localeFromPath = (pathname: string): Locale => {
     const segment = pathname.split("/").filter(Boolean)[0];
     return (LOCALES as readonly string[]).includes(segment ?? "") ? (segment as Locale) : DEFAULT_LOCALE;
-}
+};
 
-export function landingAlternates(): { hreflang: string; href: string }[] {
-    return [
-        ...LOCALES.map(locale => ({ hreflang: locale, href: localeHref(locale) })),
-        { hreflang: "x-default", href: localeHref(DEFAULT_LOCALE) },
-    ];
-}
+export const landingAlternates = (): { hreflang: string; href: string }[] => [
+    ...LOCALES.map(locale => ({ hreflang: locale, href: localeHref(locale) })),
+    { hreflang: "x-default", href: localeHref(DEFAULT_LOCALE) },
+];

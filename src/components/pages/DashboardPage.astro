@@ -129,13 +129,13 @@ const kpis = stats
                             ))}
                         </ul>
                     </section>
-
-                    <LauncherStats stats={stats.byLauncher} copy={dashboard.launcher} />
                 </>
             )
         }
 
         {monthlyUsers && <UniqueUsers stats={monthlyUsers} copy={dashboard.uniqueUsers} />}
+
+        {stats && <LauncherStats stats={stats.byLauncher} copy={dashboard.launcher} />}
     </main>
 </BaseLayout>
 

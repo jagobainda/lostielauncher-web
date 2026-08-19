@@ -4,8 +4,9 @@ import { Icon } from "astro-icon/components";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import GameStatsCard from "../cards/GameStatsCard.astro";
 import LauncherStats from "../sections/LauncherStats.astro";
+import UniqueUsers from "../sections/UniqueUsers.astro";
 import Button from "../ui/Button.astro";
-import { formatGeneratedAt, formatNumber, getDownloadStats } from "../../lib/stats";
+import { formatGeneratedAt, formatNumber, getDownloadStats, getMonthlyUsers } from "../../lib/stats";
 
 const page = await getEntry("pages", "dashboard");
 if (!page?.data.dashboard) {
@@ -13,19 +14,34 @@ if (!page?.data.dashboard) {
 }
 const { title, description, noindex, dashboard } = page.data;
 
-const stats = await getDownloadStats();
+const [stats, monthlyUsers] = await Promise.all([getDownloadStats(), getMonthlyUsers()]);
 
 const games = stats ? Object.entries(stats.byGame).sort(([, a], [, b]) => b.totalDownloads - a.totalDownloads) : [];
 const gamesTotal = games.reduce((sum, [, game]) => sum + game.totalDownloads, 0);
 
 const kpis = stats
     ? [
-          { label: dashboard.kpis.gamesTotal, value: formatNumber(gamesTotal), icon: "bi:controller" },
-          { label: dashboard.kpis.gamesCount, value: formatNumber(games.length), icon: "bi:collection-play" },
+          {
+              label: dashboard.kpis.gamesTotal,
+              value: formatNumber(gamesTotal),
+              icon: "bi:controller",
+              href: "#games",
+          },
+          ...(monthlyUsers
+              ? [
+                    {
+                        label: dashboard.kpis.uniqueUsers,
+                        value: formatNumber(monthlyUsers.latest.users),
+                        icon: "bi:people",
+                        href: "#unique-users",
+                    },
+                ]
+              : []),
           {
               label: dashboard.kpis.launcherTotal,
               value: formatNumber(stats.byLauncher.totalDownloads),
               icon: "bi:rocket-takeoff",
+              href: "#launcher",
           },
       ]
     : [];
@@ -77,24 +93,33 @@ const kpis = stats
         {
             stats && (
                 <>
-                    <ul class="mt-10 grid gap-5 sm:grid-cols-3" data-kpis>
+                    <ul
+                        class:list={["mt-10 grid gap-5", kpis.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"]}
+                        data-kpis
+                    >
                         {kpis.map(kpi => (
-                            <li
-                                class="flex items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-5"
-                                data-kpi
-                            >
-                                <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
-                                    <Icon name={kpi.icon} class="size-5" />
-                                </span>
-                                <span class="flex flex-col">
-                                    <span class="text-2xl font-semibold">{kpi.value}</span>
-                                    <span class="text-sm text-(--text-dim)">{kpi.label}</span>
-                                </span>
+                            <li data-kpi>
+                                <a
+                                    href={kpi.href}
+                                    class="group flex h-full items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-5 transition-colors duration-150 hover:border-(--overlay-muted) hover:bg-(--bg-tertiary)"
+                                >
+                                    <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
+                                        <Icon name={kpi.icon} class="size-5" />
+                                    </span>
+                                    <span class="flex min-w-0 flex-col">
+                                        <span class="text-2xl font-semibold">{kpi.value}</span>
+                                        <span class="text-sm text-(--text-dim)">{kpi.label}</span>
+                                    </span>
+                                    <Icon
+                                        name="bi:chevron-right"
+                                        class="ml-auto size-4 shrink-0 text-(--text-dim) transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-(--accent)"
+                                    />
+                                </a>
                             </li>
                         ))}
                     </ul>
 
-                    <section class="mt-16" aria-labelledby="games-stats-heading">
+                    <section id="games" class="mt-16 scroll-mt-8" aria-labelledby="games-stats-heading">
                         <h2 id="games-stats-heading" class="text-2xl font-bold tracking-tight" data-fade-in>
                             {dashboard.games.heading}
                         </h2>
@@ -104,11 +129,13 @@ const kpis = stats
                             ))}
                         </ul>
                     </section>
-
-                    <LauncherStats stats={stats.byLauncher} copy={dashboard.launcher} />
                 </>
             )
         }
+
+        {monthlyUsers && <UniqueUsers stats={monthlyUsers} copy={dashboard.uniqueUsers} />}
+
+        {stats && <LauncherStats stats={stats.byLauncher} copy={dashboard.launcher} />}
     </main>
 </BaseLayout>
 

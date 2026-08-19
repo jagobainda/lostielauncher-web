@@ -1,0 +1,49 @@
+---
+import type { MonthlyUsersPoint } from "../../lib/stats";
+import { formatNumber } from "../../lib/stats";
+
+interface Props {
+    points: MonthlyUsersPoint[];
+    label: string;
+    unitLabel: string;
+}
+
+const { points, label, unitLabel } = Astro.props;
+
+const max = Math.max(...points.map(point => point.users), 1);
+const barHeight = (users: number) => `${Math.max((users / max) * 100, 3).toFixed(1)}%`;
+---
+
+<div class="-mx-2 overflow-x-auto px-2 pb-2" data-monthly-bars>
+    <ul class="flex h-56 min-w-full items-stretch gap-2" aria-label={label}>
+        {
+            points.map((point, i) => (
+                <li
+                    class="flex max-w-24 min-w-14 flex-1 flex-col items-center gap-2"
+                    aria-label={`${point.label}: ${formatNumber(point.users)} ${unitLabel}`}
+                >
+                    <span class="text-xs font-semibold tabular-nums">{formatNumber(point.users)}</span>
+                    <span class="flex w-full flex-1 items-end">
+                        <span
+                            class:list={[
+                                "block w-full rounded-t-md transition-opacity duration-150",
+                                i === points.length - 1 ? "bg-(--accent)" : "bg-(--chart-1)",
+                            ]}
+                            style={`height:${barHeight(point.users)}`}
+                        />
+                    </span>
+                    <span class="flex flex-col items-center leading-tight">
+                        <span class="text-xs">{point.monthLabel}</span>
+                        <span class="text-[0.65rem] text-(--text-dim) tabular-nums">{point.yearLabel}</span>
+                    </span>
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<script>
+    document.querySelectorAll<HTMLElement>("[data-monthly-bars]").forEach(root => {
+        root.scrollLeft = root.scrollWidth;
+    });
+</script>

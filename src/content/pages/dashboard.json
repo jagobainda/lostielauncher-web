@@ -1,16 +1,16 @@
 {
-    "title": "Panel de descargas",
-    "description": "Estadísticas de descargas de LostieLauncher y de los juegos de EricLostie.",
+    "title": "Panel de estadísticas",
+    "description": "Estadísticas de descargas y de usuarios de LostieLauncher y de los juegos de EricLostie.",
     "noindex": true,
     "dashboard": {
-        "heading": "Panel de descargas",
-        "subtitle": "Estadísticas de descargas de los juegos y del launcher",
+        "heading": "Panel de estadísticas",
+        "subtitle": "Descargas de los juegos y del launcher, y usuarios únicos por mes",
         "updatedPrefix": "Actualizado el",
         "backHome": "Volver al inicio",
         "kpis": {
             "gamesTotal": "Descargas de juegos",
-            "gamesCount": "Juegos publicados",
-            "launcherTotal": "Usuarios del launcher"
+            "uniqueUsers": "Usuarios únicos (último mes)",
+            "launcherTotal": "Descargas del launcher"
         },
         "games": {
             "heading": "Juegos",
@@ -22,8 +22,17 @@
         },
         "launcher": {
             "heading": "Launcher",
-            "totalLabel": "Usuarios totales",
+            "totalLabel": "Descargas totales",
             "countriesLabel": "Top países"
+        },
+        "uniqueUsers": {
+            "heading": "Usuarios únicos",
+            "subtitle": "Usuarios distintos que han utilizado el launcher cada mes",
+            "latestLabel": "Último mes",
+            "averageLabel": "Media mensual",
+            "peakLabel": "Mejor mes",
+            "chartLabel": "Usuarios únicos por mes",
+            "usersLabel": "usuarios únicos"
         },
         "error": {
             "heading": "No se pudieron cargar las estadísticas",

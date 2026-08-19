@@ -35,6 +35,65 @@ export const getDownloadStats = async (): Promise<DownloadStats | null> => {
     }
 };
 
+export const MONTHLY_USERS_URL = "https://cdn.jagoba.dev/ericlostie-launcher/monthly-users.json";
+
+export interface MonthlyUsersPoint {
+    month: string;
+    label: string;
+    monthLabel: string;
+    yearLabel: string;
+    users: number;
+}
+
+export interface MonthlyUsersStats {
+    points: MonthlyUsersPoint[];
+    latest: MonthlyUsersPoint;
+    peak: MonthlyUsersPoint;
+    average: number;
+    averageYear: string;
+}
+
+const MONTH_KEY = /^\d{4}-(0[1-9]|1[0-2])$/;
+
+const monthNameFormat = new Intl.DateTimeFormat("es-ES", { month: "short", timeZone: "UTC" });
+
+const capitalize = (value: string): string => value.charAt(0).toUpperCase() + value.slice(1);
+
+const buildPoint = (month: string, users: number): MonthlyUsersPoint => {
+    const [year = month, monthNumber = "1"] = month.split("-");
+    const date = new Date(Date.UTC(Number(year), Number(monthNumber) - 1, 1));
+    const monthLabel = capitalize(monthNameFormat.format(date).replace(".", ""));
+    return { month, label: `${monthLabel} ${year}`, monthLabel, yearLabel: year, users };
+};
+
+export const getMonthlyUsers = async (): Promise<MonthlyUsersStats | null> => {
+    try {
+        const res = await fetch(MONTHLY_USERS_URL, { headers: { Accept: "application/json" } });
+        if (!res.ok) return null;
+        const raw = (await res.json()) as Record<string, unknown>;
+
+        const points = Object.entries(raw)
+            .filter(
+                (entry): entry is [string, number] =>
+                    MONTH_KEY.test(entry[0]) && typeof entry[1] === "number" && Number.isFinite(entry[1]),
+            )
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([month, users]) => buildPoint(month, users));
+
+        const latest = points.at(-1);
+        if (!latest) return null;
+
+        const peak = points.reduce((best, point) => (point.users > best.users ? point : best), latest);
+
+        const currentYear = points.filter(point => point.yearLabel === latest.yearLabel);
+        const average = Math.round(currentYear.reduce((sum, point) => sum + point.users, 0) / currentYear.length);
+
+        return { points, latest, peak, average, averageYear: latest.yearLabel };
+    } catch {
+        return null;
+    }
+};
+
 const GAME_NAME_OVERRIDES: Record<string, string> = {
     "pokemon-z": "Pokémon Z",
     "pokemon-z-en": "Pokémon Z (EN)",

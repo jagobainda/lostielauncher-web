@@ -50,7 +50,7 @@ const dashboardSchema = z.object({
     backHome: z.string(),
     kpis: z.object({
         gamesTotal: z.string(),
-        gamesCount: z.string(),
+        uniqueUsers: z.string(),
         launcherTotal: z.string(),
     }),
     games: z.object({
@@ -65,6 +65,15 @@ const dashboardSchema = z.object({
         heading: z.string(),
         totalLabel: z.string(),
         countriesLabel: z.string(),
+    }),
+    uniqueUsers: z.object({
+        heading: z.string(),
+        subtitle: z.string(),
+        latestLabel: z.string(),
+        averageLabel: z.string(),
+        peakLabel: z.string(),
+        chartLabel: z.string(),
+        usersLabel: z.string(),
     }),
     error: z.object({
         heading: z.string(),

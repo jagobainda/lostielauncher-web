@@ -39,7 +39,9 @@ const ogImageURL = new URL(ogImage, Astro.site);
         <meta name="description" content={description} />
 
         {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalURL} />}
-        {alternates.map(alt => <link rel="alternate" hreflang={alt.hreflang} href={new URL(alt.href, Astro.site)} />)}
+        {alternates.map(alt => (
+            <link rel="alternate" hreflang={alt.hreflang} href={new URL(alt.href, Astro.site)} />
+        ))}
 
         <meta property="og:type" content={ogType} />
         <meta property="og:title" content={title} />
@@ -53,7 +55,9 @@ const ogImageURL = new URL(ogImage, Astro.site);
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImageURL} />
 
-        {jsonLdItems.map(item => <script type="application/ld+json" is:inline set:html={JSON.stringify(item)} />)}
+        {jsonLdItems.map(item => (
+            <script type="application/ld+json" is:inline set:html={JSON.stringify(item)}></script>
+        ))}
 
         <slot name="head" />
     </head>

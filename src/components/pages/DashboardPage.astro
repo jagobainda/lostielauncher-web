@@ -62,76 +62,72 @@ const kpis = stats
                 <img src="/imgs/favicon/favicon.png" alt="" class="size-10" width="40" height="40" />
                 <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{dashboard.heading}</h1>
             </div>
-            <p class="mt-3 text-(--text-dim)" data-fade>{dashboard.subtitle}</p>
-            {
-                stats && (
-                    <p
-                        class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-(--overlay-subtle) px-3 py-1 text-xs text-(--text-dim)"
-                        data-fade
-                    >
-                        <Icon name="bi:clock-history" class="size-3" />
-                        {dashboard.updatedPrefix} {formatGeneratedAt(stats.generatedAt)}
-                    </p>
-                )
-            }
+            <p class="mt-3 text-(--text-dim)" data-fade>
+                {dashboard.subtitle}
+            </p>
+            {stats && (
+                <p
+                    class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-(--overlay-subtle) px-3 py-1 text-xs text-(--text-dim)"
+                    data-fade
+                >
+                    <Icon name="bi:clock-history" class="size-3" />
+                    {dashboard.updatedPrefix} {formatGeneratedAt(stats.generatedAt)}
+                </p>
+            )}
         </header>
 
-        {
-            !stats && (
-                <div class="mt-16 flex flex-col items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-10 text-center">
-                    <Icon name="bi:cloud-slash" class="size-10 text-(--text-dim)" />
-                    <h2 class="text-xl font-semibold">{dashboard.error.heading}</h2>
-                    <p class="max-w-md text-sm text-(--text-dim)">{dashboard.error.message}</p>
-                    <Button href="/dashboard" variant="secondary">
-                        <Icon name="bi:arrow-clockwise" class="size-4" />
-                        {dashboard.error.retry}
-                    </Button>
-                </div>
-            )
-        }
+        {!stats && (
+            <div class="mt-16 flex flex-col items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-10 text-center">
+                <Icon name="bi:cloud-slash" class="size-10 text-(--text-dim)" />
+                <h2 class="text-xl font-semibold">{dashboard.error.heading}</h2>
+                <p class="max-w-md text-sm text-(--text-dim)">{dashboard.error.message}</p>
+                <Button href="/dashboard" variant="secondary">
+                    <Icon name="bi:arrow-clockwise" class="size-4" />
+                    {dashboard.error.retry}
+                </Button>
+            </div>
+        )}
 
-        {
-            stats && (
-                <>
-                    <ul
-                        class:list={["mt-10 grid gap-5", kpis.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"]}
-                        data-kpis
-                    >
-                        {kpis.map(kpi => (
-                            <li data-kpi>
-                                <a
-                                    href={kpi.href}
-                                    class="group flex h-full items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-5 transition-colors duration-150 hover:border-(--overlay-muted) hover:bg-(--bg-tertiary)"
-                                >
-                                    <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
-                                        <Icon name={kpi.icon} class="size-5" />
-                                    </span>
-                                    <span class="flex min-w-0 flex-col">
-                                        <span class="text-2xl font-semibold">{kpi.value}</span>
-                                        <span class="text-sm text-(--text-dim)">{kpi.label}</span>
-                                    </span>
-                                    <Icon
-                                        name="bi:chevron-right"
-                                        class="ml-auto size-4 shrink-0 text-(--text-dim) transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-(--accent)"
-                                    />
-                                </a>
-                            </li>
+        {stats && (
+            <>
+                <ul
+                    class:list={["mt-10 grid gap-5", kpis.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"]}
+                    data-kpis
+                >
+                    {kpis.map(kpi => (
+                        <li data-kpi>
+                            <a
+                                href={kpi.href}
+                                class="group flex h-full items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-5 transition-colors duration-150 hover:border-(--overlay-muted) hover:bg-(--bg-tertiary)"
+                            >
+                                <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
+                                    <Icon name={kpi.icon} class="size-5" />
+                                </span>
+                                <span class="flex min-w-0 flex-col">
+                                    <span class="text-2xl font-semibold">{kpi.value}</span>
+                                    <span class="text-sm text-(--text-dim)">{kpi.label}</span>
+                                </span>
+                                <Icon
+                                    name="bi:chevron-right"
+                                    class="ml-auto size-4 shrink-0 text-(--text-dim) transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-(--accent)"
+                                />
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+
+                <section id="games" class="mt-16 scroll-mt-8" aria-labelledby="games-stats-heading">
+                    <h2 id="games-stats-heading" class="text-2xl font-bold tracking-tight" data-fade-in>
+                        {dashboard.games.heading}
+                    </h2>
+                    <ul class="mt-6 grid gap-5 md:grid-cols-2" data-game-cards>
+                        {games.map(([slug, game]) => (
+                            <GameStatsCard slug={slug} stats={game} copy={dashboard.games} />
                         ))}
                     </ul>
-
-                    <section id="games" class="mt-16 scroll-mt-8" aria-labelledby="games-stats-heading">
-                        <h2 id="games-stats-heading" class="text-2xl font-bold tracking-tight" data-fade-in>
-                            {dashboard.games.heading}
-                        </h2>
-                        <ul class="mt-6 grid gap-5 md:grid-cols-2" data-game-cards>
-                            {games.map(([slug, game]) => (
-                                <GameStatsCard slug={slug} stats={game} copy={dashboard.games} />
-                            ))}
-                        </ul>
-                    </section>
-                </>
-            )
-        }
+                </section>
+            </>
+        )}
 
         {monthlyUsers && <UniqueUsers stats={monthlyUsers} copy={dashboard.uniqueUsers} />}
 

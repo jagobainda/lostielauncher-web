@@ -37,35 +37,33 @@ const max = Math.max(...rows.map(row => row.count), 1);
 ---
 
 <ul class="space-y-1.5" aria-label={label}>
-    {
-        rows.map(row => (
-            <li class="flex items-center gap-3 text-sm">
-                <span class="flex w-24 shrink-0 items-center gap-2 truncate" title={row.name}>
-                    {row.flag && (
-                        <img
-                            src={`https://flagcdn.com/16x12/${row.flag}.png`}
-                            srcset={`https://flagcdn.com/32x24/${row.flag}.png 2x, https://flagcdn.com/48x36/${row.flag}.png 3x`}
-                            width="16"
-                            height="12"
-                            alt=""
-                            loading="lazy"
-                            class="shrink-0 rounded-xs"
-                        />
-                    )}
-                    {row.icon && <Icon name={row.icon} class="size-3.5 shrink-0 text-(--text-dim)" />}
-                    <span class="truncate">{row.name}</span>
-                </span>
-                <span class="h-2 flex-1 overflow-hidden rounded-full bg-(--overlay-subtle)">
-                    <span
-                        class="block h-full rounded-full bg-(--chart-1)"
-                        style={`width:${((row.count / max) * 100).toFixed(1)}%`}
+    {rows.map(row => (
+        <li class="flex items-center gap-3 text-sm">
+            <span class="flex w-24 shrink-0 items-center gap-2 truncate" title={row.name}>
+                {row.flag && (
+                    <img
+                        src={`https://flagcdn.com/16x12/${row.flag}.png`}
+                        srcset={`https://flagcdn.com/32x24/${row.flag}.png 2x, https://flagcdn.com/48x36/${row.flag}.png 3x`}
+                        width="16"
+                        height="12"
+                        alt=""
+                        loading="lazy"
+                        class="shrink-0 rounded-xs"
                     />
-                </span>
-                <span class="w-12 shrink-0 text-right tabular-nums">{formatNumber(row.count)}</span>
-                <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
-                    {row.percent.toFixed(1)}%
-                </span>
-            </li>
-        ))
-    }
+                )}
+                {row.icon && <Icon name={row.icon} class="size-3.5 shrink-0 text-(--text-dim)" />}
+                <span class="truncate">{row.name}</span>
+            </span>
+            <span class="h-2 flex-1 overflow-hidden rounded-full bg-(--overlay-subtle)">
+                <span
+                    class="block h-full rounded-full bg-(--chart-1)"
+                    style={`width:${((row.count / max) * 100).toFixed(1)}%`}
+                />
+            </span>
+            <span class="w-12 shrink-0 text-right tabular-nums">{formatNumber(row.count)}</span>
+            <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
+                {row.percent.toFixed(1)}%
+            </span>
+        </li>
+    ))}
 </ul>

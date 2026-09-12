@@ -12,7 +12,9 @@ const { step, icon, title, description } = Astro.props;
 ---
 
 <li class="relative rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-6" data-step-card>
-    <span class="absolute top-4 right-5 text-4xl font-bold text-(--overlay-subtle)" aria-hidden="true">{step}</span>
+    <span class="absolute top-4 right-5 text-4xl font-bold text-(--overlay-subtle)" aria-hidden="true">
+        {step}
+    </span>
     <span class="flex size-11 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
         <Icon name={icon} class="size-5" />
     </span>

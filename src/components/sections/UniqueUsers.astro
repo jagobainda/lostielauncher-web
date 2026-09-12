@@ -20,20 +20,22 @@ const highlights = [
 ---
 
 <section id="unique-users" class="mt-16 scroll-mt-8" aria-labelledby="unique-users-heading">
-    <h2 id="unique-users-heading" class="text-2xl font-bold tracking-tight" data-fade-in>{copy.heading}</h2>
-    <p class="mt-2 text-sm text-(--text-dim)" data-fade-in>{copy.subtitle}</p>
+    <h2 id="unique-users-heading" class="text-2xl font-bold tracking-tight" data-fade-in>
+        {copy.heading}
+    </h2>
+    <p class="mt-2 text-sm text-(--text-dim)" data-fade-in>
+        {copy.subtitle}
+    </p>
 
     <div class="mt-6 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-6" data-fade-in>
         <ul class="grid gap-5 sm:grid-cols-3">
-            {
-                highlights.map(item => (
-                    <li class="flex flex-col">
-                        <span class="text-3xl font-semibold">{item.value}</span>
-                        <span class="text-sm text-(--text-dim)">{item.label}</span>
-                        <span class="mt-0.5 text-xs text-(--text-dim)">{item.hint}</span>
-                    </li>
-                ))
-            }
+            {highlights.map(item => (
+                <li class="flex flex-col">
+                    <span class="text-3xl font-semibold">{item.value}</span>
+                    <span class="text-sm text-(--text-dim)">{item.label}</span>
+                    <span class="mt-0.5 text-xs text-(--text-dim)">{item.hint}</span>
+                </li>
+            ))}
         </ul>
 
         <div class="mt-8 border-t border-(--overlay-subtle) pt-6">

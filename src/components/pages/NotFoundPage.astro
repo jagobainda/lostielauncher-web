@@ -22,6 +22,8 @@ const { title, description, heading, message, backHome } = page.data.notFound;
         <img src="/imgs/favicon/favicon.png" alt="" class="size-16 opacity-60" />
         <h1 class="text-7xl font-bold text-(--accent)">{heading}</h1>
         <p class="max-w-md text-(--text-dim)">{message}</p>
-        <Button href={localeHref(locale)} variant="primary">{backHome}</Button>
+        <Button href={localeHref(locale)} variant="primary">
+            {backHome}
+        </Button>
     </main>
 </BaseLayout>

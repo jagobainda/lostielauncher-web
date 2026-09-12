@@ -31,20 +31,18 @@ const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", t
             />
 
             <div class="mt-6 flex flex-wrap justify-center gap-2" role="group">
-                {
-                    SCREENSHOTS.map((shot, i) => (
-                        <button
-                            type="button"
-                            data-gallery-thumb
-                            data-src={shot.src}
-                            data-theme={shot.theme}
-                            aria-pressed={i === 0 ? "true" : "false"}
-                            class="cursor-pointer rounded-full bg-(--overlay-subtle) px-4 py-1.5 text-sm text-(--text-dim) transition-colors duration-150 hover:bg-(--overlay-light) hover:text-(--text-color) aria-pressed:bg-(--accent) aria-pressed:text-white"
-                        >
-                            {shot.theme}
-                        </button>
-                    ))
-                }
+                {SCREENSHOTS.map((shot, i) => (
+                    <button
+                        type="button"
+                        data-gallery-thumb
+                        data-src={shot.src}
+                        data-theme={shot.theme}
+                        aria-pressed={i === 0 ? "true" : "false"}
+                        class="cursor-pointer rounded-full bg-(--overlay-subtle) px-4 py-1.5 text-sm text-(--text-dim) transition-colors duration-150 hover:bg-(--overlay-light) hover:text-(--text-color) aria-pressed:bg-(--accent) aria-pressed:text-white"
+                    >
+                        {shot.theme}
+                    </button>
+                ))}
             </div>
         </div>
     </div>

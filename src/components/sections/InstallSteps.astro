@@ -14,15 +14,17 @@ const { install } = Astro.props;
 
 <section id="install" class="py-20">
     <div class="mx-auto max-w-5xl px-4 sm:px-6">
-        <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl" data-fade-in>{install.heading}</h2>
-        <p class="mx-auto mt-4 max-w-2xl text-center text-(--text-dim)" data-fade-in>{install.subheading}</p>
+        <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl" data-fade-in>
+            {install.heading}
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-center text-(--text-dim)" data-fade-in>
+            {install.subheading}
+        </p>
 
         <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-steps>
-            {
-                install.steps.map((step, i) => (
-                    <StepCard step={i + 1} icon={step.icon} title={step.title} description={step.description} />
-                ))
-            }
+            {install.steps.map((step, i) => (
+                <StepCard step={i + 1} icon={step.icon} title={step.title} description={step.description} />
+            ))}
         </ol>
 
         <p

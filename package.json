@@ -16,13 +16,13 @@
         "@iconify-json/bi": "^1.2.7",
         "@tailwindcss/vite": "^4.3.3",
         "animejs": "^4.5.0",
-        "astro": "^7.3.4",
+        "astro": "^7.3.5",
         "astro-icon": "^1.2.0",
         "tailwindcss": "^4.3.2"
     },
     "devDependencies": {
-        "prettier": "^3.9.8",
-        "prettier-plugin-astro": "^1.0.1",
+        "prettier": "^3.9.9",
+        "prettier-plugin-astro": "^1.1.0",
         "prettier-plugin-tailwindcss": "^0.8.1"
     },
     "overrides": {

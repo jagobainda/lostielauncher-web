@@ -10,10 +10,10 @@
             "githubCta": "View on GitHub",
             "versionPrefix": "Version",
             "features": [
-                { "icon": "bi:collection-play", "text": "Full game library" },
-                { "icon": "bi:magic", "text": "One click, no accounts or sign-ups" },
-                { "icon": "bi:arrow-repeat", "text": "Automatic updates" },
-                { "icon": "bi:translate", "text": "8 languages available" }
+                { "icon": "pixelarticons:library", "text": "Full game library" },
+                { "icon": "pixelarticons:sparkles", "text": "One click, no accounts or sign-ups" },
+                { "icon": "pixelarticons:reload", "text": "Automatic updates" },
+                { "icon": "pixelarticons:languages", "text": "8 languages available" }
             ]
         },
         "screenshots": {
@@ -25,22 +25,22 @@
             "subheading": "You'll be playing in under a minute. No weird setup.",
             "steps": [
                 {
-                    "icon": "bi:download",
+                    "icon": "pixelarticons:download",
                     "title": "Download the installer",
                     "description": "Hit the download button and save LostieLauncher-win-Setup.exe to your computer."
                 },
                 {
-                    "icon": "bi:filetype-exe",
+                    "icon": "pixelarticons:file",
                     "title": "Run the installer",
                     "description": "Double-click the downloaded file. The launcher installs and opens automatically when it's done."
                 },
                 {
-                    "icon": "bi:controller",
+                    "icon": "pixelarticons:gamepad",
                     "title": "Pick your game",
                     "description": "Open the Library, press Download on the game you want and wait for the download to finish."
                 },
                 {
-                    "icon": "bi:play-fill",
+                    "icon": "pixelarticons:play",
                     "title": "Play!",
                     "description": "Hit Play from My games. The launcher updates itself and keeps your games up to date."
                 }

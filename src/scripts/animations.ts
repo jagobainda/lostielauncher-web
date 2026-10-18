@@ -1,5 +1,6 @@
-import { animate, stagger } from "animejs";
+import { animate, stagger, steps } from "animejs";
 
+// Pixel-art motion never interpolates: step counts are chosen so each frame moves exactly 4px.
 const OBSERVER_OPTIONS: IntersectionObserverInit = { threshold: 0, rootMargin: "0px 0px -10% 0px" };
 
 export const motionOK = (): boolean => window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
@@ -21,7 +22,7 @@ export const fadeInOnScroll = (selector: string): void => {
             const el = entry.target as HTMLElement;
             if (entry.isIntersecting) {
                 io.unobserve(el);
-                animate(el, { opacity: [0, 1], translateY: [24, 0], duration: 700, ease: "outCubic" });
+                animate(el, { opacity: [0, 1], translateY: [24, 0], duration: 480, ease: steps(6) });
             } else if (scrolledPast(entry)) {
                 io.unobserve(el);
                 reveal([el]);
@@ -45,9 +46,9 @@ export const staggerInOnScroll = (containerSelector: string, itemSelector: strin
             animate(items, {
                 opacity: [0, 1],
                 translateY: [20, 0],
-                duration: 600,
+                duration: 400,
                 delay: stagger(90),
-                ease: "outCubic",
+                ease: steps(5),
             });
         } else if (entries.every(scrolledPast)) {
             io.disconnect();

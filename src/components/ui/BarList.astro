@@ -34,6 +34,10 @@ const rows: Row[] =
           }));
 
 const max = Math.max(...rows.map(row => row.count), 1);
+
+// Bars fill whole blocks only, like a segmented health bar
+const SEGMENTS = 10;
+const filledWidth = (count: number) => `${(Math.round((count / max) * SEGMENTS) / SEGMENTS) * 100}%`;
 ---
 
 <ul class="space-y-1.5" aria-label={label}>
@@ -48,17 +52,14 @@ const max = Math.max(...rows.map(row => row.count), 1);
                         height="12"
                         alt=""
                         loading="lazy"
-                        class="shrink-0 rounded-xs"
+                        class="shrink-0 [image-rendering:pixelated]"
                     />
                 )}
-                {row.icon && <Icon name={row.icon} class="size-3.5 shrink-0 text-(--text-dim)" />}
+                {row.icon && <Icon name={row.icon} class="size-6 shrink-0 text-(--text-dim)" />}
                 <span class="truncate">{row.name}</span>
             </span>
-            <span class="h-2 flex-1 overflow-hidden rounded-full bg-(--overlay-subtle)">
-                <span
-                    class="block h-full rounded-full bg-(--chart-1)"
-                    style={`width:${((row.count / max) * 100).toFixed(1)}%`}
-                />
+            <span class="h-3 flex-1 bg-(--overlay-subtle)" style={`--segments:${SEGMENTS}`} data-segmented>
+                <span class="block h-full bg-(--chart-1)" style={`width:${filledWidth(row.count)}`} />
             </span>
             <span class="w-12 shrink-0 text-right tabular-nums">{formatNumber(row.count)}</span>
             <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
@@ -67,3 +68,14 @@ const max = Math.max(...rows.map(row => row.count), 1);
         </li>
     ))}
 </ul>
+
+<style>
+    /* Cuts the track into equal blocks with 2px gaps; a mask keeps both the empty and filled parts in step */
+    [data-segmented] {
+        mask: repeating-linear-gradient(
+            90deg,
+            #000 0 calc(100% / var(--segments) - 2px),
+            transparent 0 calc(100% / var(--segments))
+        );
+    }
+</style>

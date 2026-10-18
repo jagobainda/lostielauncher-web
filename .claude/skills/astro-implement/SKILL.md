@@ -91,6 +91,32 @@ Conventions to mirror:
 - Class ordering is handled by `prettier-plugin-tailwindcss` — run the formatter.
 - Add new tokens to `global.css` rather than hard-coding hex values in components.
 
+### Visual style: pixel art on the original palette
+
+The site uses a pixel-art look while keeping its original colours (dark greys `--bg-*`, orange `--accent*`,
+`--chart-*`). Only `--ink` (`#1c1a1a`, one step darker than `--bg-tertiary`) was added for pixel outlines.
+
+- **Typography:** `font-display` (Silkscreen) for headings, big numbers and small labels — uppercase, wide
+  tracking (`tracking-[0.04em]`), never below 12px nor for running text. `font-pixel` (Pixelify Sans) for UI
+  text: buttons, nav, chips, short labels. Paragraphs and dense data (tables, country names) stay in the
+  default `font-sans`. Fonts load from Google Fonts in `BaseLayout`.
+- **Boxes, no radius:** never use `rounded-*`, blur, soft shadows or gradients (the only gradients allowed
+  are the body dot grid and segment masks). Surfaces use the notched pixel border tokens:
+  `shadow-px` (cards: 4px ink border + 8px hard drop), `shadow-px-sm` (chips, icon tiles, small controls),
+  `shadow-px-btn` (buttons: stepped `--accent-pressed` staircase). Leave ≥ 12px around `shadow-px` boxes so
+  the drop shadow is not clipped.
+- **Interaction:** pressable boxes move into their shadow on hover — `hover:translate-1` plus the matching
+  `*-pressed` shadow — with `duration-75 ease-px` (`steps(1)`). Focus is the global 4px `--accent` outline.
+  Touch targets are at least 44px (`min-h-11`).
+- **Icons:** `pixelarticons:*` only (drawn on a 12px grid). Render them at `size-3`, `size-6` or `size-12`
+  so pixels stay whole. Raster pixel art (favicon, flags) gets `[image-rendering:pixelated]`.
+- **Sprites:** decorative sprites are character maps in `src/lib/sprites.ts`, rendered with
+  `ui/PixelSprite.astro` at an integer `scale`; they are `aria-hidden` and coloured with theme variables.
+- **Charts:** quantised to whole blocks — `BarList` (segmented bars), `MonthlyBars` (stacked blocks) and the
+  donut in `lib/charts.ts`, which is rasterised onto a cell grid instead of using arcs.
+- **Motion:** anime.js animations use `steps(n)` so each frame moves 4px; looping CSS animations
+  (`animate-px-bob`, `animate-px-blink`) are always gated with `motion-safe:`.
+
 ## TypeScript
 
 - `strict` mode is on (`astro/tsconfigs/strict`); no implicit `any`.

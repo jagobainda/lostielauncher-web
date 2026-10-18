@@ -12,6 +12,9 @@
     --text-color: #f3f7fa;
     --text-dim: rgba(243, 247, 250, 0.53);
 
+    /* Pixel outline: one step darker than --bg-tertiary so 4px borders read on every surface */
+    --ink: #1c1a1a;
+
     --success: #2e7d32;
 
     --overlay-subtle: rgba(255, 255, 255, 0.1);
@@ -31,10 +34,53 @@
 
 @theme {
     --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-display: "Silkscreen", ui-monospace, monospace;
+    --font-pixel: "Pixelify Sans", ui-monospace, monospace;
+
+    /* Pixel boxes: square corners are faked with a 1-pixel notch (four offset shadows, no border-radius) */
+    --shadow-px-border: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink);
+    --shadow-px-sm: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink);
+    --shadow-px:
+        0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), 8px 8px 0 0 var(--ink);
+    --shadow-px-pressed:
+        0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), 4px 4px 0 0 var(--ink);
+    /* Stepped "staircase" drop shadow for buttons, in the accent's darkest tone */
+    --shadow-px-btn:
+        0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink),
+        8px 8px 0 0 var(--accent-pressed), 4px 12px 0 0 var(--accent-pressed), 12px 4px 0 0 var(--accent-pressed);
+    --shadow-px-btn-pressed:
+        0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink),
+        4px 4px 0 0 var(--accent-pressed);
+
+    --ease-px: steps(1);
+
+    --animate-px-bob: px-bob 1s steps(1) infinite;
+    --animate-px-blink: px-blink 1.2s steps(1) infinite;
+
+    @keyframes px-bob {
+        50% {
+            transform: translateY(-4px);
+        }
+    }
+    @keyframes px-blink {
+        50% {
+            opacity: 0;
+        }
+    }
 }
 
 html {
     scroll-behavior: smooth;
+}
+
+body {
+    background-image: radial-gradient(var(--overlay-subtle) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+}
+
+:focus-visible {
+    outline: 4px solid var(--accent);
+    outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -43,7 +89,9 @@ html {
     }
 }
 
+/* Pixel icons are drawn on a 12px grid: render them at 12/24/36px so every pixel lands on whole device pixels */
 svg[data-icon] {
     display: inline-block;
     vertical-align: -0.125em;
+    shape-rendering: crispEdges;
 }

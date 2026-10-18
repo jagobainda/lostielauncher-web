@@ -9,11 +9,12 @@ interface Props {
 
 const { href, variant = "primary", target, rel, class: className = "" } = Astro.props;
 
+// Hover "presses" the button 4px into its stepped shadow, in a single frame
 const base =
-    "inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 font-semibold transition-colors duration-150";
+    "inline-flex min-h-14 items-center justify-center gap-2.5 px-7 py-3 font-pixel text-lg font-semibold shadow-px-btn transition-[translate,box-shadow,background-color] duration-75 ease-px hover:translate-1 hover:shadow-px-btn-pressed active:translate-1 active:shadow-px-btn-pressed";
 const variants = {
     primary: "bg-(--accent) text-white hover:bg-(--accent-hover) active:bg-(--accent-pressed)",
-    secondary: "bg-(--overlay-subtle) text-(--text-color) hover:bg-(--overlay-light) active:bg-(--overlay-muted)",
+    secondary: "bg-(--bg-tertiary) text-(--text-color) hover:bg-(--ink)",
 };
 ---
 

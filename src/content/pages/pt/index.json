@@ -10,10 +10,10 @@
             "githubCta": "Ver no GitHub",
             "versionPrefix": "Versão",
             "features": [
-                { "icon": "bi:collection-play", "text": "Biblioteca de jogos completa" },
-                { "icon": "bi:magic", "text": "Um clique, sem contas nem registos" },
-                { "icon": "bi:arrow-repeat", "text": "Atualizações automáticas" },
-                { "icon": "bi:translate", "text": "8 idiomas disponíveis" }
+                { "icon": "pixelarticons:library", "text": "Biblioteca de jogos completa" },
+                { "icon": "pixelarticons:sparkles", "text": "Um clique, sem contas nem registos" },
+                { "icon": "pixelarticons:reload", "text": "Atualizações automáticas" },
+                { "icon": "pixelarticons:languages", "text": "8 idiomas disponíveis" }
             ]
         },
         "screenshots": {
@@ -25,22 +25,22 @@
             "subheading": "Em menos de um minuto está a jogar. Sem configurações estranhas.",
             "steps": [
                 {
-                    "icon": "bi:download",
+                    "icon": "pixelarticons:download",
                     "title": "Baixe o instalador",
                     "description": "Clique no botão de download e guarde o LostieLauncher-win-Setup.exe no seu computador."
                 },
                 {
-                    "icon": "bi:filetype-exe",
+                    "icon": "pixelarticons:file",
                     "title": "Execute o instalador",
                     "description": "Faça duplo clique no ficheiro baixado. O launcher instala-se e abre automaticamente quando terminar."
                 },
                 {
-                    "icon": "bi:controller",
+                    "icon": "pixelarticons:gamepad",
                     "title": "Escolha o seu jogo",
                     "description": "Abra a Biblioteca, clique em Baixar no jogo que quiser e aguarde o fim do download."
                 },
                 {
-                    "icon": "bi:play-fill",
+                    "icon": "pixelarticons:play",
                     "title": "A jogar!",
                     "description": "Clique em Jogar em Os meus jogos. O launcher atualiza-se sozinho e mantém os seus jogos em dia."
                 }

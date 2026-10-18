@@ -14,9 +14,12 @@ if (!first) throw new Error("SCREENSHOTS must not be empty");
 const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", theme);
 ---
 
-<section id="screenshots" class="bg-(--bg-secondary) py-20">
+<section id="screenshots" class="border-y-4 border-(--ink) bg-(--bg-secondary) py-24">
     <div class="mx-auto max-w-5xl px-4 sm:px-6">
-        <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl" data-fade-in>
+        <h2
+            class="text-center font-display text-2xl leading-tight font-bold tracking-[0.04em] uppercase sm:text-4xl"
+            data-fade-in
+        >
             {screenshots.heading}
         </h2>
 
@@ -24,13 +27,13 @@ const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", t
             <img
                 src={first.src}
                 alt={altFor(first.theme)}
-                class="block h-auto w-full border border-(--overlay-subtle) shadow-2xl"
+                class="block h-auto w-full shadow-px"
                 width="1000"
                 height="650"
                 data-gallery-image
             />
 
-            <div class="mt-6 flex flex-wrap justify-center gap-2" role="group">
+            <div class="mt-10 flex flex-wrap justify-center gap-3" role="group">
                 {SCREENSHOTS.map((shot, i) => (
                     <button
                         type="button"
@@ -38,7 +41,7 @@ const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", t
                         data-src={shot.src}
                         data-theme={shot.theme}
                         aria-pressed={i === 0 ? "true" : "false"}
-                        class="cursor-pointer rounded-full bg-(--overlay-subtle) px-4 py-1.5 text-sm text-(--text-dim) transition-colors duration-150 hover:bg-(--overlay-light) hover:text-(--text-color) aria-pressed:bg-(--accent) aria-pressed:text-white"
+                        class="min-h-11 cursor-pointer bg-(--bg-tertiary) px-4 py-1.5 font-pixel text-(--text-dim) shadow-px-sm transition-colors duration-75 ease-px hover:bg-(--ink) hover:text-(--text-color) aria-pressed:bg-(--accent) aria-pressed:text-white"
                     >
                         {shot.theme}
                     </button>
@@ -49,7 +52,7 @@ const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", t
 </section>
 
 <script>
-    import { animate } from "animejs";
+    import { animate, steps } from "animejs";
     import { fadeInOnScroll, motionOK } from "../../scripts/animations";
 
     fadeInOnScroll("#screenshots [data-fade-in]");
@@ -76,11 +79,11 @@ const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", t
             if (motionOK()) {
                 animate(img, {
                     opacity: [1, 0],
-                    duration: 150,
-                    ease: "linear",
+                    duration: 160,
+                    ease: steps(4),
                     onComplete: () => {
                         swap(index);
-                        animate(img, { opacity: [0, 1], duration: 300, ease: "linear" });
+                        animate(img, { opacity: [0, 1], duration: 240, ease: steps(4) });
                     },
                 });
             } else {

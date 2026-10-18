@@ -14,25 +14,16 @@ export interface DonutSlice {
     value: number;
     percent: number;
     color: string;
-
-    path: string | null;
+    // Union of 1×1 grid cells; empty when the slice is too thin to own a whole pixel
+    cells: string;
 }
 
-const annularSectorPath = (cx: number, cy: number, rO: number, rI: number, start: number, end: number): string => {
-    const largeArc = end - start > Math.PI ? 1 : 0;
-    const p = (r: number, a: number) => `${(cx + r * Math.cos(a)).toFixed(2)} ${(cy + r * Math.sin(a)).toFixed(2)}`;
-    return [
-        `M ${p(rO, start)}`,
-        `A ${rO} ${rO} 0 ${largeArc} 1 ${p(rO, end)}`,
-        `L ${p(rI, end)}`,
-        `A ${rI} ${rI} 0 ${largeArc} 0 ${p(rI, start)}`,
-        "Z",
-    ].join(" ");
-};
+const TAU = Math.PI * 2;
 
+// Ring drawn on a coarse pixel grid: a cell belongs to the slice whose angular range holds its centre
 export const buildDonutSlices = (
     entries: Record<string, number>,
-    opts: { cx: number; cy: number; rOuter: number; rInner: number; othersLabel: string },
+    opts: { grid: number; rOuter: number; rInner: number; othersLabel: string },
 ): DonutSlice[] => {
     const sorted = Object.entries(entries)
         .filter(([, value]) => value > 0)
@@ -53,28 +44,38 @@ export const buildDonutSlices = (
     const total = parts.reduce((sum, p) => sum + p.value, 0);
     if (total <= 0) return [];
 
-    if (parts.length === 1) {
-        const only = parts[0]!;
-        return [{ label: only.label, value: only.value, percent: 100, color: only.color, path: null }];
+    let acc = 0;
+    const ends = parts.map(part => (acc += (part.value / total) * TAU));
+    const cells = parts.map(() => "");
+
+    const centre = opts.grid / 2;
+    for (let y = 0; y < opts.grid; y++) {
+        for (let x = 0; x < opts.grid; x++) {
+            const dx = x + 0.5 - centre;
+            const dy = y + 0.5 - centre;
+            const r = Math.hypot(dx, dy);
+            if (r > opts.rOuter || r < opts.rInner) continue;
+
+            // Clockwise from 12 o'clock, matching screen coordinates (y grows downwards)
+            const angle = (Math.atan2(dy, dx) + Math.PI / 2 + TAU) % TAU;
+            const index = ends.findIndex(end => angle < end);
+            const slice = index === -1 ? parts.length - 1 : index;
+
+            // Leave a one-pixel gap on each slice boundary so neighbouring colours stay readable
+            if (parts.length > 1) {
+                const start = slice === 0 ? 0 : ends[slice - 1]!;
+                const nearest = Math.min(angle - start, ends[slice]! - angle);
+                if (nearest * r < 0.5) continue;
+            }
+            cells[slice] += `M${x} ${y}h1v1h-1z`;
+        }
     }
 
-    const rMid = (opts.rOuter + opts.rInner) / 2;
-    const padAngle = 2 / rMid;
-
-    const slices: DonutSlice[] = [];
-    let angle = -Math.PI / 2;
-    for (const part of parts) {
-        const sweep = (part.value / total) * Math.PI * 2;
-        const start = angle + padAngle / 2;
-        const end = angle + sweep - padAngle / 2;
-        angle += sweep;
-        slices.push({
-            label: part.label,
-            value: part.value,
-            percent: (part.value / total) * 100,
-            color: part.color,
-            path: end > start ? annularSectorPath(opts.cx, opts.cy, opts.rOuter, opts.rInner, start, end) : "",
-        });
-    }
-    return slices;
+    return parts.map((part, i) => ({
+        label: part.label,
+        value: part.value,
+        percent: (part.value / total) * 100,
+        color: part.color,
+        cells: cells[i]!,
+    }));
 };

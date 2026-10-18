@@ -1,0 +1,27 @@
+---
+import { spriteLayers, type Sprite } from "../../lib/sprites";
+
+interface Props {
+    sprite: Sprite;
+    scale: number;
+    class?: string;
+    style?: string;
+}
+
+const { sprite, scale, class: className, style } = Astro.props;
+const { width, height, layers } = spriteLayers(sprite);
+---
+
+<svg
+    width={width * scale}
+    height={height * scale}
+    viewBox={`0 0 ${width} ${height}`}
+    shape-rendering="crispEdges"
+    aria-hidden="true"
+    class={className}
+    style={style}
+>
+    {layers.map(layer => (
+        <path d={layer.d} fill={layer.fill} />
+    ))}
+</svg>

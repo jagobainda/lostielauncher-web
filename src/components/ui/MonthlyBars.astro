@@ -11,7 +11,9 @@ interface Props {
 const { points, label, unitLabel } = Astro.props;
 
 const max = Math.max(...points.map(point => point.users), 1);
-const barHeight = (users: number) => `${Math.max((users / max) * 100, 3).toFixed(1)}%`;
+// Bars are stacks of whole blocks (min. one), like a pixel equaliser
+const BLOCKS = 16;
+const barHeight = (users: number) => `${(Math.max(Math.round((users / max) * BLOCKS), 1) / BLOCKS) * 100}%`;
 ---
 
 <div class="-mx-2 overflow-x-auto px-2 pb-2" data-monthly-bars>
@@ -21,24 +23,32 @@ const barHeight = (users: number) => `${Math.max((users / max) * 100, 3).toFixed
                 class="flex max-w-24 min-w-14 flex-1 flex-col items-center gap-2"
                 aria-label={`${point.label}: ${formatNumber(point.users)} ${unitLabel}`}
             >
-                <span class="text-xs font-semibold tabular-nums">{formatNumber(point.users)}</span>
-                <span class="flex w-full flex-1 items-end">
+                <span class="font-display text-xs font-bold">{formatNumber(point.users)}</span>
+                <span class="flex w-full flex-1 items-end" style={`--blocks:${BLOCKS}`} data-blocks>
                     <span
-                        class:list={[
-                            "block w-full rounded-t-md transition-opacity duration-150",
-                            i === points.length - 1 ? "bg-(--accent)" : "bg-(--chart-1)",
-                        ]}
+                        class:list={["block w-full", i === points.length - 1 ? "bg-(--accent)" : "bg-(--chart-1)"]}
                         style={`height:${barHeight(point.users)}`}
                     />
                 </span>
                 <span class="flex flex-col items-center leading-tight">
-                    <span class="text-xs">{point.monthLabel}</span>
-                    <span class="text-[0.65rem] text-(--text-dim) tabular-nums">{point.yearLabel}</span>
+                    <span class="font-display text-xs uppercase">{point.monthLabel}</span>
+                    <span class="font-pixel text-xs text-(--text-dim)">{point.yearLabel}</span>
                 </span>
             </li>
         ))}
     </ul>
 </div>
+
+<style>
+    /* Slices the track into blocks with 2px gaps from the baseline; bar heights are whole blocks, so none is cut */
+    [data-blocks] {
+        mask: repeating-linear-gradient(
+            0deg,
+            #000 0 calc(100% / var(--blocks) - 2px),
+            transparent 0 calc(100% / var(--blocks))
+        );
+    }
+</style>
 
 <script>
     document.querySelectorAll<HTMLElement>("[data-monthly-bars]").forEach(root => {

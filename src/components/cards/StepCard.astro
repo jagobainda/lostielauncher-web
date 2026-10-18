@@ -11,13 +11,16 @@ interface Props {
 const { step, icon, title, description } = Astro.props;
 ---
 
-<li class="relative rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-6" data-step-card>
-    <span class="absolute top-4 right-5 text-4xl font-bold text-(--overlay-subtle)" aria-hidden="true">
+<li class="relative bg-(--bg-secondary) p-6 shadow-px" data-step-card>
+    <span
+        class="absolute top-4 right-5 font-display text-4xl leading-none font-bold text-(--overlay-muted)"
+        aria-hidden="true"
+    >
         {step}
     </span>
-    <span class="flex size-11 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
-        <Icon name={icon} class="size-5" />
+    <span class="flex size-12 items-center justify-center bg-(--bg-tertiary) text-(--accent) shadow-px-sm">
+        <Icon name={icon} class="size-6" />
     </span>
-    <h3 class="mt-4 font-semibold">{title}</h3>
-    <p class="mt-2 text-sm text-(--text-dim)">{description}</p>
+    <h3 class="mt-5 font-pixel text-lg font-semibold">{title}</h3>
+    <p class="mt-2 text-sm leading-relaxed text-(--text-dim)">{description}</p>
 </li>

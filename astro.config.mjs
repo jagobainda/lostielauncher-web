@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
@@ -14,6 +14,24 @@ export default defineConfig({
             prefixDefaultLocale: false,
         },
     },
+    fonts: [
+        {
+            provider: fontProviders.google(),
+            name: "Silkscreen",
+            cssVariable: "--font-silkscreen",
+            weights: [400, 700],
+            styles: ["normal"],
+            fallbacks: ["monospace"],
+        },
+        {
+            provider: fontProviders.google(),
+            name: "Pixelify Sans",
+            cssVariable: "--font-pixelify",
+            weights: ["400 700"],
+            styles: ["normal"],
+            fallbacks: ["monospace"],
+        },
+    ],
     adapter: node({
         mode: "standalone",
     }),

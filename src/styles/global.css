@@ -34,8 +34,8 @@
 
 @theme {
     --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
-    --font-display: "Silkscreen", ui-monospace, monospace;
-    --font-pixel: "Pixelify Sans", ui-monospace, monospace;
+    --font-display: var(--font-silkscreen);
+    --font-pixel: var(--font-pixelify);
 
     /* Pixel boxes: square corners are faked with a 1-pixel notch (four offset shadows, no border-radius) */
     --shadow-px-border: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink);

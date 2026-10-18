@@ -99,7 +99,8 @@ The site uses a pixel-art look while keeping its original colours (dark greys `-
 - **Typography:** `font-display` (Silkscreen) for headings, big numbers and small labels — uppercase, wide
   tracking (`tracking-[0.04em]`), never below 12px nor for running text. `font-pixel` (Pixelify Sans) for UI
   text: buttons, nav, chips, short labels. Paragraphs and dense data (tables, country names) stay in the
-  default `font-sans`. Fonts load from Google Fonts in `BaseLayout`.
+  default `font-sans`. Both fonts are self-hosted through the Astro Fonts API (`fonts` in
+  `astro.config.mjs` + `<Font />` in `BaseLayout`): production CSP blocks third-party stylesheets and fonts.
 - **Boxes, no radius:** never use `rounded-*`, blur, soft shadows or gradients (the only gradients allowed
   are the body dot grid and segment masks). Surfaces use the notched pixel border tokens:
   `shadow-px` (cards: 4px ink border + 8px hard drop), `shadow-px-sm` (chips, icon tiles, small controls),

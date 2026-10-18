@@ -1,4 +1,6 @@
 ---
+import { Font } from "astro:assets";
+
 interface Props {
     title: string;
     description: string;
@@ -35,12 +37,8 @@ const ogImageURL = new URL(ogImage, Astro.site);
         <link rel="icon" href="/imgs/favicon/favicon.ico" sizes="any" />
         <link rel="icon" href="/imgs/favicon/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/imgs/favicon/favicon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&display=swap"
-        />
+        <Font cssVariable="--font-silkscreen" preload />
+        <Font cssVariable="--font-pixelify" preload />
         <title>{title}</title>
         <meta name="description" content={description} />
 

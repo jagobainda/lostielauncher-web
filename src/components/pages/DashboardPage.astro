@@ -24,7 +24,7 @@ const kpis = stats
           {
               label: dashboard.kpis.gamesTotal,
               value: formatNumber(gamesTotal),
-              icon: "bi:controller",
+              icon: "pixelarticons:gamepad",
               href: "#games",
           },
           ...(monthlyUsers
@@ -32,7 +32,7 @@ const kpis = stats
                     {
                         label: dashboard.kpis.uniqueUsers,
                         value: formatNumber(monthlyUsers.latest.users),
-                        icon: "bi:people",
+                        icon: "pixelarticons:users",
                         href: "#unique-users",
                     },
                 ]
@@ -40,7 +40,7 @@ const kpis = stats
           {
               label: dashboard.kpis.launcherTotal,
               value: formatNumber(stats.byLauncher.totalDownloads),
-              icon: "bi:rocket-takeoff",
+              icon: "pixelarticons:zap",
               href: "#launcher",
           },
       ]
@@ -52,37 +52,45 @@ const kpis = stats
         <header data-dashboard-header>
             <a
                 href="/"
-                class="inline-flex items-center gap-2 text-sm text-(--text-dim) transition-colors duration-150 hover:text-(--accent)"
+                class="inline-flex min-h-11 items-center gap-2 font-pixel text-(--text-dim) underline decoration-2 underline-offset-4 transition-colors duration-75 ease-px hover:text-(--accent)"
                 data-fade
             >
-                <Icon name="bi:arrow-left" class="size-4" />
+                <Icon name="pixelarticons:arrow-left" class="size-6" />
                 {dashboard.backHome}
             </a>
-            <div class="mt-6 flex items-center gap-3" data-fade>
-                <img src="/imgs/favicon/favicon.png" alt="" class="size-10" width="40" height="40" />
-                <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{dashboard.heading}</h1>
+            <div class="mt-6 flex items-center gap-4" data-fade>
+                <img
+                    src="/imgs/favicon/favicon.png"
+                    alt=""
+                    class="size-12 shrink-0 [image-rendering:pixelated]"
+                    width="48"
+                    height="48"
+                />
+                <h1 class="font-display text-2xl leading-tight font-bold tracking-[0.02em] uppercase sm:text-4xl">
+                    {dashboard.heading}
+                </h1>
             </div>
             <p class="mt-3 text-(--text-dim)" data-fade>
                 {dashboard.subtitle}
             </p>
             {stats && (
                 <p
-                    class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-(--overlay-subtle) px-3 py-1 text-xs text-(--text-dim)"
+                    class="mt-5 inline-flex items-center gap-2 bg-(--bg-tertiary) px-3 py-1 font-pixel text-sm text-(--text-dim) shadow-px-sm"
                     data-fade
                 >
-                    <Icon name="bi:clock-history" class="size-3" />
+                    <Icon name="pixelarticons:clock" class="size-3" />
                     {dashboard.updatedPrefix} {formatGeneratedAt(stats.generatedAt)}
                 </p>
             )}
         </header>
 
         {!stats && (
-            <div class="mt-16 flex flex-col items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-10 text-center">
-                <Icon name="bi:cloud-slash" class="size-10 text-(--text-dim)" />
-                <h2 class="text-xl font-semibold">{dashboard.error.heading}</h2>
+            <div class="mt-16 flex flex-col items-center gap-5 bg-(--bg-secondary) p-10 text-center shadow-px">
+                <Icon name="pixelarticons:cloud" class="size-12 text-(--text-dim)" />
+                <h2 class="font-display text-xl font-bold uppercase">{dashboard.error.heading}</h2>
                 <p class="max-w-md text-sm text-(--text-dim)">{dashboard.error.message}</p>
                 <Button href="/dashboard" variant="secondary">
-                    <Icon name="bi:arrow-clockwise" class="size-4" />
+                    <Icon name="pixelarticons:reload" class="size-6" />
                     {dashboard.error.retry}
                 </Button>
             </div>
@@ -91,25 +99,25 @@ const kpis = stats
         {stats && (
             <>
                 <ul
-                    class:list={["mt-10 grid gap-5", kpis.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"]}
+                    class:list={["mt-12 grid gap-8", kpis.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"]}
                     data-kpis
                 >
                     {kpis.map(kpi => (
                         <li data-kpi>
                             <a
                                 href={kpi.href}
-                                class="group flex h-full items-center gap-4 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-5 transition-colors duration-150 hover:border-(--overlay-muted) hover:bg-(--bg-tertiary)"
+                                class="group flex h-full items-center gap-4 bg-(--bg-secondary) p-5 shadow-px transition-[translate,box-shadow,background-color] duration-75 ease-px hover:translate-1 hover:bg-(--bg-tertiary) hover:shadow-px-pressed"
                             >
-                                <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
-                                    <Icon name={kpi.icon} class="size-5" />
+                                <span class="flex size-12 shrink-0 items-center justify-center bg-(--bg-tertiary) text-(--accent) shadow-px-sm">
+                                    <Icon name={kpi.icon} class="size-6" />
                                 </span>
                                 <span class="flex min-w-0 flex-col">
-                                    <span class="text-2xl font-semibold">{kpi.value}</span>
-                                    <span class="text-sm text-(--text-dim)">{kpi.label}</span>
+                                    <span class="font-display text-2xl font-bold">{kpi.value}</span>
+                                    <span class="font-pixel text-(--text-dim)">{kpi.label}</span>
                                 </span>
                                 <Icon
-                                    name="bi:chevron-right"
-                                    class="ml-auto size-4 shrink-0 text-(--text-dim) transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-(--accent)"
+                                    name="pixelarticons:chevron-right"
+                                    class="ml-auto size-6 shrink-0 text-(--text-dim) group-hover:text-(--accent)"
                                 />
                             </a>
                         </li>
@@ -117,10 +125,14 @@ const kpis = stats
                 </ul>
 
                 <section id="games" class="mt-16 scroll-mt-8" aria-labelledby="games-stats-heading">
-                    <h2 id="games-stats-heading" class="text-2xl font-bold tracking-tight" data-fade-in>
+                    <h2
+                        id="games-stats-heading"
+                        class="font-display text-2xl font-bold tracking-[0.04em] uppercase"
+                        data-fade-in
+                    >
                         {dashboard.games.heading}
                     </h2>
-                    <ul class="mt-6 grid gap-5 md:grid-cols-2" data-game-cards>
+                    <ul class="mt-8 grid gap-8 md:grid-cols-2" data-game-cards>
                         {games.map(([slug, game]) => (
                             <GameStatsCard slug={slug} stats={game} copy={dashboard.games} />
                         ))}

@@ -20,27 +20,27 @@ const highlights = [
 ---
 
 <section id="unique-users" class="mt-16 scroll-mt-8" aria-labelledby="unique-users-heading">
-    <h2 id="unique-users-heading" class="text-2xl font-bold tracking-tight" data-fade-in>
+    <h2 id="unique-users-heading" class="font-display text-2xl font-bold tracking-[0.04em] uppercase" data-fade-in>
         {copy.heading}
     </h2>
-    <p class="mt-2 text-sm text-(--text-dim)" data-fade-in>
+    <p class="mt-3 text-sm text-(--text-dim)" data-fade-in>
         {copy.subtitle}
     </p>
 
-    <div class="mt-6 rounded-lg border border-(--overlay-subtle) bg-(--bg-secondary) p-6" data-fade-in>
+    <div class="mt-8 bg-(--bg-secondary) p-6 shadow-px" data-fade-in>
         <ul class="grid gap-5 sm:grid-cols-3">
             {highlights.map(item => (
                 <li class="flex flex-col">
-                    <span class="text-3xl font-semibold">{item.value}</span>
-                    <span class="text-sm text-(--text-dim)">{item.label}</span>
-                    <span class="mt-0.5 text-xs text-(--text-dim)">{item.hint}</span>
+                    <span class="font-display text-3xl font-bold">{item.value}</span>
+                    <span class="mt-1 font-pixel text-(--text-dim)">{item.label}</span>
+                    <span class="font-display text-xs text-(--text-dim) uppercase">{item.hint}</span>
                 </li>
             ))}
         </ul>
 
-        <div class="mt-8 border-t border-(--overlay-subtle) pt-6">
-            <h3 class="mb-4 flex items-center gap-2 text-xs font-semibold tracking-wide text-(--text-dim) uppercase">
-                <Icon name="bi:people" class="size-3.5" />
+        <div class="mt-8 border-t-3 border-dotted border-(--overlay-muted) pt-6">
+            <h3 class="mb-4 flex items-center gap-2 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase">
+                <Icon name="pixelarticons:users" class="size-3" />
                 {copy.chartLabel}
             </h3>
             <MonthlyBars points={stats.points} label={copy.chartLabel} unitLabel={copy.usersLabel} />

@@ -1,7 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
 import Button from "../ui/Button.astro";
+import PixelSprite from "../ui/PixelSprite.astro";
 import { GITHUB_URL } from "../../lib/launcher";
+import { CLOUD, SPARK } from "../../lib/sprites";
 import type { LandingData } from "../../lib/types";
 
 interface Props {
@@ -10,47 +12,95 @@ interface Props {
 }
 
 const { hero, version } = Astro.props;
+
+// Each spark gets its own period and a negative delay, so they start out of phase and keep drifting apart.
+// Timing goes inline: the `animation` shorthand from animate-px-blink would reset a delay set by a class.
+// Offsets are measured from the centre: from lg up the title stops growing, so the sparks hug it at any width.
+// Only the two beside the logo show on small screens; the rest would land on the copy.
+const SPARKS = [
+    { scale: 3, duration: 1.3, delay: 0, class: "top-36 left-[calc(50%-11rem)] sm:left-[calc(50%-17rem)]" },
+    { scale: 2, duration: 1.7, delay: -0.4, class: "top-28 left-[calc(50%+9rem)] sm:left-[calc(50%+15rem)]" },
+    {
+        scale: 2,
+        duration: 1.1,
+        delay: -0.9,
+        class: "top-72 left-[calc(50%-28rem)] hidden lg:block xl:left-[calc(50%-31rem)]",
+    },
+    {
+        scale: 3,
+        duration: 1.9,
+        delay: -1.3,
+        class: "top-76 left-[calc(50%+26rem)] hidden lg:block xl:left-[calc(50%+29rem)]",
+    },
+    {
+        scale: 2,
+        duration: 1.5,
+        delay: -0.2,
+        class: "top-176 left-[calc(50%-30rem)] hidden lg:block xl:left-[calc(50%-33rem)]",
+    },
+    {
+        scale: 3,
+        duration: 1.2,
+        delay: -0.7,
+        class: "top-168 left-[calc(50%+28rem)] hidden lg:block xl:left-[calc(50%+31rem)]",
+    },
+];
 ---
 
 <section id="download" class="relative overflow-hidden">
-    <div
-        class="pointer-events-none absolute top-0 left-1/2 -z-10 h-[32rem] w-[52rem] -translate-x-1/2 -translate-y-1/3 rounded-full bg-(--accent) opacity-15 blur-3xl"
-        aria-hidden="true"
-    ></div>
+    <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <PixelSprite sprite={CLOUD} scale={8} class="absolute top-24 -left-10 sm:left-[8%]" />
+        <PixelSprite sprite={CLOUD} scale={6} class="absolute top-72 -right-16 sm:right-[6%]" />
+        <PixelSprite sprite={CLOUD} scale={5} class="absolute top-120 left-[3%] hidden sm:block" />
+        <PixelSprite sprite={CLOUD} scale={7} class="absolute right-[4%] bottom-20 hidden xl:block" />
+        {SPARKS.map(spark => (
+            <PixelSprite
+                sprite={SPARK}
+                scale={spark.scale}
+                class={`absolute motion-safe:animate-px-blink ${spark.class}`}
+                style={`animation-duration:${spark.duration}s;animation-delay:${spark.delay}s`}
+            />
+        ))}
+    </div>
 
-    <div class="mx-auto max-w-4xl px-4 pt-24 pb-20 text-center sm:px-6 sm:pt-28" data-hero>
-        <img
-            src="/imgs/favicon/favicon.png"
-            alt=""
-            class="mx-auto size-24 drop-shadow-lg"
-            width="96"
-            height="96"
+    <div class="mx-auto max-w-5xl px-4 pt-24 pb-20 text-center sm:px-6 sm:pt-28" data-hero>
+        <div data-fade>
+            <img
+                src="/imgs/favicon/favicon.png"
+                alt=""
+                class="mx-auto size-24 [image-rendering:pixelated] motion-safe:animate-px-bob"
+                width="96"
+                height="96"
+            />
+        </div>
+
+        <h1
+            class="mt-8 font-display text-[clamp(2.5rem,11vw,7rem)] leading-none font-bold tracking-[0.02em] uppercase"
             data-fade
-        />
-
-        <h1 class="mt-6 text-5xl font-bold tracking-tight sm:text-6xl" data-fade>
-            LostieLauncher
+        >
+            <span class="block text-(--accent)">Lostie</span>
+            <span class="block">Launcher</span>
         </h1>
-        <p class="mt-4 text-xl font-medium text-(--accent) sm:text-2xl" data-fade>
+        <p class="mt-6 font-display text-base tracking-[0.06em] text-(--accent) uppercase sm:text-xl" data-fade>
             {hero.tagline}
         </p>
-        <p class="mx-auto mt-4 max-w-2xl text-(--text-dim)" data-fade>
+        <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-(--text-dim)" data-fade>
             {hero.subtitle}
         </p>
 
         {version && (
             <p
-                class="mt-6 inline-flex items-center gap-1.5 rounded-full bg-(--overlay-subtle) px-3 py-1 text-xs text-(--text-dim)"
+                class="mt-7 inline-flex items-center gap-1.5 bg-(--bg-tertiary) px-3 py-1 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase shadow-px-sm"
                 data-fade
             >
-                <Icon name="bi:tag" class="size-3" />
+                <Icon name="pixelarticons:label" class="size-3" />
                 {hero.versionPrefix} {version.replace(/^v/, "")}
             </p>
         )}
 
-        <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row" data-fade>
-            <Button href="#install" variant="primary" class="w-full text-lg sm:w-auto">
-                <Icon name="bi:box-arrow-in-down" class="size-5" />
+        <div class="mt-10 flex flex-col items-center justify-center gap-6 sm:flex-row" data-fade>
+            <Button href="#install" variant="primary" class="w-full sm:w-auto">
+                <Icon name="pixelarticons:download" class="size-6" />
                 {hero.installCta}
             </Button>
             <Button
@@ -60,21 +110,21 @@ const { hero, version } = Astro.props;
                 rel="noopener noreferrer"
                 class="w-full sm:w-auto"
             >
-                <Icon name="bi:github" class="size-5" />
+                <Icon name="pixelarticons:github" class="size-6" />
                 {hero.githubCta}
             </Button>
         </div>
-        <p class="mt-4 text-sm text-(--text-dim)" data-fade>
+        <p class="mt-6 font-pixel text-(--text-dim)" data-fade>
             {hero.downloadNote}
         </p>
 
-        <ul class="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4" data-fade>
+        <ul class="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4" data-fade>
             {hero.features.map(feature => (
-                <li class="flex flex-col items-center gap-2.5">
-                    <span class="flex size-11 items-center justify-center rounded-lg bg-(--overlay-subtle) text-(--accent)">
-                        <Icon name={feature.icon} class="size-5" />
+                <li class="flex flex-col items-center gap-3">
+                    <span class="flex size-12 items-center justify-center bg-(--bg-tertiary) text-(--accent) shadow-px-sm">
+                        <Icon name={feature.icon} class="size-6" />
                     </span>
-                    <span class="text-sm text-(--text-dim)">{feature.text}</span>
+                    <span class="font-pixel text-(--text-dim)">{feature.text}</span>
                 </li>
             ))}
         </ul>

@@ -240,17 +240,17 @@ const COUNTRY_CODES: Record<string, string> = {
 export const countryCode = (country: string): string | null => COUNTRY_CODES[country.trim()] ?? null;
 
 const OS_ICONS: Record<string, string> = {
-    launcher: "bi:rocket-takeoff",
-    windows: "bi:windows",
-    linux: "bi:tux",
-    mac: "bi:apple",
-    macos: "bi:apple",
-    ios: "bi:apple",
-    ipados: "bi:apple",
-    android: "bi:android2",
+    launcher: "pixelarticons:zap",
+    windows: "pixelarticons:app-windows",
+    linux: "pixelarticons:linux",
+    mac: "pixelarticons:apple",
+    macos: "pixelarticons:apple",
+    ios: "pixelarticons:apple",
+    ipados: "pixelarticons:apple",
+    android: "pixelarticons:android",
 };
 
-export const osIcon = (os: string): string => OS_ICONS[os.trim().toLowerCase()] ?? "bi:question-circle";
+export const osIcon = (os: string): string => OS_ICONS[os.trim().toLowerCase()] ?? "pixelarticons:circle-question";
 
 const numberFormat = new Intl.NumberFormat("es-ES");
 

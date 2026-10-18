@@ -2,7 +2,9 @@
 import { getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Button from "../ui/Button.astro";
+import PixelSprite from "../ui/PixelSprite.astro";
 import { localeHref, type Locale } from "../../lib/i18n";
+import { CLOUD, SPARK } from "../../lib/sprites";
 
 interface Props {
     locale: Locale;
@@ -18,10 +20,21 @@ const { title, description, heading, message, backHome } = page.data.notFound;
 ---
 
 <BaseLayout title={title} description={description} lang={locale} noindex>
-    <main class="flex min-h-screen flex-col items-center justify-center gap-6 px-4 text-center">
-        <img src="/imgs/favicon/favicon.png" alt="" class="size-16 opacity-60" />
-        <h1 class="text-7xl font-bold text-(--accent)">{heading}</h1>
-        <p class="max-w-md text-(--text-dim)">{message}</p>
+    <main class="relative flex min-h-screen flex-col items-center justify-center gap-8 overflow-hidden px-4 text-center">
+        <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+            <PixelSprite sprite={CLOUD} scale={8} class="absolute top-[12%] -left-8 sm:left-[10%]" />
+            <PixelSprite sprite={CLOUD} scale={6} class="absolute -right-12 bottom-[14%] sm:right-[10%]" />
+            <PixelSprite sprite={SPARK} scale={4} class="absolute top-[20%] right-[20%] motion-safe:animate-px-blink" />
+        </div>
+        <img
+            src="/imgs/favicon/favicon.png"
+            alt=""
+            class="size-16 opacity-60 [image-rendering:pixelated] motion-safe:animate-px-bob"
+            width="64"
+            height="64"
+        />
+        <h1 class="font-display text-[clamp(5rem,25vw,12rem)] leading-none font-bold text-(--accent)">{heading}</h1>
+        <p class="max-w-md leading-relaxed text-(--text-dim)">{message}</p>
         <Button href={localeHref(locale)} variant="primary">
             {backHome}
         </Button>

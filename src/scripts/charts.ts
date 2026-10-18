@@ -10,11 +10,10 @@ const getTooltip = (): HTMLDivElement => {
         pointerEvents: "none",
         display: "none",
         padding: "0.4rem 0.6rem",
-        borderRadius: "0.375rem",
-        background: "var(--bg-tertiary)",
-        border: "1px solid var(--overlay-light)",
-        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.4)",
-        font: "0.8rem/1.35 var(--font-sans, sans-serif)",
+        background: "var(--ink)",
+        // Notched pixel frame, lighter than the ink fill so it stays visible on dark cards
+        boxShadow: ["0 -3px", "0 3px", "-3px 0", "3px 0"].map(o => `${o} 0 0 var(--overlay-muted)`).join(", "),
+        font: "0.875rem/1.35 var(--font-pixel, monospace)",
         color: "var(--text-color)",
         whiteSpace: "nowrap",
     });

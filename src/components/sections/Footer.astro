@@ -11,23 +11,33 @@ const { footer } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-(--overlay-subtle) bg-(--bg-tertiary) py-10">
+<footer class="border-t-4 border-(--ink) bg-(--bg-tertiary) py-12">
     <div class="mx-auto flex max-w-5xl flex-col items-center gap-4 px-4 text-center sm:px-6">
         <div class="flex items-center gap-2.5">
-            <img src="/imgs/favicon/favicon.png" alt="" class="size-5" />
-            <span class="font-semibold">LostieLauncher</span>
+            <img
+                src="/imgs/favicon/favicon.png"
+                alt=""
+                class="size-8 [image-rendering:pixelated]"
+                width="32"
+                height="32"
+            />
+            <span class="font-display font-bold tracking-[0.04em] uppercase">
+                <span class="text-(--accent)">Lostie</span>Launcher
+            </span>
         </div>
-        <p class="text-sm text-(--text-dim)">{footer.tagline}</p>
+        <p class="font-pixel text-(--text-dim)">{footer.tagline}</p>
         <a
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 text-sm text-(--text-dim) transition-colors duration-150 hover:text-(--accent)"
+            class="inline-flex min-h-11 items-center gap-2 font-pixel text-(--text-dim) underline decoration-2 underline-offset-4 transition-colors duration-75 ease-px hover:text-(--accent)"
         >
-            <Icon name="bi:github" class="size-4" />
+            <Icon name="pixelarticons:github" class="size-6" />
             {footer.sourceCode}
         </a>
         <p class="max-w-xl text-xs text-(--text-dim)">{footer.disclaimer}</p>
-        <p class="text-xs text-(--text-dim)">© {year} EricLostie · jagobainda</p>
+        <p class="font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase">
+            © {year} EricLostie · jagobainda
+        </p>
     </div>
 </footer>

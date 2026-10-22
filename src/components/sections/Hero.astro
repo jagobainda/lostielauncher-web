@@ -63,34 +63,39 @@ const SPARKS = [
         ))}
     </div>
 
-    <div class="mx-auto max-w-5xl px-4 pt-24 pb-20 text-center sm:px-6 sm:pt-28" data-hero>
+    <div
+        class="mx-auto flex min-h-svh max-w-5xl flex-col items-center justify-center gap-[clamp(0.75rem,3svh,2.5rem)] px-4 py-8 text-center sm:px-6"
+        data-hero
+    >
         <div data-fade>
             <img
                 src="/imgs/favicon/favicon.png"
                 alt=""
-                class="mx-auto size-24 [image-rendering:pixelated] motion-safe:animate-px-bob"
+                class="size-16 [image-rendering:pixelated] motion-safe:animate-px-bob sm:size-24 sm:short:size-16"
                 width="96"
                 height="96"
             />
         </div>
 
-        <h1
-            class="mt-8 font-display text-[clamp(2.5rem,11vw,7rem)] leading-none font-bold tracking-[0.02em] uppercase"
-            data-fade
-        >
-            <span class="block text-(--accent)">Lostie</span>
-            <span class="block">Launcher</span>
-        </h1>
-        <p class="mt-6 font-display text-base tracking-[0.06em] text-(--accent) uppercase sm:text-xl" data-fade>
-            {hero.tagline}
-        </p>
-        <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-(--text-dim)" data-fade>
+        <div>
+            <h1
+                class="font-display text-[clamp(2.5rem,min(11vw,11svh),7rem)] leading-none font-bold tracking-[0.02em] uppercase"
+                data-fade
+            >
+                <span class="block text-(--accent)">Lostie</span>
+                <span class="block">Launcher</span>
+            </h1>
+            <p class="mt-4 font-display text-base tracking-[0.06em] text-(--accent) uppercase sm:text-xl" data-fade>
+                {hero.tagline}
+            </p>
+        </div>
+        <p class="max-w-2xl leading-relaxed text-(--text-dim) max-sm:hidden short:hidden" data-fade>
             {hero.subtitle}
         </p>
 
         {version && (
             <p
-                class="mt-7 inline-flex items-center gap-1.5 bg-(--bg-tertiary) px-3 py-1 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase shadow-px-sm"
+                class="inline-flex items-center gap-1.5 bg-(--bg-tertiary) px-3 py-1 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase shadow-px-sm"
                 data-fade
             >
                 <Icon name="pixelarticons:label" class="size-3" />
@@ -98,7 +103,7 @@ const SPARKS = [
             </p>
         )}
 
-        <div class="mt-10 flex flex-col items-center justify-center gap-6 sm:flex-row" data-fade>
+        <div class="flex w-full flex-col items-center justify-center gap-6 sm:flex-row" data-fade>
             <Button href="#install" variant="primary" class="w-full sm:w-auto">
                 <Icon name="pixelarticons:download" class="size-6" />
                 {hero.installCta}
@@ -114,17 +119,17 @@ const SPARKS = [
                 {hero.githubCta}
             </Button>
         </div>
-        <p class="mt-6 font-pixel text-(--text-dim)" data-fade>
+        <p class="font-pixel text-(--text-dim) max-sm:hidden" data-fade>
             {hero.downloadNote}
         </p>
 
-        <ul class="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4" data-fade>
+        <ul class="grid w-full max-w-3xl grid-cols-2 gap-x-4 gap-y-5 sm:gap-x-6 md:grid-cols-4" data-fade>
             {hero.features.map(feature => (
-                <li class="flex flex-col items-center gap-3">
-                    <span class="flex size-12 items-center justify-center bg-(--bg-tertiary) text-(--accent) shadow-px-sm">
+                <li class="flex items-center gap-3 text-left sm:flex-col sm:text-center">
+                    <span class="flex size-12 shrink-0 items-center justify-center bg-(--bg-tertiary) text-(--accent) shadow-px-sm">
                         <Icon name={feature.icon} class="size-6" />
                     </span>
-                    <span class="font-pixel text-(--text-dim)">{feature.text}</span>
+                    <span class="font-pixel text-sm text-(--text-dim) sm:text-base">{feature.text}</span>
                 </li>
             ))}
         </ul>

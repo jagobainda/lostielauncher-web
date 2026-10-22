@@ -149,7 +149,9 @@ const kpis = stats
             </>
         )}
 
-        {monthlyUsers && <UniqueUsers stats={monthlyUsers} copy={dashboard.uniqueUsers} />}
+        {monthlyUsers && (
+            <UniqueUsers stats={monthlyUsers} copy={dashboard.uniqueUsers} platforms={dashboard.launcher.platforms} />
+        )}
 
         {stats && <LauncherStats stats={stats.byLauncher} copy={dashboard.launcher} />}
 

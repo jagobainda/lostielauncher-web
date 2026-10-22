@@ -12,6 +12,12 @@ export interface OsStat {
     percent: number;
 }
 
+export interface VersionStat {
+    version: string;
+    count: number;
+    percent: number;
+}
+
 export interface DownloadBreakdown {
     totalDownloads: number;
     byVersion: Record<string, number>;
@@ -63,9 +69,15 @@ export const splitByClient = (byOs: OsStat[]): { launcher: OsStat[]; browser: Os
 
 export const shareOf = (part: number, total: number): number => (total > 0 ? (part / total) * 100 : 0);
 
+export const versionStats = (breakdown: DownloadBreakdown): VersionStat[] =>
+    Object.entries(breakdown.byVersion)
+        .filter(([, count]) => count > 0)
+        .sort(([, a], [, b]) => b - a)
+        .map(([version, count]) => ({ version, count, percent: shareOf(count, breakdown.totalDownloads) }));
+
 type JsonObject = Record<string, unknown>;
 
-const isObject = (value: unknown): value is JsonObject =>
+export const isObject = (value: unknown): value is JsonObject =>
     typeof value === "object" && value !== null && !Array.isArray(value);
 
 const isCount = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value) && value >= 0;

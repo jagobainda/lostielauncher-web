@@ -1,12 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
-import type { DownloadBreakdown, LauncherDownloads } from "../../lib/downloads";
-import { LAUNCHER_PLATFORMS, shareOf } from "../../lib/downloads";
-import { buildDonutSlices } from "../../lib/charts";
+import type { DownloadBreakdown, LauncherDownloads, VersionStat } from "../../lib/downloads";
+import { LAUNCHER_PLATFORMS, shareOf, versionStats } from "../../lib/downloads";
 import { formatNumber } from "../../lib/stats";
 import type { DashboardData } from "../../lib/types";
 import BarList from "../ui/BarList.astro";
-import DonutChart from "../ui/DonutChart.astro";
+import TabPanel from "../ui/TabPanel.astro";
+import Tabs from "../ui/Tabs.astro";
 
 interface Props {
     stats: LauncherDownloads;
@@ -16,7 +16,6 @@ interface Props {
 const { stats, copy } = Astro.props;
 
 const PLATFORM_ICONS = { Desktop: "pixelarticons:monitor", Android: "pixelarticons:smartphone" } as const;
-const DONUT_GRID = 36;
 
 const platforms = LAUNCHER_PLATFORMS.flatMap(key => {
     const breakdown = stats.byPlatform?.[key];
@@ -27,39 +26,39 @@ interface View {
     key: string;
     label: string;
     stats: DownloadBreakdown;
+    versions: VersionStat[];
     empty: string | null;
 }
 
+// Version names differ per platform (setup vs APK), so the combined view lists countries only
 const views: View[] = [
-    { key: "all", label: copy.allLabel, stats, empty: null },
-    ...platforms.map(p => ({ key: p.key.toLowerCase(), label: p.copy.label, stats: p.stats, empty: p.copy.empty })),
+    { key: "all", label: copy.allLabel, stats, versions: [], empty: null },
+    ...platforms.map(p => ({
+        key: p.key.toLowerCase(),
+        label: p.copy.label,
+        stats: p.stats,
+        versions: versionStats(p.stats),
+        empty: p.copy.empty,
+    })),
 ];
 const hasTabs = views.length > 1;
 
 const totals = [
     {
         icon: "pixelarticons:zap",
-        accent: true,
+        primary: true,
         value: stats.totalDownloads,
         label: copy.totalLabel,
         hint: platforms.length > 0 ? copy.combinedHint : null,
     },
     ...platforms.map(platform => ({
         icon: platform.icon,
-        accent: false,
+        primary: false,
         value: platform.stats.totalDownloads,
         label: `${platform.copy.label} · ${shareOf(platform.stats.totalDownloads, stats.totalDownloads).toFixed(1)}% ${copy.shareLabel}`,
         hint: platform.copy.hint,
     })),
 ];
-
-const slicesOf = (breakdown: DownloadBreakdown) =>
-    buildDonutSlices(breakdown.byVersion, {
-        grid: DONUT_GRID,
-        rOuter: 18,
-        rInner: 12,
-        othersLabel: copy.othersLabel,
-    });
 ---
 
 <section id="launcher" class="mt-16 scroll-mt-8" aria-labelledby="launcher-stats-heading">
@@ -73,19 +72,29 @@ const slicesOf = (breakdown: DownloadBreakdown) =>
     )}
 
     <div class="mt-8 bg-(--bg-secondary) p-6 shadow-px" data-fade-in>
-        <ul class:list={["grid gap-6", platforms.length > 0 && "sm:grid-cols-3"]}>
+        <ul class:list={["grid gap-6", platforms.length > 0 && "grid-cols-2 sm:grid-cols-3"]}>
             {totals.map(total => (
-                <li class="flex items-center gap-4">
+                <li
+                    class:list={[
+                        "flex",
+                        total.primary
+                            ? "col-span-full items-center gap-4 sm:col-span-1"
+                            : "flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4",
+                    ]}
+                >
                     <span
                         class:list={[
                             "flex size-12 shrink-0 items-center justify-center bg-(--bg-tertiary) shadow-px-sm",
-                            total.accent ? "text-(--accent)" : "text-(--text-dim)",
+                            total.primary ? "text-(--accent)" : "text-(--text-dim)",
                         ]}
                     >
                         <Icon name={total.icon} class="size-6" />
                     </span>
                     <span class="flex min-w-0 flex-col">
-                        <span class="font-display text-3xl font-bold" data-count-up={total.value}>
+                        <span
+                            class:list={["font-display font-bold", total.primary ? "text-3xl" : "text-2xl sm:text-3xl"]}
+                            data-count-up={total.value}
+                        >
                             {formatNumber(total.value)}
                         </span>
                         <span class="font-pixel text-(--text-dim)">{total.label}</span>
@@ -98,52 +107,34 @@ const slicesOf = (breakdown: DownloadBreakdown) =>
         </ul>
 
         <div class="mt-8 border-t-3 border-dotted border-(--overlay-muted) pt-6">
-            {hasTabs && (
-                <div role="tablist" aria-label={copy.filterLabel} class="mb-6 flex flex-wrap gap-4" data-platform-tabs>
-                    {views.map((view, i) => (
-                        <button
-                            type="button"
-                            role="tab"
-                            id={`launcher-tab-${view.key}`}
-                            aria-controls={`launcher-panel-${view.key}`}
-                            aria-selected={i === 0 ? "true" : "false"}
-                            tabindex={i === 0 ? 0 : -1}
-                            class="min-h-11 bg-(--bg-tertiary) px-4 font-pixel shadow-px-sm transition-colors duration-75 ease-px hover:bg-(--ink) aria-selected:bg-(--accent) aria-selected:text-white"
-                        >
-                            {view.label}
-                        </button>
-                    ))}
-                </div>
-            )}
+            {hasTabs && <Tabs id="launcher" label={copy.filterLabel} tabs={views} />}
 
             {views.map((view, i) => {
-                const slices = slicesOf(view.stats);
                 const isEmpty = view.stats.totalDownloads === 0 && view.empty !== null;
                 return (
-                    <div
-                        id={`launcher-panel-${view.key}`}
-                        role={hasTabs ? "tabpanel" : undefined}
-                        aria-labelledby={hasTabs ? `launcher-tab-${view.key}` : undefined}
-                        hidden={i > 0}
-                    >
+                    <TabPanel id="launcher" tab={view.key} tabbed={hasTabs} hidden={i > 0}>
                         {isEmpty ? (
                             <p class="flex items-center gap-3 text-sm text-(--text-dim)">
                                 <Icon name="pixelarticons:info-box" class="size-6 shrink-0" />
                                 {view.empty}
                             </p>
                         ) : (
-                            <div class="grid gap-8 md:grid-cols-2">
-                                {slices.length > 0 && (
+                            <div
+                                class:list={[
+                                    "grid gap-8",
+                                    view.versions.length > 0 && view.stats.topCountries.length > 0 && "md:grid-cols-2",
+                                ]}
+                            >
+                                {view.versions.length > 0 && (
                                     <div class="min-w-0">
                                         <h3 class="mb-3 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase">
                                             {copy.versionsLabel}
                                         </h3>
-                                        <DonutChart
-                                            slices={slices}
-                                            total={view.stats.totalDownloads}
-                                            grid={DONUT_GRID}
-                                            centerLabel={copy.downloadsLabel}
-                                            legendLabel={`${copy.versionsLabel} — ${view.label}`}
+                                        <BarList
+                                            kind="version"
+                                            items={view.versions}
+                                            segments={20}
+                                            label={`${copy.versionsLabel} — ${view.label}`}
                                         />
                                     </div>
                                 )}
@@ -162,36 +153,9 @@ const slicesOf = (breakdown: DownloadBreakdown) =>
                                 )}
                             </div>
                         )}
-                    </div>
+                    </TabPanel>
                 );
             })}
         </div>
     </div>
 </section>
-
-<script>
-    document.querySelectorAll<HTMLElement>("[data-platform-tabs]").forEach(list => {
-        const tabs = [...list.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
-
-        const select = (selected: HTMLButtonElement): void => {
-            for (const tab of tabs) {
-                const active = tab === selected;
-                tab.setAttribute("aria-selected", String(active));
-                tab.tabIndex = active ? 0 : -1;
-                document.getElementById(tab.getAttribute("aria-controls") ?? "")?.toggleAttribute("hidden", !active);
-            }
-        };
-
-        tabs.forEach((tab, i) => {
-            tab.addEventListener("click", () => select(tab));
-            tab.addEventListener("keydown", event => {
-                const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
-                if (step === 0) return;
-                event.preventDefault();
-                const next = tabs[(i + step + tabs.length) % tabs.length]!;
-                next.focus();
-                select(next);
-            });
-        });
-    });
-</script>

@@ -1,22 +1,36 @@
 ---
 import { Icon } from "astro-icon/components";
+import type { LauncherPlatform } from "../../lib/downloads";
+import { LAUNCHER_PLATFORMS } from "../../lib/downloads";
 import type { MonthlyUsersStats } from "../../lib/stats";
 import { formatNumber } from "../../lib/stats";
 import type { DashboardData } from "../../lib/types";
 import MonthlyBars from "../ui/MonthlyBars.astro";
+import TabPanel from "../ui/TabPanel.astro";
+import Tabs from "../ui/Tabs.astro";
 
 interface Props {
     stats: MonthlyUsersStats;
     copy: DashboardData["uniqueUsers"];
+    platforms: Record<LauncherPlatform, { label: string }>;
 }
 
-const { stats, copy } = Astro.props;
+const { stats, copy, platforms } = Astro.props;
 
 const highlights = [
     { label: copy.latestLabel, value: stats.latest.users, hint: stats.latest.label },
     { label: copy.averageLabel, value: stats.average, hint: stats.averageYear },
     { label: copy.peakLabel, value: stats.peak.users, hint: stats.peak.label },
 ];
+
+const views = [
+    { key: "all", label: copy.allLabel, points: stats.points },
+    ...LAUNCHER_PLATFORMS.flatMap(key => {
+        const points = stats.byPlatform[key];
+        return points ? [{ key: key.toLowerCase(), label: platforms[key].label, points }] : [];
+    }),
+];
+const hasTabs = views.length > 1;
 ---
 
 <section id="unique-users" class="mt-16 scroll-mt-8" aria-labelledby="unique-users-heading">
@@ -45,7 +59,17 @@ const highlights = [
                 <Icon name="pixelarticons:users" class="size-3" />
                 {copy.chartLabel}
             </h3>
-            <MonthlyBars points={stats.points} label={copy.chartLabel} unitLabel={copy.usersLabel} />
+            {hasTabs && <Tabs id="unique-users" label={copy.filterLabel} tabs={views} />}
+            {views.map((view, i) => (
+                <TabPanel id="unique-users" tab={view.key} tabbed={hasTabs} hidden={i > 0}>
+                    <MonthlyBars
+                        points={view.points}
+                        label={hasTabs ? `${copy.chartLabel} — ${view.label}` : copy.chartLabel}
+                        unitLabel={copy.usersLabel}
+                    />
+                </TabPanel>
+            ))}
+            {hasTabs && <p class="mt-4 text-xs text-(--text-dim)">{copy.platformsNote}</p>}
         </div>
     </div>
 </section>

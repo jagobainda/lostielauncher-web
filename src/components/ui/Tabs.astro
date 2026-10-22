@@ -1,0 +1,52 @@
+---
+interface Props {
+    id: string;
+    label: string;
+    tabs: { key: string; label: string }[];
+}
+
+const { id, label, tabs } = Astro.props;
+---
+
+<div role="tablist" aria-label={label} class="mb-6 flex flex-wrap gap-4" data-tabs>
+    {tabs.map((tab, i) => (
+        <button
+            type="button"
+            role="tab"
+            id={`${id}-tab-${tab.key}`}
+            aria-controls={`${id}-panel-${tab.key}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            tabindex={i === 0 ? 0 : -1}
+            class="min-h-11 bg-(--bg-tertiary) px-4 font-pixel shadow-px-sm transition-colors duration-75 ease-px hover:bg-(--ink) aria-selected:bg-(--accent) aria-selected:text-white"
+        >
+            {tab.label}
+        </button>
+    ))}
+</div>
+
+<script>
+    document.querySelectorAll<HTMLElement>("[data-tabs]").forEach(list => {
+        const tabs = [...list.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+
+        const select = (selected: HTMLButtonElement): void => {
+            for (const tab of tabs) {
+                const active = tab === selected;
+                tab.setAttribute("aria-selected", String(active));
+                tab.tabIndex = active ? 0 : -1;
+                document.getElementById(tab.getAttribute("aria-controls") ?? "")?.toggleAttribute("hidden", !active);
+            }
+        };
+
+        tabs.forEach((tab, i) => {
+            tab.addEventListener("click", () => select(tab));
+            tab.addEventListener("keydown", event => {
+                const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+                if (step === 0) return;
+                event.preventDefault();
+                const next = tabs[(i + step + tabs.length) % tabs.length]!;
+                next.focus();
+                select(next);
+            });
+        });
+    });
+</script>

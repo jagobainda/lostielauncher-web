@@ -32,8 +32,6 @@
             "allLabel": "Todas",
             "versionsLabel": "Descargas por versión",
             "countriesLabel": "Top países",
-            "downloadsLabel": "descargas",
-            "othersLabel": "Otras",
             "platforms": {
                 "Desktop": {
                     "label": "Windows",
@@ -55,7 +53,10 @@
             "averageLabel": "Media mensual",
             "peakLabel": "Mejor mes",
             "chartLabel": "Usuarios únicos por mes",
-            "usersLabel": "usuarios únicos"
+            "usersLabel": "usuarios únicos",
+            "filterLabel": "Plataforma",
+            "allLabel": "Todas",
+            "platformsNote": "Usuarios aproximados por IP. Una IP que usa las dos plataformas cuenta en cada una, pero solo una vez en el total, así que el total no es su suma."
         },
         "error": {
             "heading": "No se pudieron cargar las estadísticas",

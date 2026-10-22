@@ -1,10 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
-import type { CountryStat, OsStat } from "../../lib/downloads";
+import type { CountryStat, OsStat, VersionStat } from "../../lib/downloads";
 import { formatNumber, countryCode, osIcon } from "../../lib/stats";
 
 type Props = { label: string; max?: number; segments?: number } & (
-    { kind: "country"; items: CountryStat[] } | { kind: "os"; items: (OsStat & { label?: string })[] }
+    | { kind: "country"; items: CountryStat[] }
+    | { kind: "os"; items: (OsStat & { label?: string })[] }
+    | { kind: "version"; items: VersionStat[] }
 );
 
 const props = Astro.props;
@@ -29,14 +31,23 @@ const rows: Row[] =
               flag: countryCode(item.country),
               icon: null,
           }))
-        : props.items.map(item => ({
-              name: item.label ?? item.os,
-              title: item.os,
-              count: item.count,
-              percent: item.percent,
-              flag: null,
-              icon: osIcon(item.os),
-          }));
+        : props.kind === "os"
+          ? props.items.map(item => ({
+                name: item.label ?? item.os,
+                title: item.os,
+                count: item.count,
+                percent: item.percent,
+                flag: null,
+                icon: osIcon(item.os),
+            }))
+          : props.items.map(item => ({
+                name: item.version,
+                title: item.version,
+                count: item.count,
+                percent: item.percent,
+                flag: null,
+                icon: null,
+            }));
 
 const max = Math.max(props.max ?? 0, ...rows.map(row => row.count), 1);
 

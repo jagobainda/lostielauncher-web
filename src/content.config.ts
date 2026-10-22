@@ -78,8 +78,6 @@ const dashboardSchema = z.object({
         allLabel: z.string(),
         versionsLabel: z.string(),
         countriesLabel: z.string(),
-        downloadsLabel: z.string(),
-        othersLabel: z.string(),
         platforms: z.object({
             Desktop: launcherPlatformCopy,
             Android: launcherPlatformCopy,
@@ -94,6 +92,9 @@ const dashboardSchema = z.object({
         peakLabel: z.string(),
         chartLabel: z.string(),
         usersLabel: z.string(),
+        filterLabel: z.string(),
+        allLabel: z.string(),
+        platformsNote: z.string(),
     }),
     error: z.object({
         heading: z.string(),

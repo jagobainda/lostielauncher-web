@@ -1,3 +1,5 @@
+import { isObject, LAUNCHER_PLATFORMS, type LauncherPlatform } from "./downloads.ts";
+
 export const MONTHLY_USERS_URL = "https://cdn.jagoba.dev/ericlostie-launcher/monthly-users.json";
 
 export interface MonthlyUsersPoint {
@@ -14,6 +16,8 @@ export interface MonthlyUsersStats {
     peak: MonthlyUsersPoint;
     average: number;
     averageYear: string;
+    // Only months measured per platform; the total is not their sum, since an IP can use both
+    byPlatform: Partial<Record<LauncherPlatform, MonthlyUsersPoint[]>>;
 }
 
 const MONTH_KEY = /^\d{4}-(0[1-9]|1[0-2])$/;
@@ -29,29 +33,43 @@ const buildPoint = (month: string, users: number): MonthlyUsersPoint => {
     return { month, label: `${monthLabel} ${year}`, monthLabel, yearLabel: year, users };
 };
 
+const toPoints = (raw: unknown): MonthlyUsersPoint[] =>
+    isObject(raw)
+        ? Object.entries(raw)
+              .filter(
+                  (entry): entry is [string, number] =>
+                      MONTH_KEY.test(entry[0]) && typeof entry[1] === "number" && Number.isFinite(entry[1]),
+              )
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([month, users]) => buildPoint(month, users))
+        : [];
+
+export const parseMonthlyUsers = (raw: unknown): MonthlyUsersStats | null => {
+    const points = toPoints(raw);
+    const latest = points.at(-1);
+    if (!isObject(raw) || !latest) return null;
+
+    const peak = points.reduce((best, point) => (point.users > best.users ? point : best), latest);
+
+    const currentYear = points.filter(point => point.yearLabel === latest.yearLabel);
+    const average = Math.round(currentYear.reduce((sum, point) => sum + point.users, 0) / currentYear.length);
+
+    const platforms = isObject(raw.byPlatform) ? raw.byPlatform : {};
+    const byPlatform = Object.fromEntries(
+        LAUNCHER_PLATFORMS.flatMap(platform => {
+            const series = toPoints(platforms[platform]);
+            return series.length > 0 ? [[platform, series] as const] : [];
+        }),
+    );
+
+    return { points, latest, peak, average, averageYear: latest.yearLabel, byPlatform };
+};
+
 export const getMonthlyUsers = async (): Promise<MonthlyUsersStats | null> => {
     try {
         const res = await fetch(MONTHLY_USERS_URL, { headers: { Accept: "application/json" } });
         if (!res.ok) return null;
-        const raw = (await res.json()) as Record<string, unknown>;
-
-        const points = Object.entries(raw)
-            .filter(
-                (entry): entry is [string, number] =>
-                    MONTH_KEY.test(entry[0]) && typeof entry[1] === "number" && Number.isFinite(entry[1]),
-            )
-            .sort(([a], [b]) => a.localeCompare(b))
-            .map(([month, users]) => buildPoint(month, users));
-
-        const latest = points.at(-1);
-        if (!latest) return null;
-
-        const peak = points.reduce((best, point) => (point.users > best.users ? point : best), latest);
-
-        const currentYear = points.filter(point => point.yearLabel === latest.yearLabel);
-        const average = Math.round(currentYear.reduce((sum, point) => sum + point.users, 0) / currentYear.length);
-
-        return { points, latest, peak, average, averageYear: latest.yearLabel };
+        return parseMonthlyUsers(await res.json());
     } catch {
         return null;
     }

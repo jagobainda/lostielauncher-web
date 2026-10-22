@@ -8,6 +8,7 @@ import {
     parseDownloadStats,
     parseOs,
     shareOf,
+    versionStats,
     splitByClient,
 } from "../src/lib/downloads.ts";
 
@@ -198,5 +199,23 @@ describe("shareOf", () => {
 
     it("returns zero instead of NaN when there are no downloads", () => {
         assert.equal(shareOf(0, 0), 0);
+    });
+});
+
+describe("versionStats", () => {
+    it("sorts versions by count and computes the share of the platform total", () => {
+        const versions = versionStats({
+            totalDownloads: 50,
+            byVersion: { "0.9.1-delta": 10, setup: 40 },
+            topCountries: [],
+        });
+        assert.deepEqual(versions, [
+            { version: "setup", count: 40, percent: 80 },
+            { version: "0.9.1-delta", count: 10, percent: 20 },
+        ]);
+    });
+
+    it("leaves out versions without downloads", () => {
+        assert.deepEqual(versionStats({ totalDownloads: 0, byVersion: { setup: 0 }, topCountries: [] }), []);
     });
 });

@@ -23,7 +23,9 @@ const barHeight = (users: number) => `${(Math.max(Math.round((users / max) * BLO
                 class="flex max-w-24 min-w-14 flex-1 flex-col items-center gap-2"
                 aria-label={`${point.label}: ${formatNumber(point.users)} ${unitLabel}`}
             >
-                <span class="font-display text-xs font-bold">{formatNumber(point.users)}</span>
+                <span class="font-display text-xs font-bold" data-count-up={point.users}>
+                    {formatNumber(point.users)}
+                </span>
                 <span class="flex w-full flex-1 items-end" style={`--blocks:${BLOCKS}`} data-blocks>
                     <span
                         class:list={["block w-full", i === points.length - 1 ? "bg-(--accent)" : "bg-(--chart-1)"]}

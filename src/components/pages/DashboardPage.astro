@@ -23,7 +23,7 @@ const kpis = stats
     ? [
           {
               label: dashboard.kpis.gamesTotal,
-              value: formatNumber(gamesTotal),
+              value: gamesTotal,
               icon: "pixelarticons:gamepad",
               href: "#games",
           },
@@ -31,7 +31,7 @@ const kpis = stats
               ? [
                     {
                         label: dashboard.kpis.uniqueUsers,
-                        value: formatNumber(monthlyUsers.latest.users),
+                        value: monthlyUsers.latest.users,
                         icon: "pixelarticons:users",
                         href: "#unique-users",
                     },
@@ -39,7 +39,7 @@ const kpis = stats
               : []),
           {
               label: dashboard.kpis.launcherTotal,
-              value: formatNumber(stats.byLauncher.totalDownloads),
+              value: stats.byLauncher.totalDownloads,
               icon: "pixelarticons:zap",
               href: "#launcher",
           },
@@ -112,7 +112,9 @@ const kpis = stats
                                     <Icon name={kpi.icon} class="size-6" />
                                 </span>
                                 <span class="flex min-w-0 flex-col">
-                                    <span class="font-display text-2xl font-bold">{kpi.value}</span>
+                                    <span class="font-display text-2xl font-bold" data-count-up={kpi.value}>
+                                        {formatNumber(kpi.value)}
+                                    </span>
                                     <span class="font-pixel text-(--text-dim)">{kpi.label}</span>
                                 </span>
                                 <Icon
@@ -148,10 +150,12 @@ const kpis = stats
 </BaseLayout>
 
 <script>
-    import { fadeInOnScroll, staggerInOnScroll } from "../../scripts/animations";
+    import { countUpOnScroll, fadeInOnScroll, staggerInOnScroll } from "../../scripts/animations";
+    import { formatNumber } from "../../lib/stats";
 
-    staggerInOnScroll("[data-dashboard-header]", "[data-fade]");
-    staggerInOnScroll("[data-kpis]", "[data-kpi]");
-    staggerInOnScroll("[data-game-cards]", "[data-stats-card]");
-    fadeInOnScroll("[data-fade-in]");
+    staggerInOnScroll("[data-dashboard-header]", "[data-fade]", "smooth");
+    staggerInOnScroll("[data-kpis]", "[data-kpi]", "smooth");
+    staggerInOnScroll("[data-game-cards]", "[data-stats-card]", "smooth");
+    fadeInOnScroll("[data-fade-in]", "smooth");
+    countUpOnScroll("[data-count-up]", formatNumber);
 </script>

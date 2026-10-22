@@ -23,7 +23,9 @@ const { stats, copy } = Astro.props;
             <span class="flex size-12 items-center justify-center bg-(--bg-tertiary) text-(--accent) shadow-px-sm">
                 <Icon name="pixelarticons:zap" class="size-6" />
             </span>
-            <span class="mt-2 font-display text-4xl font-bold">{formatNumber(stats.totalDownloads)}</span>
+            <span class="mt-2 font-display text-4xl font-bold" data-count-up={stats.totalDownloads}>
+                {formatNumber(stats.totalDownloads)}
+            </span>
             <span class="font-pixel text-(--text-dim)">{copy.totalLabel}</span>
         </div>
 

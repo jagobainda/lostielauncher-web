@@ -44,7 +44,9 @@ const segLabel = (slice: DonutSlice) => `${slice.label}: ${formatNumber(slice.va
             )}
         </svg>
         <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span class="font-display text-base font-bold">{formatNumber(total)}</span>
+            <span class="font-display text-base font-bold" data-count-up={total}>
+                {formatNumber(total)}
+            </span>
             <span class="max-w-20 font-pixel text-xs leading-tight text-(--text-dim)">{centerLabel}</span>
         </div>
     </div>
@@ -54,7 +56,9 @@ const segLabel = (slice: DonutSlice) => `${slice.label}: ${formatNumber(slice.va
             <li class="flex items-center gap-2 px-1.5 py-0.5 text-sm" data-legend-row data-index={i}>
                 <span class="size-3 shrink-0" style={`background:${slice.color}`} aria-hidden="true" />
                 <span class="truncate">{slice.label}</span>
-                <span class="ml-auto shrink-0 tabular-nums">{formatNumber(slice.value)}</span>
+                <span class="ml-auto shrink-0 tabular-nums" data-count-up={slice.value}>
+                    {formatNumber(slice.value)}
+                </span>
                 <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
                     {slice.percent.toFixed(1)}%
                 </span>

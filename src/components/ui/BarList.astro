@@ -61,7 +61,9 @@ const filledWidth = (count: number) => `${(Math.round((count / max) * SEGMENTS) 
             <span class="h-3 flex-1 bg-(--overlay-subtle)" style={`--segments:${SEGMENTS}`} data-segmented>
                 <span class="block h-full bg-(--chart-1)" style={`width:${filledWidth(row.count)}`} />
             </span>
-            <span class="w-12 shrink-0 text-right tabular-nums">{formatNumber(row.count)}</span>
+            <span class="w-12 shrink-0 text-right tabular-nums" data-count-up={row.count}>
+                {formatNumber(row.count)}
+            </span>
             <span class="w-12 shrink-0 text-right text-xs text-(--text-dim) tabular-nums">
                 {row.percent.toFixed(1)}%
             </span>

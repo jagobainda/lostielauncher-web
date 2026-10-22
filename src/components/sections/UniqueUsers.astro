@@ -13,9 +13,9 @@ interface Props {
 const { stats, copy } = Astro.props;
 
 const highlights = [
-    { label: copy.latestLabel, value: formatNumber(stats.latest.users), hint: stats.latest.label },
-    { label: copy.averageLabel, value: formatNumber(stats.average), hint: stats.averageYear },
-    { label: copy.peakLabel, value: formatNumber(stats.peak.users), hint: stats.peak.label },
+    { label: copy.latestLabel, value: stats.latest.users, hint: stats.latest.label },
+    { label: copy.averageLabel, value: stats.average, hint: stats.averageYear },
+    { label: copy.peakLabel, value: stats.peak.users, hint: stats.peak.label },
 ];
 ---
 
@@ -31,7 +31,9 @@ const highlights = [
         <ul class="grid gap-5 sm:grid-cols-3">
             {highlights.map(item => (
                 <li class="flex flex-col">
-                    <span class="font-display text-3xl font-bold">{item.value}</span>
+                    <span class="font-display text-3xl font-bold" data-count-up={item.value}>
+                        {formatNumber(item.value)}
+                    </span>
                     <span class="mt-1 font-pixel text-(--text-dim)">{item.label}</span>
                     <span class="font-display text-xs text-(--text-dim) uppercase">{item.hint}</span>
                 </li>

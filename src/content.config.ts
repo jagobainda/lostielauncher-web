@@ -42,6 +42,12 @@ const landingSchema = z.object({
     }),
 });
 
+const launcherPlatformCopy = z.object({
+    label: z.string(),
+    hint: z.string(),
+    empty: z.string(),
+});
+
 const dashboardSchema = z.object({
     heading: z.string(),
     subtitle: z.string(),
@@ -57,14 +63,29 @@ const dashboardSchema = z.object({
         versionsLabel: z.string(),
         osLabel: z.string(),
         countriesLabel: z.string(),
+        launcherClientsLabel: z.string(),
+        browsersLabel: z.string(),
         downloadsLabel: z.string(),
         othersLabel: z.string(),
     }),
     launcher: z.object({
         heading: z.string(),
+        subtitle: z.string(),
         totalLabel: z.string(),
+        combinedHint: z.string(),
+        shareLabel: z.string(),
+        filterLabel: z.string(),
+        allLabel: z.string(),
+        versionsLabel: z.string(),
         countriesLabel: z.string(),
+        downloadsLabel: z.string(),
+        othersLabel: z.string(),
+        platforms: z.object({
+            Desktop: launcherPlatformCopy,
+            Android: launcherPlatformCopy,
+        }),
     }),
+    downloadsNote: z.string(),
     uniqueUsers: z.object({
         heading: z.string(),
         subtitle: z.string(),

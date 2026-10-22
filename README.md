@@ -13,6 +13,7 @@ Content Collections + Zod · `@astrojs/node` · `@astrojs/sitemap` · Prettier.
 npm install
 npm run dev       # http://localhost:4321
 npm run build
+npm test          # node:test, no extra dependencies
 npm run format
 ```
 

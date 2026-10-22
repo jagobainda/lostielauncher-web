@@ -1,40 +1,3 @@
-export const STATS_URL = "https://ericlostie-launcher.jagoba.dev/stats/downloads.json";
-
-export interface CountryStat {
-    country: string;
-    count: number;
-    percent: number;
-}
-
-export interface OsStat {
-    os: string;
-    count: number;
-    percent: number;
-}
-
-export interface DownloadTarget {
-    totalDownloads: number;
-    byVersion: Record<string, number>;
-    topCountries: CountryStat[];
-    byOs?: OsStat[];
-}
-
-export interface DownloadStats {
-    byGame: Record<string, DownloadTarget>;
-    byLauncher: DownloadTarget;
-    generatedAt: string;
-}
-
-export const getDownloadStats = async (): Promise<DownloadStats | null> => {
-    try {
-        const res = await fetch(STATS_URL, { headers: { Accept: "application/json" } });
-        if (!res.ok) return null;
-        return (await res.json()) as DownloadStats;
-    } catch {
-        return null;
-    }
-};
-
 export const MONTHLY_USERS_URL = "https://cdn.jagoba.dev/ericlostie-launcher/monthly-users.json";
 
 export interface MonthlyUsersPoint {
@@ -240,8 +203,10 @@ const COUNTRY_CODES: Record<string, string> = {
 export const countryCode = (country: string): string | null => COUNTRY_CODES[country.trim()] ?? null;
 
 const OS_ICONS: Record<string, string> = {
-    launcher: "pixelarticons:zap",
+    "launcher desktop": "pixelarticons:monitor",
+    "launcher android": "pixelarticons:smartphone",
     windows: "pixelarticons:app-windows",
+    chromeos: "pixelarticons:google-chrome",
     linux: "pixelarticons:linux",
     mac: "pixelarticons:apple",
     macos: "pixelarticons:apple",

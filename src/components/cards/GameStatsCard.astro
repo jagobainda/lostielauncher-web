@@ -1,5 +1,7 @@
 ---
-import type { DownloadTarget } from "../../lib/stats";
+import { Icon } from "astro-icon/components";
+import type { GameDownloads, LauncherPlatform } from "../../lib/downloads";
+import { launcherClientPlatform, splitByClient } from "../../lib/downloads";
 import { formatGameName } from "../../lib/stats";
 import { buildDonutSlices } from "../../lib/charts";
 import DonutChart from "../ui/DonutChart.astro";
@@ -8,11 +10,12 @@ import type { DashboardData } from "../../lib/types";
 
 interface Props {
     slug: string;
-    stats: DownloadTarget;
+    stats: GameDownloads;
     copy: DashboardData["games"];
+    platforms: Record<LauncherPlatform, { label: string }>;
 }
 
-const { slug, stats, copy } = Astro.props;
+const { slug, stats, copy, platforms } = Astro.props;
 
 const DONUT_GRID = 36;
 const slices = buildDonutSlices(stats.byVersion, {
@@ -21,10 +24,26 @@ const slices = buildDonutSlices(stats.byVersion, {
     rInner: 12,
     othersLabel: copy.othersLabel,
 });
+
+const gameName = formatGameName(slug);
+const clients = splitByClient(stats.byOs);
+// One scale for both lists, so a handful of browser downloads never looks as big as the launcher bar
+const osMax = Math.max(...stats.byOs.map(row => row.count), 1);
+const osGroups = [
+    {
+        label: copy.launcherClientsLabel,
+        icon: "pixelarticons:zap",
+        items: clients.launcher.map(row => {
+            const platform = launcherClientPlatform(row.os);
+            return { ...row, label: platform ? platforms[platform].label : row.os };
+        }),
+    },
+    { label: copy.browsersLabel, icon: "pixelarticons:globe", items: clients.browser },
+].filter(group => group.items.length > 0);
 ---
 
 <li class="bg-(--bg-secondary) p-6 shadow-px" data-stats-card>
-    <h3 class="font-display text-lg font-bold tracking-[0.02em] uppercase">{formatGameName(slug)}</h3>
+    <h3 class="font-display text-lg font-bold tracking-[0.02em] uppercase">{gameName}</h3>
 
     <div class="mt-5">
         <DonutChart
@@ -36,10 +55,20 @@ const slices = buildDonutSlices(stats.byVersion, {
         />
     </div>
 
-    {stats.byOs && stats.byOs.length > 0 && (
+    {osGroups.length > 0 && (
         <div class="mt-6 border-t-3 border-dotted border-(--overlay-muted) pt-5">
             <h4 class="mb-3 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase">{copy.osLabel}</h4>
-            <BarList kind="os" items={stats.byOs} label={`${copy.osLabel} — ${formatGameName(slug)}`} />
+            <div class="space-y-4">
+                {osGroups.map(group => (
+                    <div>
+                        <p class="mb-1.5 flex items-center gap-2 font-pixel text-sm text-(--text-dim)">
+                            <Icon name={group.icon} class="size-3" />
+                            {group.label}
+                        </p>
+                        <BarList kind="os" items={group.items} max={osMax} label={`${group.label} — ${gameName}`} />
+                    </div>
+                ))}
+            </div>
         </div>
     )}
 
@@ -48,11 +77,7 @@ const slices = buildDonutSlices(stats.byVersion, {
             <h4 class="mb-3 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase">
                 {copy.countriesLabel}
             </h4>
-            <BarList
-                kind="country"
-                items={stats.topCountries}
-                label={`${copy.countriesLabel} — ${formatGameName(slug)}`}
-            />
+            <BarList kind="country" items={stats.topCountries} label={`${copy.countriesLabel} — ${gameName}`} />
         </div>
     )}
 </li>

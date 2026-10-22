@@ -17,14 +17,37 @@
             "versionsLabel": "Descargas por versión",
             "osLabel": "Descargas por plataforma",
             "countriesLabel": "Top países",
+            "launcherClientsLabel": "Desde el launcher",
+            "browsersLabel": "Desde el navegador",
             "downloadsLabel": "descargas",
             "othersLabel": "Otras"
         },
         "launcher": {
             "heading": "Launcher",
+            "subtitle": "Descargas de los instaladores de Windows y del APK de Android. La plataforma es la del archivo descargado, no la del dispositivo.",
             "totalLabel": "Descargas totales",
-            "countriesLabel": "Top países"
+            "combinedHint": "Windows + Android",
+            "shareLabel": "del total",
+            "filterLabel": "Plataforma",
+            "allLabel": "Todas",
+            "versionsLabel": "Descargas por versión",
+            "countriesLabel": "Top países",
+            "downloadsLabel": "descargas",
+            "othersLabel": "Otras",
+            "platforms": {
+                "Desktop": {
+                    "label": "Windows",
+                    "hint": "Setup, Portable y actualizaciones",
+                    "empty": "Todavía no hay descargas de los instaladores de Windows."
+                },
+                "Android": {
+                    "label": "Android",
+                    "hint": "APK",
+                    "empty": "Todavía no hay descargas del APK. Se cuentan desde la llegada del launcher a Android, sin histórico anterior."
+                }
+            }
         },
+        "downloadsNote": "Cada descarga es una petición de archivo servida con éxito, incluidas las parciales o reanudadas; no equivale a usuarios ni a instalaciones únicas. Los datos se actualizan cada 20 minutos.",
         "uniqueUsers": {
             "heading": "Usuarios únicos",
             "subtitle": "Usuarios distintos que han utilizado el launcher cada mes",

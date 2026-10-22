@@ -1,15 +1,18 @@
 ---
 import { Icon } from "astro-icon/components";
-import type { CountryStat, OsStat } from "../../lib/stats";
+import type { CountryStat, OsStat } from "../../lib/downloads";
 import { formatNumber, countryCode, osIcon } from "../../lib/stats";
 
-type Props = { label: string } & ({ kind: "country"; items: CountryStat[] } | { kind: "os"; items: OsStat[] });
+type Props = { label: string; max?: number } & (
+    { kind: "country"; items: CountryStat[] } | { kind: "os"; items: (OsStat & { label?: string })[] }
+);
 
 const props = Astro.props;
 const { label } = props;
 
 interface Row {
     name: string;
+    title: string;
     count: number;
     percent: number;
     flag: string | null;
@@ -20,20 +23,22 @@ const rows: Row[] =
     props.kind === "country"
         ? props.items.map(item => ({
               name: item.country,
+              title: item.country,
               count: item.count,
               percent: item.percent,
               flag: countryCode(item.country),
               icon: null,
           }))
         : props.items.map(item => ({
-              name: item.os,
+              name: item.label ?? item.os,
+              title: item.os,
               count: item.count,
               percent: item.percent,
               flag: null,
               icon: osIcon(item.os),
           }));
 
-const max = Math.max(...rows.map(row => row.count), 1);
+const max = Math.max(props.max ?? 0, ...rows.map(row => row.count), 1);
 
 // Bars fill whole blocks only, like a segmented health bar
 const SEGMENTS = 10;
@@ -43,7 +48,7 @@ const filledWidth = (count: number) => `${(Math.round((count / max) * SEGMENTS) 
 <ul class="space-y-1.5" aria-label={label}>
     {rows.map(row => (
         <li class="flex items-center gap-3 text-sm">
-            <span class="flex w-24 shrink-0 items-center gap-2 truncate" title={row.name}>
+            <span class="flex w-24 shrink-0 items-center gap-2 truncate" title={row.title}>
                 {row.flag && (
                     <img
                         src={`https://flagcdn.com/16x12/${row.flag}.png`}

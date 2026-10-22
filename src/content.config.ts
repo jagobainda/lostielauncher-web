@@ -37,7 +37,6 @@ const landingSchema = z.object({
         downloadCta: z.string(),
     }),
     footer: z.object({
-        tagline: z.string(),
         sourceCode: z.string(),
         disclaimer: z.string(),
     }),

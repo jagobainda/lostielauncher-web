@@ -1,0 +1,22 @@
+---
+import type { LauncherGame } from "../../../lib/launcherCatalog";
+import type { AndroidCopy } from "../../../lib/types";
+import AndroidGameCard from "./AndroidGameCard.astro";
+import ReplicaEmptyState from "../ReplicaEmptyState.astro";
+
+interface Props {
+    games: LauncherGame[];
+    copy: AndroidCopy;
+}
+const { games, copy } = Astro.props;
+---
+
+{games.length ? (
+    <div class="android-scroll h-full overflow-y-auto p-[20em]">
+        {games.map(game => (
+            <AndroidGameCard {game} {copy} kind="library" />
+        ))}
+    </div>
+) : (
+    <ReplicaEmptyState platform="Android" icon="lucide:wifi-off" text={copy.libraryNoContent} />
+)}

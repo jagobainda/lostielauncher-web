@@ -1,0 +1,15 @@
+---
+interface Props {
+    title: string;
+}
+const { title } = Astro.props;
+---
+
+<section>
+    <div class="mb-[8em] pl-[4em]">
+        <h2 class="text-[14em] font-semibold text-(color:--lt-primary-fg)">{title}</h2>
+    </div>
+    <div class="rounded-[6em] bg-(--lt-secondary-bg)">
+        <slot />
+    </div>
+</section>

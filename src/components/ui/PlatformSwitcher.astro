@@ -1,0 +1,64 @@
+---
+import { Icon } from "astro-icon/components";
+import { LAUNCHER_PLATFORMS, type LauncherPlatform } from "../../lib/downloads";
+
+interface Props {
+    label: string;
+}
+
+const { label } = Astro.props;
+
+const OPTIONS: Record<LauncherPlatform, { name: string; icon: string }> = {
+    Desktop: { name: "Windows", icon: "pixelarticons:monitor" },
+    Android: { name: "Android", icon: "pixelarticons:android" },
+};
+---
+
+<details class="relative" data-platform-switcher>
+    <summary
+        class="flex min-h-14 cursor-pointer list-none items-center justify-center bg-(--accent) px-3 text-white shadow-px-btn transition-[translate,box-shadow,background-color] duration-75 ease-px hover:translate-1 hover:bg-(--accent-hover) hover:shadow-px-btn-pressed active:translate-1 active:bg-(--accent-pressed) active:shadow-px-btn-pressed [&::-webkit-details-marker]:hidden"
+        aria-label={label}
+    >
+        <Icon name="pixelarticons:chevron-down" class="size-6" />
+    </summary>
+    <ul class="absolute right-0 z-50 mt-4 min-w-48 bg-(--bg-tertiary) py-1 shadow-px">
+        {LAUNCHER_PLATFORMS.map(platform => (
+            <li>
+                <button
+                    type="button"
+                    data-platform-option={platform}
+                    aria-pressed={String(platform === "Desktop")}
+                    class="flex min-h-11 w-full items-center gap-3 px-4 py-2.5 text-left font-pixel text-(--text-color) transition-colors duration-75 ease-px hover:bg-(--ink) aria-pressed:font-semibold aria-pressed:text-(--accent)"
+                >
+                    <Icon name={OPTIONS[platform].icon} class="size-6" />
+                    {OPTIONS[platform].name}
+                </button>
+            </li>
+        ))}
+    </ul>
+</details>
+
+<script>
+    import { choosePlatform, currentPlatform } from "../../scripts/platform";
+
+    const options = [...document.querySelectorAll<HTMLButtonElement>("[data-platform-option]")];
+    const syncPressed = (): void =>
+        options.forEach(option =>
+            option.setAttribute("aria-pressed", String(option.dataset.platformOption === currentPlatform())),
+        );
+    syncPressed();
+
+    document.querySelectorAll<HTMLDetailsElement>("[data-platform-switcher]").forEach(switcher => {
+        switcher.querySelectorAll<HTMLButtonElement>("[data-platform-option]").forEach(option => {
+            option.addEventListener("click", () => {
+                choosePlatform(option.dataset.platformOption);
+                syncPressed();
+                switcher.open = false;
+                switcher.querySelector("summary")?.focus();
+            });
+        });
+        document.addEventListener("click", e => {
+            if (switcher.open && !switcher.contains(e.target as Node)) switcher.open = false;
+        });
+    });
+</script>

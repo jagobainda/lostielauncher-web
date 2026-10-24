@@ -1,0 +1,66 @@
+---
+import { formatFeedDate } from "../../../lib/launcherReplica";
+import { localized, type HomeEntry } from "../../../lib/launcherCatalog";
+import type { Locale } from "../../../lib/i18n";
+import ReplicaLinkText from "../ReplicaLinkText.astro";
+
+interface Props {
+    entry: HomeEntry;
+    locale: Locale;
+    kind: "news" | "notification";
+}
+const { entry, locale, kind } = Astro.props;
+const formattedDate = formatFeedDate(entry.date, locale, kind === "news");
+const title = localized(entry.title, locale);
+const body = localized(entry.body, locale);
+---
+
+<article
+    class:list={[
+        "mb-[10em] rounded-[8em] bg-(--lt-overlay-subtle)",
+        kind === "news" ? "p-[16em]" : "flex gap-[12em] p-[14em]",
+    ]}
+>
+    {kind === "news" ? (
+        <>
+            <div class="flex items-center justify-between">
+                <div class="rounded-[4em] bg-(--lt-primary-fg) px-[8em] py-[2em]">
+                    <span class="text-[11em] font-semibold">{entry.kind}</span>
+                </div>
+                <time datetime={entry.date} class="text-[11em] text-(color:--lt-secondary-fg-dim)">
+                    {formattedDate}
+                </time>
+            </div>
+            <div class="mt-[10em] mb-[4em]">
+                <h3 class="text-[15em] font-semibold">{title}</h3>
+            </div>
+            <p class="text-[13em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">
+                <ReplicaLinkText platform="Android" text={body} />
+            </p>
+        </>
+    ) : (
+        <>
+            <div
+                class:list={[
+                    "w-[4em] shrink-0 rounded-[2em]",
+                    {
+                        "bg-(--lt-notification-info)": entry.kind === "Info",
+                        "bg-(--lt-notification-warning)": entry.kind === "Warning",
+                        "bg-(--lt-notification-exclamation)": entry.kind !== "Info" && entry.kind !== "Warning",
+                    },
+                ]}
+            ></div>
+            <div class="min-w-0 flex-1 self-center">
+                <h3 class="text-[13em] font-semibold">{title}</h3>
+                <div class="mt-[4em]">
+                    <p class="text-[12em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">{body}</p>
+                </div>
+            </div>
+            <div class="pt-[2em]">
+                <time datetime={entry.date} class="text-[11em] whitespace-nowrap text-(color:--lt-secondary-fg-dim)">
+                    {formattedDate}
+                </time>
+            </div>
+        </>
+    )}
+</article>

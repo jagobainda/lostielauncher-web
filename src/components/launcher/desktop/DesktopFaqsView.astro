@@ -1,0 +1,50 @@
+---
+import Icon from "./DesktopIcon.astro";
+import type { DesktopCopy } from "../../../lib/types";
+import DesktopFaqCard from "./DesktopFaqCard.astro";
+import ReplicaEmptyState from "../ReplicaEmptyState.astro";
+import DesktopScrollArea from "./DesktopScrollArea.astro";
+interface Props {
+    copy: DesktopCopy;
+}
+const { copy } = Astro.props;
+---
+
+<div data-replica-faqs data-replica-view="faqs" data-title={copy.TitleFaqs} hidden class="h-full p-[20em]">
+    <div class="grid h-full grid-rows-[40em_1fr] gap-[16em]">
+        <label class="flex items-center rounded-[6em] bg-(--lt-tertiary-bg) px-[12em]">
+            <Icon name="lucide:search" class="mr-[10em] size-[16em] shrink-0 text-(color:--lt-secondary-fg-dim)" />
+            <input
+                data-faq-search
+                type="text"
+                aria-label={copy.FaqsSearchPlaceholder}
+                placeholder={copy.FaqsSearchPlaceholder}
+                class="min-w-0 flex-1 border-0 bg-transparent text-[13em] text-(color:--lt-secondary-fg) placeholder:text-(color:--lt-secondary-fg-dim) focus:placeholder:text-transparent"
+            />
+            <button
+                data-faq-clear
+                hidden
+                type="button"
+                aria-label={copy.BtnCancel}
+                title={copy.BtnCancel}
+                class="flex size-[24em] cursor-pointer items-center justify-center rounded-[4em] text-(color:--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
+            >
+                <Icon name="lucide:x" class="size-[12em]" />
+            </button>
+        </label>
+        <div class="min-h-0">
+            <div data-faq-results class="h-full">
+                <DesktopScrollArea>
+                    <div>
+                        {copy.faqs.map(faq => (
+                            <DesktopFaqCard faq={faq} />
+                        ))}
+                    </div>
+                </DesktopScrollArea>
+            </div>
+            <div data-faq-empty hidden class="h-full" role="status">
+                <ReplicaEmptyState platform="Desktop" icon="lucide:search-x" text={copy.FaqsNoResults} compact />
+            </div>
+        </div>
+    </div>
+</div>

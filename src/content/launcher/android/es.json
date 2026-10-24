@@ -1,0 +1,58 @@
+{
+    "titleHome": "Inicio",
+    "titleGames": "Mis Juegos",
+    "titleLibrary": "Biblioteca",
+    "titleFaqs": "Preguntas frecuentes",
+    "titleSettings": "Ajustes",
+    "faqsSearchPlaceholder": "Buscar en las preguntas y respuestas...",
+    "faqsNoResults": "Sin resultados para tu búsqueda",
+    "faqsClearSearch": "Borrar búsqueda",
+    "btnDownload": "Descargar",
+    "btnDownloaded": "Descargado",
+    "btnUpdate": "Actualizar",
+    "btnPlay": "Jugar",
+    "tooltipUninstall": "Desinstalar juego",
+    "tooltipSwitchSpecialVersion": "Cambiar a versión especial",
+    "settingsGeneral": "General",
+    "settingsAppearance": "Apariencia",
+    "settingsAutoUpdate": "Actualizaciones automáticas",
+    "settingsLanguage": "Idioma",
+    "settingsTheme": "Tema",
+    "settingsCheckForUpdates": "Buscar actualizaciones",
+    "libraryNoContent": "No disponible",
+    "gamesNoContent": "No tienes juegos instalados",
+    "gamesGoToLibrary": "Ir a la biblioteca",
+    "homeNews": "Novedades",
+    "homeNotifications": "Notificaciones",
+    "homeNoContent": "Sin contenido",
+    "faqs": [
+        {
+            "question": "¿Cómo descargo un juego?",
+            "answer": "Ve a la Biblioteca, elige el juego que quieras y pulsa Descargar. Cuando termine la instalación, aparecerá en Mis Juegos listo para jugar."
+        },
+        {
+            "question": "¿Por qué necesito Kirin?",
+            "answer": "Los juegos están hechos para Windows y Android no puede ejecutarlos por sí solo. Kirin es la aplicación que los abre en Android: el launcher descarga, instala y actualiza los juegos y los añade a la biblioteca de Kirin, que es quien los ejecuta al pulsar Jugar. Hace falta Kirin 0.4.0 o superior, la primera versión que permite a otras aplicaciones añadir juegos a su biblioteca y abrirlos. Gracias a Max por su ayuda con la integración y por crear Kirin, el emulador que nos permite jugar a estos juegos en Android. Más información en https://playkirin.com/"
+        },
+        {
+            "question": "¿Dónde se instalan los juegos y cómo cambio la carpeta?",
+            "answer": "En Android, los juegos se instalan en la carpeta LostieLauncher del almacenamiento interno y esa carpeta no se puede cambiar. Si desinstalas el launcher, los juegos instalados no se borran: puedes eliminarlos a mano desde esa carpeta."
+        },
+        {
+            "question": "¿Perderé mis partidas guardadas al actualizar o desinstalar un juego?",
+            "answer": "No. Las partidas guardadas se conservan siempre, tanto al actualizar como al desinstalar un juego."
+        },
+        {
+            "question": "¿Qué es una versión especial y cómo la activo?",
+            "answer": "Es una versión alternativa de un juego que se desbloquea con una clave con formato XXXX-XXXX-XXXX-XXXX-XXXX. Puedes introducir la clave al descargar el juego o cambiar a la versión especial desde Mis Juegos sin perder nada."
+        },
+        {
+            "question": "¿Qué significa el modo offline?",
+            "answer": "Significa que el launcher no puede conectar con el servidor, ya sea porque no tienes conexión a internet o porque el servidor está en mantenimiento. Puedes seguir jugando a tus juegos instalados; las descargas, actualizaciones y versiones especiales se reactivarán automáticamente cuando vuelva la conexión."
+        },
+        {
+            "question": "He encontrado un error, ¿dónde lo reporto?",
+            "answer": "Abre un issue en el repositorio de GitHub del launcher contando qué ha pasado y qué estabas haciendo. Cuanto más detalle des, más fácil será arreglarlo."
+        }
+    ]
+}

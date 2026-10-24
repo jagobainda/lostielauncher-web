@@ -1,0 +1,101 @@
+---
+import Icon from "./DesktopIcon.astro";
+import type { DesktopCopy } from "../../../lib/types";
+import { LAUNCHER_LOGO_URL } from "../../../lib/launcherCatalog";
+import { GITHUB_URL } from "../../../lib/launcher";
+import { LAUNCHER_SOCIALS } from "../../../lib/launcherReplica";
+interface Props {
+    copy: DesktopCopy;
+}
+const { copy } = Astro.props;
+const nav = [
+    { view: "home", icon: "lucide:house", label: copy.TitleHome },
+    { view: "games", icon: "lucide:play", label: copy.TitleGames },
+    { view: "library", icon: "lucide:download", label: copy.TitleLibrary },
+    { view: "faqs", icon: "lucide:circle-question-mark", label: copy.TitleFaqs },
+    { view: "settings", icon: "lucide:cog", label: copy.TitleSettings },
+];
+---
+
+<div class="shell grid h-full grid-rows-[50em_1fr]">
+    <div class="flex items-center justify-between">
+        <div class="ml-[16em] flex items-center gap-[8em]">
+            <img src={LAUNCHER_LOGO_URL} width="22" height="22" alt="" class="size-[22em] object-contain" />
+            <span data-replica-title class="text-[13em] font-semibold">
+                {copy.TitleLibrary}
+            </span>
+        </div>
+        <div class="flex h-full items-center">
+            <span
+                data-replica-visible-in="home games library"
+                title={copy.TooltipRefresh}
+                class="flex size-[50em] items-center justify-center hover:bg-(--lt-overlay-medium)"
+            >
+                <Icon name="lucide:refresh-cw" class="size-[14em]" />
+            </span>
+            <div data-replica-visible-in="home" class="flex h-full" hidden>
+                {LAUNCHER_SOCIALS.map(social => (
+                    <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={social.label}
+                        title={social.label}
+                        class="flex size-[50em] items-center justify-center hover:bg-(--lt-overlay-medium)"
+                    >
+                        <Icon name={social.icon} class="size-[14em]" />
+                    </a>
+                ))}
+            </div>
+            <a
+                data-replica-visible-in="settings"
+                hidden
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                title="GitHub"
+                class="flex size-[50em] items-center justify-center hover:bg-(--lt-overlay-medium)"
+            >
+                <Icon name="simple-icons:github" class="size-[14em]" />
+            </a>
+            <span class="flex size-[50em] items-center justify-center hover:bg-(--lt-overlay-medium)">
+                <Icon name="lucide:minus" class="size-[12em]" />
+            </span>
+            <span class="hover:bg-(--lt-window-close) flex size-[50em] items-center justify-center">
+                <Icon name="lucide:x" class="size-[12em]" />
+            </span>
+        </div>
+    </div>
+    <div class="grid min-h-0 grid-cols-[90em_1fr]">
+        <div class="m-[15em] flex flex-col justify-between bg-(--lt-secondary-bg)">
+            {[nav.slice(0, 3), nav.slice(3)].map((group, index) => (
+                <div>
+                    {group.map(item => (
+                        <button
+                            type="button"
+                            data-replica-nav={item.view}
+                            aria-label={item.label}
+                            title={item.label}
+                            aria-current={item.view === "library" ? "page" : undefined}
+                            class="relative aria-[current=page]:bg-(--lt-overlay-subtle) aria-[current=page]:text-(color:--lt-primary-fg) aria-[current=page]:before:absolute aria-[current=page]:before:inset-y-0 aria-[current=page]:before:left-0 aria-[current=page]:before:w-[3em] aria-[current=page]:before:bg-(--lt-primary-fg) flex size-[60em] cursor-pointer items-center justify-center text-(color:--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
+                        >
+                            <Icon name={item.icon} class="size-[22em]" />
+                        </button>
+                    ))}
+                    {index === 0 && (
+                        <span
+                            title="Saved Games"
+                            class="flex size-[60em] items-center justify-center text-(color:--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
+                        >
+                            <Icon name="lucide:save" class="size-[22em]" />
+                        </span>
+                    )}
+                </div>
+            ))}
+        </div>
+        <div class="mt-[15em] mr-[15em] mb-[15em] min-h-0 min-w-0">
+            <slot />
+        </div>
+    </div>
+</div>

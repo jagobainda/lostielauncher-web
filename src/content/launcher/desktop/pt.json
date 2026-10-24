@@ -1,0 +1,61 @@
+{
+    "TitleHome": "Início",
+    "TitleGames": "Meus Jogos",
+    "TitleLibrary": "Biblioteca",
+    "TitleSettings": "Configurações",
+    "TitleFaqs": "Perguntas frequentes",
+    "FaqsSearchPlaceholder": "Pesquisar nas perguntas e respostas...",
+    "FaqsNoResults": "Sem resultados para sua pesquisa",
+    "BtnDownload": "Baixar",
+    "BtnDownloaded": "Baixado",
+    "BtnUpdate": "Atualizar",
+    "BtnPlay": "Jogar",
+    "TooltipOpenFolder": "Abrir pasta do jogo",
+    "TooltipUninstall": "Desinstalar jogo",
+    "TooltipRefresh": "Atualizar",
+    "TooltipSwitchSpecialVersion": "Mudar para versão especial",
+    "SettingsGeneral": "Geral",
+    "SettingsAppearance": "Aparência",
+    "SettingsStartWithWindows": "Iniciar com o Windows",
+    "SettingsStartMinimized": "Iniciar minimizado",
+    "SettingsAutoUpdate": "Atualizações automáticas",
+    "SettingsLanguage": "Idioma",
+    "SettingsDownloadDir": "Diretório de downloads",
+    "SettingsTheme": "Tema",
+    "BtnBrowse": "Procurar...",
+    "SettingsCheckForUpdates": "Verificar atualizações do launcher",
+    "SettingsGamesStoredIn": "Os jogos são guardados em:",
+    "LibraryNoContent": "Não disponível",
+    "GamesNoContent": "Nenhum jogo instalado",
+    "GamesGoToLibrary": "Ir à biblioteca",
+    "HomeNews": "Novidades",
+    "HomeNotifications": "Notificações",
+    "HomeNoContent": "Sem conteúdo",
+    "faqs": [
+        {
+            "question": "Como baixo um jogo?",
+            "answer": "Vá à Biblioteca, escolha o jogo que deseja e pressione Baixar. Quando a instalação terminar, ele aparecerá em Meus Jogos pronto para jogar."
+        },
+        {
+            "question": "Onde os jogos são instalados e como mudo a pasta?",
+            "answer": "Os jogos são instalados no diretório de downloads configurado. Você pode alterá-lo em Configurações, na opção Diretório de downloads. Se você já tiver jogos instalados, precisará movê-los manualmente para o novo caminho."
+        },
+        {
+            "question": "Vou perder meus saves ao atualizar ou desinstalar um jogo?",
+            "answer": "Não. Os saves e o registro de tempo de jogo são sempre mantidos, tanto ao atualizar quanto ao desinstalar um jogo."
+        },
+        {
+            "question": "O que é uma versão especial e como a ativo?",
+            "answer": "É uma versão alternativa de um jogo desbloqueada com uma chave no formato XXXX-XXXX-XXXX-XXXX-XXXX. Você pode inserir a chave ao baixar o jogo ou mudar para a versão especial em Meus Jogos sem perder nada."
+        },
+        {
+            "question": "O que significa o modo offline?",
+            "answer": "Significa que o servidor está em manutenção. Você pode continuar jogando seus jogos instalados; downloads, atualizações e versões especiais serão reativados automaticamente quando a manutenção terminar."
+        },
+        {
+            "question": "Encontrei um erro, onde o reporto?",
+            "answer": "Escreva no canal #testeo-launcher do Discord da comunidade contando o que aconteceu e o que você estava fazendo. Quanto mais detalhes você der, mais fácil será corrigir."
+        }
+    ],
+    "BtnCancel": "Cancelar"
+}

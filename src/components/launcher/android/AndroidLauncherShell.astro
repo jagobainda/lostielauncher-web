@@ -1,0 +1,30 @@
+---
+import Icon from "./AndroidIcon.astro";
+import type { AndroidCopy } from "../../../lib/types";
+import AndroidShellTopBar from "./AndroidShellTopBar.astro";
+import AndroidShellNavigation from "./AndroidShellNavigation.astro";
+
+interface Props {
+    copy: AndroidCopy;
+}
+const { copy } = Astro.props;
+---
+
+<div class="flex h-[800em] w-full flex-col overflow-hidden bg-(--lt-primary-bg) text-(color:--lt-secondary-fg)">
+    <div aria-hidden="true" class="flex h-[24em] shrink-0 items-center justify-between px-[24em]">
+        <span class="text-[12em] font-semibold">9:41</span>
+        <div class="flex items-center gap-[4em]">
+            <Icon name="mdi:wifi" class="size-[14em]" />
+            <Icon name="mdi:signal" class="size-[14em]" />
+            <Icon name="mdi:battery" class="h-[14em] w-[9em]" />
+        </div>
+    </div>
+    <AndroidShellTopBar {copy} />
+    <div class="min-h-0 flex-1 p-[15em]">
+        <slot />
+    </div>
+    <AndroidShellNavigation {copy} />
+    <div aria-hidden="true" class="flex h-[24em] shrink-0 items-end justify-center bg-(--lt-secondary-bg) pb-[8em]">
+        <span class="h-[4em] w-[108em] rounded-[2em] bg-(--lt-secondary-fg)"></span>
+    </div>
+</div>

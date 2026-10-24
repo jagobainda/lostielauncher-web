@@ -1,0 +1,36 @@
+---
+import ReplicaThemeOptions from "../ReplicaThemeOptions.astro";
+
+interface Props {
+    kind: "theme" | "static";
+    label: string;
+    value: string;
+}
+const { kind, label, value } = Astro.props;
+---
+
+{kind === "theme" ? (
+    <details class="relative shrink-0" data-replica-theme-picker>
+        <summary
+            aria-label={label}
+            class="android-input flex h-[34em] w-[160em] cursor-pointer list-none items-center rounded-[4em] pl-[9em] [&::-webkit-details-marker]:hidden"
+        >
+            <span data-replica-theme-name class="flex-1 text-[12em]">
+                {value}
+            </span>
+            <span class="flex w-[29em] items-center justify-center">
+                <span class="block h-[4em] w-[8em] bg-(--lt-secondary-fg-dim) [clip-path:polygon(0_0,100%_0,50%_100%)]"></span>
+            </span>
+        </summary>
+        <div class="absolute top-[36em] right-0 z-10 w-full rounded-[4em] bg-(--lt-secondary-bg) p-[4em]">
+            <ReplicaThemeOptions platform="Android" />
+        </div>
+    </details>
+) : (
+    <span class="android-input flex h-[34em] w-[160em] shrink-0 items-center rounded-[4em] pl-[9em]">
+        <span class="flex-1 text-[12em]">{value}</span>
+        <span class="flex w-[29em] items-center justify-center">
+            <span class="block h-[4em] w-[8em] bg-(--lt-secondary-fg-dim) [clip-path:polygon(0_0,100%_0,50%_100%)]"></span>
+        </span>
+    </span>
+)}

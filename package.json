@@ -14,7 +14,10 @@
     "dependencies": {
         "@astrojs/node": "^11.1.7",
         "@astrojs/sitemap": "^3.7.4",
+        "@iconify-json/lucide": "^1.2.147",
+        "@iconify-json/mdi": "^1.2.3",
         "@iconify-json/pixelarticons": "^1.2.10",
+        "@iconify-json/simple-icons": "^1.2.100",
         "@tailwindcss/vite": "^4.3.3",
         "animejs": "^4.5.0",
         "astro": "^7.3.8",

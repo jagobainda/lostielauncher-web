@@ -1,0 +1,20 @@
+---
+import type { LauncherPlatform } from "../../lib/downloads";
+
+interface Props {
+    platform: LauncherPlatform;
+    as?: "div" | "span";
+}
+
+const { platform, as: Tag = "div" } = Astro.props;
+
+// display: contents keeps the wrapper out of the parent's layout. Without data-platform the page is the Desktop one.
+const VISIBILITY: Record<LauncherPlatform, string> = {
+    Desktop: "contents android:hidden",
+    Android: "hidden android:contents",
+};
+---
+
+<Tag class={VISIBILITY[platform]}>
+    <slot />
+</Tag>

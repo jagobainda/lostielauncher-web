@@ -1,0 +1,39 @@
+---
+import type { HomeFeed } from "../../../lib/launcherCatalog";
+import type { Locale } from "../../../lib/i18n";
+import type { AndroidCopy } from "../../../lib/types";
+import AndroidContentCard from "./AndroidContentCard.astro";
+import ReplicaEmptyState from "../ReplicaEmptyState.astro";
+
+interface Props {
+    feed: HomeFeed;
+    locale: Locale;
+    copy: AndroidCopy;
+}
+const { feed, locale, copy } = Astro.props;
+---
+
+{!feed.news.length && !feed.notifications.length ? (
+    <ReplicaEmptyState platform="Android" icon="lucide:wifi-off" text={copy.homeNoContent} />
+) : (
+    <div class="h-full p-[20em]">
+        <div class="android-scroll h-full overflow-y-auto">
+            <div class="mb-[14em]">
+                <h2 class="text-[18em] font-semibold">{copy.homeNews}</h2>
+            </div>
+            {feed.news.length ? (
+                feed.news.map(entry => <AndroidContentCard {entry} {locale} kind="news" />)
+            ) : (
+                <ReplicaEmptyState platform="Android" icon="lucide:newspaper" text={copy.homeNoContent} compact />
+            )}
+            <div class="mt-[10em] mb-[14em]">
+                <h2 class="text-[18em] font-semibold">{copy.homeNotifications}</h2>
+            </div>
+            {feed.notifications.length ? (
+                feed.notifications.map(entry => <AndroidContentCard {entry} {locale} kind="notification" />)
+            ) : (
+                <ReplicaEmptyState platform="Android" icon="lucide:bell-off" text={copy.homeNoContent} compact />
+            )}
+        </div>
+    </div>
+)}

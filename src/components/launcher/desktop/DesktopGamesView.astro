@@ -1,0 +1,35 @@
+---
+import type { DesktopCopy } from "../../../lib/types";
+import { REPLICA_INSTALLED, type LauncherGame } from "../../../lib/launcherCatalog";
+import DesktopGameCard from "./DesktopGameCard.astro";
+import DesktopScrollArea from "./DesktopScrollArea.astro";
+import ReplicaEmptyState from "../ReplicaEmptyState.astro";
+interface Props {
+    copy: DesktopCopy;
+    games: LauncherGame[];
+}
+const { copy, games } = Astro.props;
+const installed = games.filter(game => REPLICA_INSTALLED[game.id]);
+---
+
+<div data-replica-view="games" data-title={copy.TitleGames} hidden class="h-full">
+    {installed.length ? (
+        <DesktopScrollArea>
+            <div class="p-[20em]">
+                {installed.map(game => (
+                    <DesktopGameCard game={game} copy={copy} mode="games" />
+                ))}
+            </div>
+        </DesktopScrollArea>
+    ) : (
+        <ReplicaEmptyState platform="Desktop" icon="mdi:gamepad-variant-outline" text={copy.GamesNoContent}>
+            <button
+                type="button"
+                data-replica-nav="library"
+                class="mt-[12em] cursor-pointer rounded-[4em] bg-(--lt-primary-fg) px-[20em] py-[8em] text-(color:--lt-secondary-fg) hover:bg-(--lt-primary-fg-hover)"
+            >
+                <span class="text-[13em]">{copy.GamesGoToLibrary}</span>
+            </button>
+        </ReplicaEmptyState>
+    )}
+</div>

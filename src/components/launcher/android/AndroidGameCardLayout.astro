@@ -1,0 +1,20 @@
+---
+import AndroidGameLogo from "./AndroidGameLogo.astro";
+
+interface Props {
+    logoUrl: string | null;
+}
+const { logoUrl } = Astro.props;
+---
+
+<article class="mb-[10em] rounded-[6em] bg-(--lt-secondary-bg) p-[16em]">
+    <div class="flex min-h-[80em] items-center gap-[16em]">
+        <AndroidGameLogo url={logoUrl} />
+        <div class="min-w-0 flex-1">
+            <slot />
+        </div>
+    </div>
+    <div class="mt-[12em] flex min-h-[32em] justify-end">
+        <slot name="actions" />
+    </div>
+</article>

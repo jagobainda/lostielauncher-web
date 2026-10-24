@@ -1,0 +1,38 @@
+---
+import Icon from "./AndroidIcon.astro";
+
+interface Props {
+    icon: string;
+    label?: string;
+    title?: string;
+    kind?: "accent" | "success" | "secondary" | "downloaded";
+    stretch?: boolean;
+}
+const { icon, label, title, kind = "accent", stretch = false } = Astro.props;
+---
+
+<span
+    title={title}
+    class:list={[
+        "flex h-[32em] shrink-0 items-center justify-center gap-[6em] rounded-[4em]",
+        label ? (stretch ? "min-w-0 flex-1" : "min-w-[110em]") : "w-[32em]",
+        {
+            "bg-(--lt-primary-fg)": kind === "accent",
+            "bg-(--lt-success)": kind === "success",
+            "bg-(--lt-overlay-muted)": kind === "secondary" || kind === "downloaded",
+            "opacity-60": kind === "downloaded",
+        },
+    ]}
+>
+    <Icon
+        name={icon}
+        class:list={[label ? "size-[13em]" : "size-[14em]", { "text-(color:--lt-success)": kind === "downloaded" }]}
+    />
+    {label && (
+        <span
+            class:list={["whitespace-nowrap text-[12em]", { "font-semibold": kind === "accent" || kind === "success" }]}
+        >
+            {label}
+        </span>
+    )}
+</span>

@@ -1,0 +1,15 @@
+---
+import { formatFeedDate } from "../../../lib/launcherReplica";
+import type { Locale } from "../../../lib/i18n";
+interface Props {
+    date: string;
+    locale: Locale;
+    year?: boolean;
+}
+const { date, locale, year = false } = Astro.props;
+const formatted = formatFeedDate(date, locale, year);
+---
+
+<time datetime={date} class="text-[11em] text-(color:--lt-secondary-fg-dim)">
+    {formatted}
+</time>

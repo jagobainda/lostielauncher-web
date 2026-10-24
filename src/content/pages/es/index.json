@@ -1,52 +1,105 @@
 {
     "title": "LostieLauncher, todos los juegos de EricLostie, en un solo lugar",
-    "description": "Descarga LostieLauncher para Windows: instala, actualiza y juega a los fangames de EricLostie desde una única interfaz. Descargas reanudables, actualizaciones automáticas y 10 temas visuales.",
+    "description": "Descarga LostieLauncher para Windows y Android: instala, actualiza y juega a los fangames de EricLostie desde una única interfaz. Descargas reanudables, actualizaciones automáticas y 10 temas visuales.",
     "landing": {
         "hero": {
             "tagline": "Todos los juegos de EricLostie, en un solo lugar",
-            "subtitle": "Explora el catálogo, descarga tus juegos y mantenlos siempre actualizados desde una interfaz limpia y rápida, hecha para Windows.",
-            "installCta": "Instalar para Windows",
+            "subtitle": {
+                "Desktop": "Explora el catálogo, descarga tus juegos y mantenlos siempre actualizados desde una interfaz limpia y rápida, hecha para Windows.",
+                "Android": "Explora el catálogo, descarga tus juegos y mantenlos siempre actualizados desde una interfaz táctil, limpia y rápida, hecha para Android."
+            },
+            "installCta": {
+                "Desktop": "Instalar para Windows",
+                "Android": "Instalar para Android"
+            },
+            "platformLabel": "Elegir plataforma",
             "downloadNote": "Gratis · Open source · Se actualiza solo",
             "githubCta": "Ver en GitHub",
             "versionPrefix": "Versión",
             "features": [
-                { "icon": "pixelarticons:library", "text": "Biblioteca de juegos completa" },
-                { "icon": "pixelarticons:sparkles", "text": "Un clic, sin cuentas ni registros" },
-                { "icon": "pixelarticons:reload", "text": "Actualizaciones automáticas" },
-                { "icon": "pixelarticons:languages", "text": "8 idiomas disponibles" }
+                {
+                    "icon": "pixelarticons:library",
+                    "text": "Biblioteca de juegos completa"
+                },
+                {
+                    "icon": "pixelarticons:sparkles",
+                    "text": "Un clic, sin cuentas ni registros"
+                },
+                {
+                    "icon": "pixelarticons:reload",
+                    "text": "Actualizaciones automáticas"
+                },
+                {
+                    "icon": "pixelarticons:languages",
+                    "text": "8 idiomas disponibles"
+                }
             ]
         },
         "screenshots": {
             "heading": "Explora visualmente el launcher",
-            "screenshotAlt": "Captura de LostieLauncher con el tema {theme}"
+            "label": {
+                "Desktop": "Réplica interactiva de LostieLauncher para Windows",
+                "Android": "Réplica interactiva de LostieLauncher para Android"
+            },
+            "hint": "Haz clic para explorar el launcher."
         },
         "install": {
             "heading": "Cómo descargar e instalar",
             "subheading": "En menos de un minuto estás jugando. Sin configuraciones raras.",
-            "steps": [
-                {
-                    "icon": "pixelarticons:download",
-                    "title": "Descarga el instalador",
-                    "description": "Pulsa el botón de descarga y guarda LostieLauncher-win-Setup.exe en tu equipo."
-                },
-                {
-                    "icon": "pixelarticons:file",
-                    "title": "Ejecuta el instalador",
-                    "description": "Haz doble clic en el archivo descargado. El launcher se instala y se abre automáticamente al terminar."
-                },
-                {
-                    "icon": "pixelarticons:gamepad",
-                    "title": "Elige tu juego",
-                    "description": "Entra en la Biblioteca, pulsa Descargar en el juego que quieras y espera a que termine la descarga."
-                },
-                {
-                    "icon": "pixelarticons:play",
-                    "title": "¡A jugar!",
-                    "description": "Dale a Jugar desde Mis juegos. El launcher se actualiza solo y mantiene tus juegos al día."
-                }
-            ],
-            "smartScreenNote": "Si Windows SmartScreen muestra un aviso, pulsa «Más información» y después «Ejecutar de todas formas». El instalador está firmado con una firma de desarrollador independiente que Windows aún conoce poco, no es peligroso.",
-            "downloadCta": "Descargar instalador"
+            "steps": {
+                "Desktop": [
+                    {
+                        "icon": "pixelarticons:download",
+                        "title": "Descarga el instalador",
+                        "description": "Pulsa el botón de descarga y guarda LostieLauncher-win-Setup.exe en tu equipo."
+                    },
+                    {
+                        "icon": "pixelarticons:file",
+                        "title": "Ejecuta el instalador",
+                        "description": "Haz doble clic en el archivo descargado. El launcher se instala y se abre automáticamente al terminar."
+                    },
+                    {
+                        "icon": "pixelarticons:gamepad",
+                        "title": "Elige tu juego",
+                        "description": "Entra en la Biblioteca, pulsa Descargar en el juego que quieras y espera a que termine la descarga."
+                    },
+                    {
+                        "icon": "pixelarticons:play",
+                        "title": "¡A jugar!",
+                        "description": "Dale a Jugar desde Mis juegos. El launcher se actualiza solo y mantiene tus juegos al día."
+                    }
+                ],
+                "Android": [
+                    {
+                        "icon": "pixelarticons:download",
+                        "title": "Descarga el APK",
+                        "description": "Pulsa el botón de descarga desde tu móvil y guarda el APK de LostieLauncher en el dispositivo."
+                    },
+                    {
+                        "icon": "pixelarticons:android",
+                        "title": "Instala el launcher",
+                        "description": "Abre el APK descargado y pulsa Instalar. Si no tienes Kirin, la app que abre los juegos, el launcher te pedirá instalarlo."
+                    },
+                    {
+                        "icon": "pixelarticons:gamepad",
+                        "title": "Elige tu juego",
+                        "description": "Entra en la Biblioteca y pulsa Descargar en el juego que quieras. La descarga sigue en segundo plano con una notificación de progreso."
+                    },
+                    {
+                        "icon": "pixelarticons:play",
+                        "title": "¡A jugar!",
+                        "description": "Dale a Jugar desde Mis juegos y Kirin abrirá el juego. El launcher se actualiza solo y mantiene tus juegos al día."
+                    }
+                ]
+            },
+            "note": {
+                "Desktop": "Si Windows SmartScreen muestra un aviso, pulsa «Más información» y después «Ejecutar de todas formas». El instalador está firmado con una firma de desarrollador independiente que Windows aún conoce poco, no es peligroso.",
+                "Android": "Si Android bloquea la instalación, permite que tu navegador instale aplicaciones desconocidas cuando te lo pida y vuelve a abrir el APK. Necesitas Android 8.0 o superior y Kirin 0.4.0 o superior, que el launcher te ayuda a instalar."
+            },
+            "downloadCta": {
+                "Desktop": "Descargar instalador",
+                "Android": "Descargar APK"
+            }
         },
         "footer": {
             "sourceCode": "Código fuente",

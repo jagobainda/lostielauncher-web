@@ -1,0 +1,32 @@
+---
+import Icon from "./AndroidIcon.astro";
+
+interface Props {
+    url: string | null;
+}
+const { url } = Astro.props;
+---
+
+<div
+    data-android-game-logo
+    class="relative flex h-[80em] w-[110em] shrink-0 items-center justify-center overflow-hidden rounded-[6em] bg-(--lt-tertiary-bg) p-[5em]"
+>
+    <Icon name="mdi:pokeball" class="absolute size-[32em] text-(color:--lt-overlay-medium)" />
+    {url && <img src={url} width="100" height="70" loading="lazy" alt="" class="relative size-full object-contain" />}
+</div>
+
+<script>
+    document.querySelectorAll<HTMLElement>("[data-android-game-logo]").forEach(root => {
+        const img = root.querySelector("img");
+        const placeholder = root.querySelector<SVGElement>("svg");
+        if (!img || !placeholder) return;
+        const loaded = () => {
+            placeholder.style.display = "none";
+        };
+        if (img.complete && img.naturalWidth) loaded();
+        img.addEventListener("load", loaded);
+        img.addEventListener("error", () => {
+            img.hidden = true;
+        });
+    });
+</script>

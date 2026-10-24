@@ -2,16 +2,19 @@
 import { Icon } from "astro-icon/components";
 import Button from "../ui/Button.astro";
 import PixelSprite from "../ui/PixelSprite.astro";
-import { GITHUB_URL } from "../../lib/launcher";
+import PlatformOnly from "../ui/PlatformOnly.astro";
+import PlatformSwitcher from "../ui/PlatformSwitcher.astro";
+import { LAUNCHER_PLATFORMS } from "../../lib/downloads";
+import { GITHUB_URL, type LauncherReleases } from "../../lib/launcher";
 import { CLOUD, SPARK } from "../../lib/sprites";
 import type { LandingData } from "../../lib/types";
 
 interface Props {
     hero: LandingData["hero"];
-    version: string | null;
+    releases: LauncherReleases;
 }
 
-const { hero, version } = Astro.props;
+const { hero, releases } = Astro.props;
 
 // Each spark gets its own period and a negative delay, so they start out of phase and keep drifting apart.
 // Timing goes inline: the `animation` shorthand from animate-px-blink would reset a delay set by a class.
@@ -90,24 +93,43 @@ const SPARKS = [
             </p>
         </div>
         <p class="max-w-2xl leading-relaxed text-(--text-dim) max-sm:hidden short:hidden" data-fade>
-            {hero.subtitle}
+            {LAUNCHER_PLATFORMS.map(platform => (
+                <PlatformOnly platform={platform} as="span">
+                    {hero.subtitle[platform]}
+                </PlatformOnly>
+            ))}
         </p>
 
-        {version && (
-            <p
-                class="inline-flex items-center gap-1.5 bg-(--bg-tertiary) px-3 py-1 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase shadow-px-sm"
-                data-fade
-            >
-                <Icon name="pixelarticons:label" class="size-3" />
-                {hero.versionPrefix} {version.replace(/^v/, "")}
-            </p>
-        )}
+        {LAUNCHER_PLATFORMS.map(platform => {
+            const version = releases[platform].version;
+            return (
+                version && (
+                    <PlatformOnly platform={platform}>
+                        <p
+                            class="inline-flex items-center gap-1.5 bg-(--bg-tertiary) px-3 py-1 font-display text-xs tracking-[0.04em] text-(--text-dim) uppercase shadow-px-sm"
+                            data-fade
+                        >
+                            <Icon name="pixelarticons:label" class="size-3" />
+                            {hero.versionPrefix} {version.replace(/^v/, "")}
+                        </p>
+                    </PlatformOnly>
+                )
+            );
+        })}
 
-        <div class="flex w-full flex-col items-center justify-center gap-6 sm:flex-row" data-fade>
-            <Button href="#install" variant="primary" class="w-full sm:w-auto">
-                <Icon name="pixelarticons:download" class="size-6" />
-                {hero.installCta}
-            </Button>
+        {/* z-10: the platform menu must cover the next faded-in siblings, whose transforms open stacking contexts */}
+        <div class="relative z-10 flex w-full flex-col items-center justify-center gap-6 sm:flex-row" data-fade>
+            <div class="flex w-full gap-1 sm:w-auto">
+                <Button href="#install" variant="primary" class="flex-1 sm:flex-none">
+                    <Icon name="pixelarticons:download" class="size-6" />
+                    {LAUNCHER_PLATFORMS.map(platform => (
+                        <PlatformOnly platform={platform} as="span">
+                            {hero.installCta[platform]}
+                        </PlatformOnly>
+                    ))}
+                </Button>
+                <PlatformSwitcher label={hero.platformLabel} />
+            </div>
             <Button
                 href={GITHUB_URL}
                 variant="secondary"

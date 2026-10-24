@@ -1,0 +1,37 @@
+---
+import { localized, type HomeEntry } from "../../../lib/launcherCatalog";
+import type { Locale } from "../../../lib/i18n";
+import DesktopFeedDate from "./DesktopFeedDate.astro";
+interface Props {
+    entry: HomeEntry;
+    locale: Locale;
+}
+const { entry, locale } = Astro.props;
+const kind = ["info", "warning", "exclamation"].includes(entry.kind.toLowerCase()) ? entry.kind.toLowerCase() : "info";
+---
+
+<article class="mb-[10em] grid grid-cols-[4em_1fr_auto] rounded-[8em] bg-(--lt-overlay-subtle) p-[14em]">
+    <div
+        class:list={[
+            "rounded-[2em]",
+            {
+                "bg-(--lt-notification-info)": kind === "info",
+                "bg-(--lt-notification-warning)": kind === "warning",
+                "bg-(--lt-notification-exclamation)": kind === "exclamation",
+            },
+        ]}
+    ></div>
+    <div class="ml-[12em] self-center">
+        <div>
+            <span class="text-[13em] font-semibold">{localized(entry.title, locale)}</span>
+        </div>
+        <div class="mt-[4em]">
+            <p class="text-[12em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">
+                {localized(entry.body, locale)}
+            </p>
+        </div>
+    </div>
+    <div class="mt-[2em] ml-[8em]">
+        <DesktopFeedDate date={entry.date} locale={locale} />
+    </div>
+</article>

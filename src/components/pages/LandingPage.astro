@@ -6,9 +6,11 @@ import Hero from "../sections/Hero.astro";
 import ScreenshotGallery from "../sections/ScreenshotGallery.astro";
 import InstallSteps from "../sections/InstallSteps.astro";
 import Footer from "../sections/Footer.astro";
+import { LAUNCHER_PLATFORMS } from "../../lib/downloads";
 import { landingAlternates, type Locale } from "../../lib/i18n";
-import { getLatestVersion } from "../../lib/launcher";
+import { getLauncherReleases } from "../../lib/launcher";
 import { softwareApplicationSchema } from "../../lib/seo";
+import { PLATFORM_STORAGE_KEY } from "../../scripts/platform";
 
 interface Props {
     locale: Locale;
@@ -22,7 +24,7 @@ if (!page?.data.landing) {
 }
 const { title, description, landing } = page.data;
 
-const version = await getLatestVersion();
+const releases = await getLauncherReleases();
 ---
 
 <BaseLayout
@@ -30,16 +32,25 @@ const version = await getLatestVersion();
     description={description}
     lang={locale}
     alternates={landingAlternates()}
-    jsonLd={softwareApplicationSchema({ description, inLanguage: locale, version })}
+    jsonLd={softwareApplicationSchema({ description, inLanguage: locale, version: releases.Desktop.version })}
 >
+    {/* Inline in <head> so the platform is set before first paint */}
+    <script is:inline slot="head" define:vars={{ storageKey: PLATFORM_STORAGE_KEY, platforms: LAUNCHER_PLATFORMS }}>
+        let platform = null;
+        try {
+            platform = localStorage.getItem(storageKey);
+        } catch {}
+        if (!platforms.includes(platform)) platform = /android/i.test(navigator.userAgent) ? "Android" : "Desktop";
+        document.documentElement.dataset.platform = platform;
+    </script>
     <div data-locale={locale}>
         <div class="absolute top-4 right-4 z-50 sm:top-5 sm:right-6">
             <LangSwitcher currentLocale={locale} />
         </div>
         <main>
-            <Hero hero={landing.hero} version={version} />
-            <ScreenshotGallery screenshots={landing.screenshots} />
-            <InstallSteps install={landing.install} />
+            <Hero hero={landing.hero} releases={releases} />
+            <ScreenshotGallery screenshots={landing.screenshots} {locale} />
+            <InstallSteps install={landing.install} releases={releases} />
         </main>
         <Footer footer={landing.footer} />
     </div>

@@ -1,0 +1,57 @@
+---
+import Icon from "./AndroidIcon.astro";
+import { formatGameSize } from "../../../lib/launcherReplica";
+import type { LauncherGame } from "../../../lib/launcherCatalog";
+import { REPLICA_INSTALLED } from "../../../lib/launcherCatalog";
+import type { AndroidCopy } from "../../../lib/types";
+import AndroidGameCardLayout from "./AndroidGameCardLayout.astro";
+import AndroidCardAction from "./AndroidCardAction.astro";
+
+interface Props {
+    game: LauncherGame;
+    copy: AndroidCopy;
+    kind: "library" | "installed";
+}
+const { game, copy, kind } = Astro.props;
+const installed = REPLICA_INSTALLED[game.id];
+const hasUpdate = installed && installed !== game.version;
+const size = formatGameSize(game.sizeGb);
+---
+
+<AndroidGameCardLayout logoUrl={game.logoUrl}>
+    <h3 class="truncate text-[16em] font-bold">{game.name}</h3>
+    <div class="mt-[6em] flex flex-wrap items-center gap-x-[14em] text-(color:--lt-secondary-fg-dim)">
+        {kind === "library" && (
+            <div class="flex items-center gap-[4em]">
+                <Icon name="mdi:harddisk" class="size-[12em]" />
+                <span class="text-[12em]">{size}</span>
+            </div>
+        )}
+        <div class="flex items-center gap-[4em]">
+            <Icon name="mdi:tag-outline" class="size-[12em]" />
+            <span class="text-[12em]">{kind === "installed" ? installed : game.version}</span>
+        </div>
+        {kind === "installed" && hasUpdate && (
+            <div class="flex items-center gap-[8em] text-(color:--lt-primary-fg)">
+                <Icon name="mdi:arrow-right" class="size-[10em]" />
+                <span class="text-[12em] font-semibold">{game.version}</span>
+            </div>
+        )}
+    </div>
+    <div slot="actions" class:list={["flex gap-[6em]", { "w-full": kind === "installed" }]}>
+        {kind === "installed" ? (
+            <>
+                <AndroidCardAction icon="mdi:play" label={copy.btnPlay} stretch />
+                {hasUpdate && <AndroidCardAction icon="mdi:update" label={copy.btnUpdate} kind="success" stretch />}
+                <AndroidCardAction icon="mdi:key-variant" title={copy.tooltipSwitchSpecialVersion} kind="secondary" />
+                <AndroidCardAction icon="mdi:trash-can-outline" title={copy.tooltipUninstall} kind="secondary" />
+            </>
+        ) : (
+            <AndroidCardAction
+                icon={hasUpdate ? "mdi:update" : installed ? "mdi:check" : "mdi:download"}
+                label={hasUpdate ? copy.btnUpdate : installed ? copy.btnDownloaded : copy.btnDownload}
+                kind={hasUpdate ? "success" : installed ? "downloaded" : "accent"}
+            />
+        )}
+    </div>
+</AndroidGameCardLayout>

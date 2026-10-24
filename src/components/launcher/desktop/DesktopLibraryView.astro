@@ -1,0 +1,26 @@
+---
+import type { DesktopCopy } from "../../../lib/types";
+import type { LauncherGame } from "../../../lib/launcherCatalog";
+import DesktopGameCard from "./DesktopGameCard.astro";
+import DesktopScrollArea from "./DesktopScrollArea.astro";
+import ReplicaEmptyState from "../ReplicaEmptyState.astro";
+interface Props {
+    copy: DesktopCopy;
+    games: LauncherGame[];
+}
+const { copy, games } = Astro.props;
+---
+
+<div data-replica-view="library" data-title={copy.TitleLibrary} class="h-full">
+    {games.length ? (
+        <DesktopScrollArea>
+            <div class="p-[20em]">
+                {games.map(game => (
+                    <DesktopGameCard game={game} copy={copy} mode="library" />
+                ))}
+            </div>
+        </DesktopScrollArea>
+    ) : (
+        <ReplicaEmptyState platform="Desktop" icon="mdi:cloud-off-outline" text={copy.LibraryNoContent} />
+    )}
+</div>

@@ -1,0 +1,27 @@
+---
+import Icon from "./DesktopIcon.astro";
+import type { DesktopCopy } from "../../../lib/types";
+import ReplicaLinkText from "../ReplicaLinkText.astro";
+interface Props {
+    faq: DesktopCopy["faqs"][number];
+}
+const { faq } = Astro.props;
+---
+
+<details data-faq-card class="group mb-[10em] rounded-[8em] bg-(--lt-overlay-subtle)">
+    <summary class="flex cursor-pointer list-none [&::-webkit-details-marker]:hidden items-center p-[16em]">
+        <Icon name="lucide:circle-question-mark" class="mr-[10em] size-[16em] shrink-0 text-(color:--lt-primary-fg)" />
+        <span data-faq-text class="flex-1 text-[14em] font-semibold">
+            {faq.question}
+        </span>
+        <Icon
+            name="lucide:chevron-down"
+            class="group-open:rotate-180 ml-[10em] size-[16em] shrink-0 text-(color:--lt-secondary-fg-dim)"
+        />
+    </summary>
+    <div class="mx-[16em] border-t-[1em] border-(--lt-overlay-light) pt-[12em] pb-[16em]">
+        <p data-faq-text class="text-[13em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">
+            <ReplicaLinkText platform="Desktop" text={faq.answer} />
+        </p>
+    </div>
+</details>

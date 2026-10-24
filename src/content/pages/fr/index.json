@@ -1,52 +1,105 @@
 {
     "title": "LostieLauncher, tous les jeux d'EricLostie au même endroit",
-    "description": "Téléchargez LostieLauncher pour Windows : installez, mettez à jour et jouez aux fangames d'EricLostie depuis une seule interface. Téléchargements reprenables, mises à jour automatiques et 10 thèmes visuels.",
+    "description": "Téléchargez LostieLauncher pour Windows et Android : installez, mettez à jour et jouez aux fangames d'EricLostie depuis une seule interface. Téléchargements reprenables, mises à jour automatiques et 10 thèmes visuels.",
     "landing": {
         "hero": {
             "tagline": "Tous les jeux d'EricLostie, au même endroit",
-            "subtitle": "Parcourez le catalogue, téléchargez vos jeux et gardez-les toujours à jour depuis une interface propre et rapide, conçue pour Windows.",
-            "installCta": "Installer pour Windows",
+            "subtitle": {
+                "Desktop": "Parcourez le catalogue, téléchargez vos jeux et gardez-les toujours à jour depuis une interface propre et rapide, conçue pour Windows.",
+                "Android": "Parcourez le catalogue, téléchargez vos jeux et gardez-les toujours à jour depuis une interface tactile, propre et rapide, conçue pour Android."
+            },
+            "installCta": {
+                "Desktop": "Installer pour Windows",
+                "Android": "Installer pour Android"
+            },
+            "platformLabel": "Choisir la plateforme",
             "downloadNote": "Gratuit · Open source · Se met à jour tout seul",
             "githubCta": "Voir sur GitHub",
             "versionPrefix": "Version",
             "features": [
-                { "icon": "pixelarticons:library", "text": "Bibliothèque de jeux complète" },
-                { "icon": "pixelarticons:sparkles", "text": "Un clic, sans compte ni inscription" },
-                { "icon": "pixelarticons:reload", "text": "Mises à jour automatiques" },
-                { "icon": "pixelarticons:languages", "text": "8 langues disponibles" }
+                {
+                    "icon": "pixelarticons:library",
+                    "text": "Bibliothèque de jeux complète"
+                },
+                {
+                    "icon": "pixelarticons:sparkles",
+                    "text": "Un clic, sans compte ni inscription"
+                },
+                {
+                    "icon": "pixelarticons:reload",
+                    "text": "Mises à jour automatiques"
+                },
+                {
+                    "icon": "pixelarticons:languages",
+                    "text": "8 langues disponibles"
+                }
             ]
         },
         "screenshots": {
             "heading": "Explorez le launcher en images",
-            "screenshotAlt": "Capture d'écran de LostieLauncher avec le thème {theme}"
+            "label": {
+                "Desktop": "Réplique interactive de LostieLauncher pour Windows",
+                "Android": "Réplique interactive de LostieLauncher pour Android"
+            },
+            "hint": "Cliquez pour explorer le launcher."
         },
         "install": {
             "heading": "Comment télécharger et installer",
             "subheading": "Vous jouez en moins d'une minute. Aucune configuration compliquée.",
-            "steps": [
-                {
-                    "icon": "pixelarticons:download",
-                    "title": "Téléchargez l'installateur",
-                    "description": "Cliquez sur le bouton de téléchargement et enregistrez LostieLauncher-win-Setup.exe sur votre ordinateur."
-                },
-                {
-                    "icon": "pixelarticons:file",
-                    "title": "Lancez l'installateur",
-                    "description": "Double-cliquez sur le fichier téléchargé. Le launcher s'installe et s'ouvre automatiquement une fois terminé."
-                },
-                {
-                    "icon": "pixelarticons:gamepad",
-                    "title": "Choisissez votre jeu",
-                    "description": "Ouvrez la Bibliothèque, cliquez sur Télécharger pour le jeu de votre choix et attendez la fin du téléchargement."
-                },
-                {
-                    "icon": "pixelarticons:play",
-                    "title": "Jouez !",
-                    "description": "Cliquez sur Jouer depuis Mes jeux. Le launcher se met à jour tout seul et garde vos jeux à jour."
-                }
-            ],
-            "smartScreenNote": "Si Windows SmartScreen affiche un avertissement, cliquez sur « Informations complémentaires » puis « Exécuter quand même ». L'installateur est signé avec une signature de développeur indépendant encore peu connue de Windows — il n'est pas dangereux.",
-            "downloadCta": "Télécharger l'installateur"
+            "steps": {
+                "Desktop": [
+                    {
+                        "icon": "pixelarticons:download",
+                        "title": "Téléchargez l'installateur",
+                        "description": "Cliquez sur le bouton de téléchargement et enregistrez LostieLauncher-win-Setup.exe sur votre ordinateur."
+                    },
+                    {
+                        "icon": "pixelarticons:file",
+                        "title": "Lancez l'installateur",
+                        "description": "Double-cliquez sur le fichier téléchargé. Le launcher s'installe et s'ouvre automatiquement une fois terminé."
+                    },
+                    {
+                        "icon": "pixelarticons:gamepad",
+                        "title": "Choisissez votre jeu",
+                        "description": "Ouvrez la Bibliothèque, cliquez sur Télécharger pour le jeu de votre choix et attendez la fin du téléchargement."
+                    },
+                    {
+                        "icon": "pixelarticons:play",
+                        "title": "Jouez !",
+                        "description": "Cliquez sur Jouer depuis Mes jeux. Le launcher se met à jour tout seul et garde vos jeux à jour."
+                    }
+                ],
+                "Android": [
+                    {
+                        "icon": "pixelarticons:download",
+                        "title": "Téléchargez l'APK",
+                        "description": "Appuyez sur le bouton de téléchargement depuis votre téléphone et enregistrez l'APK de LostieLauncher sur l'appareil."
+                    },
+                    {
+                        "icon": "pixelarticons:android",
+                        "title": "Installez le launcher",
+                        "description": "Ouvrez l'APK téléchargé et appuyez sur Installer. Si vous n'avez pas Kirin, l'application qui lance les jeux, le launcher vous proposera de l'installer."
+                    },
+                    {
+                        "icon": "pixelarticons:gamepad",
+                        "title": "Choisissez votre jeu",
+                        "description": "Ouvrez la Bibliothèque et appuyez sur Télécharger pour le jeu de votre choix. Le téléchargement continue en arrière-plan avec une notification de progression."
+                    },
+                    {
+                        "icon": "pixelarticons:play",
+                        "title": "Jouez !",
+                        "description": "Appuyez sur Jouer depuis Mes jeux et Kirin ouvre le jeu. Le launcher se met à jour tout seul et garde vos jeux à jour."
+                    }
+                ]
+            },
+            "note": {
+                "Desktop": "Si Windows SmartScreen affiche un avertissement, cliquez sur « Informations complémentaires » puis « Exécuter quand même ». L'installateur est signé avec une signature de développeur indépendant encore peu connue de Windows — il n'est pas dangereux.",
+                "Android": "Si Android bloque l'installation, autorisez votre navigateur à installer des applications inconnues lorsqu'il vous le demande, puis rouvrez l'APK. Il faut Android 8.0 ou plus récent et Kirin 0.4.0 ou plus récent, que le launcher vous aide à installer."
+            },
+            "downloadCta": {
+                "Desktop": "Télécharger l'installateur",
+                "Android": "Télécharger l'APK"
+            }
         },
         "footer": {
             "sourceCode": "Code source",

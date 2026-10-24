@@ -1,0 +1,66 @@
+---
+import type { HomeFeed } from "../../../lib/launcherCatalog";
+import type { Locale } from "../../../lib/i18n";
+import type { DesktopCopy } from "../../../lib/types";
+import DesktopNewsCard from "./DesktopNewsCard.astro";
+import DesktopNotificationCard from "./DesktopNotificationCard.astro";
+import ReplicaEmptyState from "../ReplicaEmptyState.astro";
+import DesktopScrollArea from "./DesktopScrollArea.astro";
+interface Props {
+    feed: HomeFeed;
+    copy: DesktopCopy;
+    locale: Locale;
+}
+const { feed, copy, locale } = Astro.props;
+---
+
+<div data-replica-view="home" data-title={copy.TitleHome} hidden class="h-full">
+    {feed.news.length || feed.notifications.length ? (
+        <div class="grid h-full grid-cols-2 gap-[20em] p-[20em]">
+            <div class="grid min-h-0 grid-rows-[auto_1fr]">
+                <div class="mb-[14em]">
+                    <span class="text-[18em] font-semibold">{copy.HomeNews}</span>
+                </div>
+                {feed.news.length ? (
+                    <DesktopScrollArea>
+                        <div>
+                            {feed.news.map(entry => (
+                                <DesktopNewsCard entry={entry} locale={locale} />
+                            ))}
+                        </div>
+                    </DesktopScrollArea>
+                ) : (
+                    <ReplicaEmptyState
+                        platform="Desktop"
+                        icon="mdi:newspaper-variant-outline"
+                        text={copy.HomeNoContent}
+                        compact
+                    />
+                )}
+            </div>
+            <div class="grid min-h-0 grid-rows-[auto_1fr]">
+                <div class="mb-[14em]">
+                    <span class="text-[18em] font-semibold">{copy.HomeNotifications}</span>
+                </div>
+                {feed.notifications.length ? (
+                    <DesktopScrollArea>
+                        <div>
+                            {feed.notifications.map(entry => (
+                                <DesktopNotificationCard entry={entry} locale={locale} />
+                            ))}
+                        </div>
+                    </DesktopScrollArea>
+                ) : (
+                    <ReplicaEmptyState
+                        platform="Desktop"
+                        icon="mdi:bell-off-outline"
+                        text={copy.HomeNoContent}
+                        compact
+                    />
+                )}
+            </div>
+        </div>
+    ) : (
+        <ReplicaEmptyState platform="Desktop" icon="mdi:cloud-off-outline" text={copy.HomeNoContent} />
+    )}
+</div>

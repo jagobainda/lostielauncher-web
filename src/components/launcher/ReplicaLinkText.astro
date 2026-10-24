@@ -1,0 +1,30 @@
+---
+import type { LauncherPlatform } from "../../lib/downloads";
+import { replicaLinkSegments } from "../../lib/launcherReplica";
+interface Props {
+    text: string;
+    platform: LauncherPlatform;
+}
+const { text, platform } = Astro.props;
+const desktop = platform === "Desktop";
+const segments = replicaLinkSegments(text);
+---
+
+{segments.map(segment =>
+    segment.href ? (
+        <a
+            href={segment.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={desktop ? segment.href : undefined}
+            class:list={[
+                "text-(color:--lt-primary-fg) underline",
+                { "hover:text-(color:--lt-primary-fg-hover)": desktop },
+            ]}
+        >
+            {segment.text}
+        </a>
+    ) : (
+        segment.text
+    ),
+)}

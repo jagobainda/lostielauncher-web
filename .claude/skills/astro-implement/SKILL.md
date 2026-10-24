@@ -118,6 +118,20 @@ The site uses a pixel-art look while keeping its original colours (dark greys `-
 - **Motion:** anime.js animations use `steps(n)` so each frame moves 4px; looping CSS animations
   (`animate-px-bob`, `animate-px-blink`) are always gated with `motion-safe:`.
 
+### Exception: launcher replicas
+
+`src/components/launcher/` holds interactive 1:1 replicas of the real launcher apps (Windows WPF, Android
+Compose), shown in the landing gallery. Inside them, fidelity to the real app wins over the site's pixel style:
+
+- They use the apps' real rounded corners, typography (Segoe UI / Roboto) and icon sets (`lucide:*`, `mdi:*`,
+  `simple-icons:*`, as in the apps' sources), not `pixelarticons` nor the pixel-box tokens.
+- Colours come only from the `--lt-*` variables set by `themeStyle()` (`lib/launcherReplica.ts`), so the
+  10 launcher themes recolour everything; no hard-coded theme colours.
+- UI strings live in the `launcherDesktop` / `launcherAndroid` collections, copied verbatim from the apps'
+  translations; strings the apps themselves leave untranslated stay as literals.
+- Sizes are design pixels in `em` over a `cqw`-scaled root, so a replica scales like a screenshot.
+- Their outer frame (gallery border, Android bezel) still follows the pixel style.
+
 ## TypeScript
 
 - `strict` mode is on (`astro/tsconfigs/strict`); no implicit `any`.

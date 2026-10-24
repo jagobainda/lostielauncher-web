@@ -17,6 +17,14 @@ export default defineConfig({
     fonts: [
         {
             provider: fontProviders.google(),
+            name: "Roboto",
+            cssVariable: "--font-roboto",
+            weights: [400, 600, 700],
+            styles: ["normal"],
+            fallbacks: ["Arial", "sans-serif"],
+        },
+        {
+            provider: fontProviders.google(),
             name: "Silkscreen",
             cssVariable: "--font-silkscreen",
             weights: [400, 700],

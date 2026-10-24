@@ -13,7 +13,7 @@ export const softwareApplicationSchema = (opts: {
         name: "LostieLauncher",
         description: opts.description,
         inLanguage: opts.inLanguage,
-        operatingSystem: "Windows",
+        operatingSystem: "Windows, Android",
         applicationCategory: "GameApplication",
         downloadUrl: INSTALLER_URL,
         url: SITE_URL,

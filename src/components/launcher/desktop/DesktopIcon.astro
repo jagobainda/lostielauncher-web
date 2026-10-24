@@ -1,0 +1,46 @@
+---
+import { Icon } from "astro-icon/components";
+interface Props {
+    name: string;
+    class?: string;
+}
+const { name, class: className } = Astro.props;
+// WPF stretches the geometry bounds; Iconify's original view boxes include extra padding.
+const bounds: Record<string, string> = {
+    "lucide:refresh-cw": "2 2 20 20",
+    "lucide:minus": "4 11 16 2",
+    "lucide:x": "5 5 14 14",
+    "lucide:house": "2 1 20 21",
+    "lucide:play": "4 2 18 20",
+    "lucide:download": "2 2 20 20",
+    "lucide:save": "2 2 20 20",
+    "lucide:circle-question-mark": "1 1 22 22",
+    "lucide:cog": "1 1 22 22",
+    "lucide:search": "2 2 20 20",
+    "lucide:search-x": "2 2 20 20",
+    "lucide:chevron-down": "5 8 14 8",
+    "mdi:harddisk": "4 2 16 20",
+    "mdi:tag-outline": "2 2 20 20",
+    "mdi:check": "3.5 5.59 17.5 13.41",
+    "mdi:download": "5 3 14 17",
+    "mdi:update": "3 3 18 18",
+    "mdi:play": "8 5.14 11 14",
+    "mdi:key-variant": "2 2 20 20",
+    "mdi:folder-open": "2 4 21.21 16",
+    "mdi:trash-can-outline": "4 3 16 18",
+    "mdi:arrow-right": "4 4.08 15.84 15.84",
+    "mdi:launch": "3 3 18 18",
+    "mdi:window-minimize": "4 10 16 4",
+    "mdi:refresh": "4 4 16 16",
+    "mdi:folder-download": "2 4 20 16",
+    "mdi:translate": "1 2 22 20",
+    "mdi:palette": "3 3 18 18",
+    "mdi:cloud-off-outline": "1 2.8 22 19.8",
+    "mdi:gamepad-variant-outline": "0 5 24 14",
+    "mdi:newspaper-variant-outline": "2 3 20 18",
+    "mdi:bell-off-outline": "1.11 1.73 21 21.27",
+    "mdi:pokeball": "2 2 20 20",
+};
+---
+
+<Icon name={name} class={className} viewBox={bounds[name] ?? "0 0 24 24"} is:inline aria-hidden="true" />

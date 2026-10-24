@@ -1,0 +1,61 @@
+{
+    "TitleHome": "Inicio",
+    "TitleGames": "Mis Juegos",
+    "TitleLibrary": "Biblioteca",
+    "TitleSettings": "Ajustes",
+    "TitleFaqs": "Preguntas frecuentes",
+    "FaqsSearchPlaceholder": "Buscar en las preguntas y respuestas...",
+    "FaqsNoResults": "Sin resultados para tu búsqueda",
+    "BtnDownload": "Descargar",
+    "BtnDownloaded": "Descargado",
+    "BtnUpdate": "Actualizar",
+    "BtnPlay": "Jugar",
+    "TooltipOpenFolder": "Abrir carpeta del juego",
+    "TooltipUninstall": "Desinstalar juego",
+    "TooltipRefresh": "Actualizar",
+    "TooltipSwitchSpecialVersion": "Cambiar a versión especial",
+    "SettingsGeneral": "General",
+    "SettingsAppearance": "Apariencia",
+    "SettingsStartWithWindows": "Iniciar con Windows",
+    "SettingsStartMinimized": "Iniciar minimizado",
+    "SettingsAutoUpdate": "Actualizaciones automáticas",
+    "SettingsLanguage": "Idioma",
+    "SettingsDownloadDir": "Directorio de descargas",
+    "SettingsTheme": "Tema",
+    "BtnBrowse": "Examinar...",
+    "SettingsCheckForUpdates": "Buscar actualizaciones del launcher",
+    "SettingsGamesStoredIn": "Los juegos se guardan en:",
+    "LibraryNoContent": "No disponible",
+    "GamesNoContent": "No tienes juegos instalados",
+    "GamesGoToLibrary": "Ir a la biblioteca",
+    "HomeNews": "Novedades",
+    "HomeNotifications": "Notificaciones",
+    "HomeNoContent": "Sin contenido",
+    "faqs": [
+        {
+            "question": "¿Cómo descargo un juego?",
+            "answer": "Ve a la Biblioteca, elige el juego que quieras y pulsa Descargar. Cuando termine la instalación, aparecerá en Mis Juegos listo para jugar."
+        },
+        {
+            "question": "¿Dónde se instalan los juegos y cómo cambio la carpeta?",
+            "answer": "Los juegos se instalan en el directorio de descargas configurado. Puedes cambiarlo en Ajustes, en la opción Directorio de descargas. Si ya tienes juegos instalados, tendrás que moverlos manualmente a la nueva ruta."
+        },
+        {
+            "question": "¿Perderé mis partidas guardadas al actualizar o desinstalar un juego?",
+            "answer": "No. Las partidas guardadas y el registro de tiempo jugado se conservan siempre, tanto al actualizar como al desinstalar un juego."
+        },
+        {
+            "question": "¿Qué es una versión especial y cómo la activo?",
+            "answer": "Es una versión alternativa de un juego que se desbloquea con una clave con formato XXXX-XXXX-XXXX-XXXX-XXXX. Puedes introducir la clave al descargar el juego o cambiar a la versión especial desde Mis Juegos sin perder nada."
+        },
+        {
+            "question": "¿Qué significa el modo offline?",
+            "answer": "Significa que el servidor está en mantenimiento. Puedes seguir jugando a tus juegos instalados; las descargas, actualizaciones y versiones especiales se reactivarán automáticamente cuando termine el mantenimiento."
+        },
+        {
+            "question": "He encontrado un error, ¿dónde lo reporto?",
+            "answer": "Escribe en el canal #testeo-launcher del Discord de la comunidad contando qué ha pasado y qué estabas haciendo. Cuanto más detalle des, más fácil será arreglarlo."
+        }
+    ],
+    "BtnCancel": "Cancelar"
+}

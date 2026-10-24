@@ -1,0 +1,47 @@
+---
+import Icon from "./AndroidIcon.astro";
+import type { AndroidCopy } from "../../../lib/types";
+import { LAUNCHER_LOGO_URL } from "../../../lib/launcherCatalog";
+import { GITHUB_URL } from "../../../lib/launcher";
+import { LAUNCHER_SOCIALS } from "../../../lib/launcherReplica";
+
+interface Props {
+    copy: AndroidCopy;
+}
+const { copy } = Astro.props;
+---
+
+<div class="flex h-[50em] shrink-0 items-center pl-[16em]">
+    <img src={LAUNCHER_LOGO_URL} alt="" width="22" height="22" class="size-[22em] object-contain" loading="lazy" />
+    <div class="min-w-0 flex-1 pl-[8em]">
+        <span data-replica-title class="block truncate text-[13em] font-semibold">
+            {copy.titleLibrary}
+        </span>
+    </div>
+    <div data-replica-visible-in="home" hidden class="flex">
+        {LAUNCHER_SOCIALS.map(link => (
+            <a
+                href={link.href}
+                aria-label={link.label}
+                title={link.label}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex size-[50em] items-center justify-center hover:bg-(--lt-overlay-medium)"
+            >
+                <Icon name={link.icon} class="size-[14em]" />
+            </a>
+        ))}
+    </div>
+    <a
+        data-replica-visible-in="settings"
+        hidden
+        href={GITHUB_URL}
+        aria-label="GitHub"
+        title="GitHub"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex size-[50em] items-center justify-center hover:bg-(--lt-overlay-medium)"
+    >
+        <Icon name="simple-icons:github" class="size-[14em]" />
+    </a>
+</div>

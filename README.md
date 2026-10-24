@@ -25,6 +25,10 @@ Any change (pages, components, collections, scripts…) must follow the project-
 /astro-implement
 ```
 
+The landing switches between Windows and Android and includes interactive launcher replicas in four locales.
+Replica copy lives in `src/content/launcher/`; catalogue, feed and release versions are fetched at build time.
+Fonts are self-hosted through the Astro Fonts API; Android Roboto is not preloaded.
+
 ## Pending tasks
 
 See `TODO.md`.

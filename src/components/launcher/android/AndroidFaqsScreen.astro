@@ -1,0 +1,41 @@
+---
+import Icon from "./AndroidIcon.astro";
+import type { AndroidCopy } from "../../../lib/types";
+import AndroidFaqCard from "./AndroidFaqCard.astro";
+import ReplicaEmptyState from "../ReplicaEmptyState.astro";
+
+interface Props {
+    copy: AndroidCopy;
+}
+const { copy } = Astro.props;
+---
+
+<div data-replica-faqs class="flex h-full flex-col p-[20em]">
+    <label class="android-input mb-[16em] flex h-[40em] shrink-0 items-center gap-[10em] rounded-[6em] px-[11em]">
+        <Icon name="lucide:search" class="size-[16em] shrink-0 text-(color:--lt-secondary-fg-dim)" />
+        <input
+            data-faq-search
+            type="text"
+            aria-label={copy.faqsSearchPlaceholder}
+            placeholder={copy.faqsSearchPlaceholder}
+            class="min-w-0 flex-1 bg-transparent text-[13em] placeholder:text-(color:--lt-secondary-fg-dim) focus:placeholder:text-transparent"
+        />
+        <button
+            data-faq-clear
+            type="button"
+            aria-label={copy.faqsClearSearch}
+            hidden
+            class="flex size-[24em] shrink-0 items-center justify-center rounded-[4em] text-(color:--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light) hover:text-(color:--lt-secondary-fg)"
+        >
+            <Icon name="lucide:x" class="size-[12em]" />
+        </button>
+    </label>
+    <div data-faq-results class="android-scroll min-h-0 flex-1 overflow-y-auto">
+        {copy.faqs.map(faq => (
+            <AndroidFaqCard {...faq} />
+        ))}
+    </div>
+    <div data-faq-empty hidden role="status" class="min-h-0 flex-1">
+        <ReplicaEmptyState platform="Android" icon="lucide:search-x" text={copy.faqsNoResults} compact />
+    </div>
+</div>

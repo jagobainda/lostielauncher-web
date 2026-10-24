@@ -1,0 +1,92 @@
+---
+import { Font } from "astro:assets";
+import { getEntry } from "astro:content";
+import type { Locale } from "../../../lib/i18n";
+import { getCatalog, getHomeFeed } from "../../../lib/launcherCatalog";
+import { DEFAULT_THEME, themeStyle } from "../../../lib/launcherReplica";
+import AndroidLauncherShell from "./AndroidLauncherShell.astro";
+import AndroidHomeScreen from "./AndroidHomeScreen.astro";
+import AndroidGamesScreen from "./AndroidGamesScreen.astro";
+import AndroidLibraryScreen from "./AndroidLibraryScreen.astro";
+import AndroidFaqsScreen from "./AndroidFaqsScreen.astro";
+import AndroidSettingsScreen from "./AndroidSettingsScreen.astro";
+
+interface Props {
+    locale: Locale;
+    label: string;
+}
+
+const { locale, label } = Astro.props;
+const [entry, games, feed] = await Promise.all([getEntry("launcherAndroid", locale), getCatalog(), getHomeFeed()]);
+if (!entry) throw new Error(`Missing Android launcher copy: ${locale}`);
+const copy = entry.data;
+---
+
+<Font cssVariable="--font-roboto" />
+
+<div
+    data-replica
+    data-android-replica
+    data-theme={DEFAULT_THEME.name}
+    role="group"
+    aria-label={label}
+    style={themeStyle(DEFAULT_THEME)}
+    class="android-replica w-full max-w-[372px] font-(family-name:--font-roboto) leading-[1.2] tracking-normal [container-type:inline-size]"
+>
+    <div class="bg-(--ink) p-[6em] text-[length:calc(100cqw/372)]">
+        <AndroidLauncherShell {copy}>
+            <div data-replica-view="home" data-title={copy.titleHome} hidden class="h-full">
+                <AndroidHomeScreen {copy} {feed} {locale} />
+            </div>
+            <div data-replica-view="games" data-title={copy.titleGames} hidden class="h-full">
+                <AndroidGamesScreen {copy} {games} />
+            </div>
+            <div data-replica-view="library" data-title={copy.titleLibrary} class="h-full">
+                <AndroidLibraryScreen {copy} {games} />
+            </div>
+            <div data-replica-view="faqs" data-title={copy.titleFaqs} hidden class="h-full">
+                <AndroidFaqsScreen {copy} />
+            </div>
+            <div data-replica-view="settings" data-title={copy.titleSettings} hidden class="h-full">
+                <AndroidSettingsScreen {copy} {locale} />
+            </div>
+        </AndroidLauncherShell>
+    </div>
+</div>
+
+<script>
+    import { initReplica } from "../../../scripts/launcherReplica";
+    document.querySelectorAll<HTMLElement>("[data-android-replica]").forEach(initReplica);
+</script>
+
+<style>
+    /* Native app styling must reach the child screens and override the site's pixel icons. */
+    .android-replica :global(svg[data-icon]) {
+        shape-rendering: geometricPrecision;
+    }
+
+    .android-replica :global(.android-input) {
+        background: var(--lt-tertiary-bg);
+        border: 1em solid transparent;
+    }
+
+    .android-replica[data-theme="Cefireon"] :global(.android-input),
+    .android-replica[data-theme="Sylveon"] :global(.android-input),
+    .android-replica[data-theme="Astrem"] :global(.android-input) {
+        border-color: var(--lt-overlay-strong);
+    }
+
+    .android-replica :global(.android-scroll) {
+        scrollbar-width: thin;
+        scrollbar-color: var(--lt-overlay-medium) transparent;
+    }
+
+    .android-replica :global(.android-scroll::-webkit-scrollbar) {
+        width: 8em;
+    }
+
+    .android-replica :global(.android-scroll::-webkit-scrollbar-thumb) {
+        background: var(--lt-overlay-medium);
+        border-radius: 4em;
+    }
+</style>

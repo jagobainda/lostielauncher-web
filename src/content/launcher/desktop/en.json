@@ -1,0 +1,61 @@
+{
+    "TitleHome": "Home",
+    "TitleGames": "My Games",
+    "TitleLibrary": "Library",
+    "TitleSettings": "Settings",
+    "TitleFaqs": "FAQs",
+    "FaqsSearchPlaceholder": "Search questions and answers...",
+    "FaqsNoResults": "No results for your search",
+    "BtnDownload": "Download",
+    "BtnDownloaded": "Downloaded",
+    "BtnUpdate": "Update",
+    "BtnPlay": "Play",
+    "TooltipOpenFolder": "Open game folder",
+    "TooltipUninstall": "Uninstall game",
+    "TooltipRefresh": "Refresh",
+    "TooltipSwitchSpecialVersion": "Switch to special version",
+    "SettingsGeneral": "General",
+    "SettingsAppearance": "Appearance",
+    "SettingsStartWithWindows": "Start with Windows",
+    "SettingsStartMinimized": "Start minimized",
+    "SettingsAutoUpdate": "Automatic updates",
+    "SettingsLanguage": "Language",
+    "SettingsDownloadDir": "Download directory",
+    "SettingsTheme": "Theme",
+    "BtnBrowse": "Browse...",
+    "SettingsCheckForUpdates": "Check for launcher updates",
+    "SettingsGamesStoredIn": "Games are stored in:",
+    "LibraryNoContent": "Not available",
+    "GamesNoContent": "No games installed",
+    "GamesGoToLibrary": "Go to Library",
+    "HomeNews": "News",
+    "HomeNotifications": "Notifications",
+    "HomeNoContent": "No content",
+    "faqs": [
+        {
+            "question": "How do I download a game?",
+            "answer": "Go to the Library, pick the game you want and press Download. Once the installation finishes, it will appear in My Games ready to play."
+        },
+        {
+            "question": "Where are games installed and how do I change the folder?",
+            "answer": "Games are installed in the configured download directory. You can change it in Settings, under Download directory. If you already have games installed, you will need to move them manually to the new path."
+        },
+        {
+            "question": "Will I lose my saved games when updating or uninstalling a game?",
+            "answer": "No. Saved games and the playtime record are always kept, both when updating and when uninstalling a game."
+        },
+        {
+            "question": "What is a special version and how do I activate it?",
+            "answer": "It is an alternative version of a game unlocked with a key in the format XXXX-XXXX-XXXX-XXXX-XXXX. You can enter the key when downloading the game or switch to the special version from My Games without losing anything."
+        },
+        {
+            "question": "What does offline mode mean?",
+            "answer": "It means the server is under maintenance. You can keep playing your installed games; downloads, updates and special versions will reactivate automatically when the maintenance ends."
+        },
+        {
+            "question": "I found a bug, where do I report it?",
+            "answer": "Write in the #testeo-launcher channel of the community Discord explaining what happened and what you were doing. The more detail you give, the easier it will be to fix."
+        }
+    ],
+    "BtnCancel": "Cancel"
+}

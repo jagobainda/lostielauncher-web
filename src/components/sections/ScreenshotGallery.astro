@@ -1,17 +1,19 @@
 ---
-import { SCREENSHOTS } from "../../lib/screenshots";
+import { LAUNCHER_PLATFORMS } from "../../lib/downloads";
+import { DEFAULT_THEME, LAUNCHER_THEMES, themeStyle } from "../../lib/launcherReplica";
+import type { Locale } from "../../lib/i18n";
 import type { LandingData } from "../../lib/types";
+import AndroidReplica from "../launcher/android/AndroidReplica.astro";
+import DesktopReplica from "../launcher/desktop/DesktopReplica.astro";
+import PlatformOnly from "../ui/PlatformOnly.astro";
 
 interface Props {
     screenshots: LandingData["screenshots"];
+    locale: Locale;
 }
 
-const { screenshots } = Astro.props;
-
-const first = SCREENSHOTS[0];
-if (!first) throw new Error("SCREENSHOTS must not be empty");
-
-const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", theme);
+const { screenshots, locale } = Astro.props;
+const replicas = { Desktop: DesktopReplica, Android: AndroidReplica };
 ---
 
 <section id="screenshots" class="border-y-4 border-(--ink) bg-(--bg-secondary) py-24">
@@ -22,28 +24,40 @@ const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", t
         >
             {screenshots.heading}
         </h2>
+        <p class="mt-4 text-center text-sm text-(--text-dim)" data-fade-in>
+            {screenshots.hint}
+        </p>
 
-        <div class="mt-12" data-gallery data-alt-template={screenshots.screenshotAlt} data-fade-in>
-            <img
-                src={first.src}
-                alt={altFor(first.theme)}
-                class="block h-auto w-full shadow-px"
-                width="1000"
-                height="650"
-                data-gallery-image
-            />
+        <div class="mt-12" data-gallery data-fade-in>
+            {LAUNCHER_PLATFORMS.map(platform => {
+                const Replica = replicas[platform];
+                return (
+                    <PlatformOnly platform={platform}>
+                        <div
+                            class:list={[
+                                "mx-auto mb-3",
+                                platform === "Desktop"
+                                    ? "w-full shadow-px"
+                                    : "w-[293px] max-w-full shadow-[8px_8px_0_0_var(--ink)]",
+                            ]}
+                        >
+                            <Replica {locale} label={screenshots.label[platform]} />
+                        </div>
+                    </PlatformOnly>
+                );
+            })}
 
             <div class="mt-10 flex flex-wrap justify-center gap-3" role="group">
-                {SCREENSHOTS.map((shot, i) => (
+                {LAUNCHER_THEMES.map(theme => (
                     <button
                         type="button"
                         data-gallery-thumb
-                        data-src={shot.src}
-                        data-theme={shot.theme}
-                        aria-pressed={i === 0 ? "true" : "false"}
+                        data-theme={theme.name}
+                        data-theme-style={themeStyle(theme)}
+                        aria-pressed={theme === DEFAULT_THEME ? "true" : "false"}
                         class="min-h-11 cursor-pointer bg-(--bg-tertiary) px-4 py-1.5 font-pixel text-(--text-dim) shadow-px-sm transition-colors duration-75 ease-px hover:bg-(--ink) hover:text-(--text-color) aria-pressed:bg-(--accent) aria-pressed:text-white"
                     >
-                        {shot.theme}
+                        {theme.name}
                     </button>
                 ))}
             </div>
@@ -54,55 +68,80 @@ const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", t
 <script>
     import { animate, steps } from "animejs";
     import { fadeInOnScroll, motionOK } from "../../scripts/animations";
+    import { applyReplicaTheme, THEME_EVENT } from "../../scripts/launcherReplica";
 
     fadeInOnScroll("#screenshots [data-fade-in]");
 
     const root = document.querySelector<HTMLElement>("[data-gallery]");
-    const img = root?.querySelector<HTMLImageElement>("[data-gallery-image]");
+    const replicas = root ? [...root.querySelectorAll<HTMLElement>("[data-replica]")] : [];
     const thumbs = root ? [...root.querySelectorAll<HTMLButtonElement>("[data-gallery-thumb]")] : [];
 
-    if (root && img && thumbs.length) {
-        const altTemplate = root.getAttribute("data-alt-template") ?? "{theme}";
+    if (root && replicas.length && thumbs.length) {
         let current = 0;
-
-        const swap = (index: number) => {
-            const thumb = thumbs[index];
-            if (!thumb) return;
-            img.src = thumb.dataset.src ?? "";
-            img.alt = altTemplate.replace("{theme}", thumb.dataset.theme ?? "");
-        };
-
-        const show = (index: number) => {
-            if (index === current) return;
-            current = index;
-            thumbs.forEach((t, i) => t.setAttribute("aria-pressed", String(i === index)));
-            if (motionOK()) {
-                animate(img, {
-                    opacity: [1, 0],
-                    duration: 160,
-                    ease: steps(4),
-                    onComplete: () => {
-                        swap(index);
-                        animate(img, { opacity: [0, 1], duration: 240, ease: steps(4) });
-                    },
-                });
-            } else {
-                swap(index);
-            }
-        };
-
+        let transition: ReturnType<typeof animate> | undefined;
         let timer: ReturnType<typeof setInterval> | null = null;
         let stopped = !motionOK();
+
+        const cancelFade = () => {
+            transition?.pause();
+            replicas.forEach(replica => replica.style.removeProperty("opacity"));
+        };
+        const swap = (index: number) => {
+            const thumb = thumbs[index];
+            if (!thumb?.dataset.theme || !thumb.dataset.themeStyle) return;
+            current = index;
+            thumbs.forEach((button, i) => button.setAttribute("aria-pressed", String(i === index)));
+            replicas.forEach(replica => {
+                if (replica.dataset.theme !== thumb.dataset.theme) {
+                    applyReplicaTheme(replica, thumb.dataset.theme!, thumb.dataset.themeStyle!);
+                }
+            });
+        };
         const stopRotation = () => {
             stopped = true;
             if (timer) clearInterval(timer);
             timer = null;
+            cancelFade();
         };
+        const rotate = () => {
+            if (!motionOK()) {
+                stopRotation();
+                return;
+            }
+            const index = (current + 1) % thumbs.length;
+            transition = animate(replicas, {
+                opacity: [1, 0],
+                duration: 160,
+                ease: steps(4),
+                onComplete: () => {
+                    swap(index);
+                    transition = animate(replicas, { opacity: [0, 1], duration: 240, ease: steps(4) });
+                },
+            });
+        };
+
+        root.addEventListener(THEME_EVENT, event => {
+            const name = (event as CustomEvent<{ name: string }>).detail.name;
+            const index = thumbs.findIndex(thumb => thumb.dataset.theme === name);
+            if (index >= 0 && index !== current) {
+                cancelFade();
+                swap(index);
+            }
+        });
+        for (const event of ["pointerdown", "keydown", "focusin"]) {
+            root.addEventListener(event, stopRotation, { once: true });
+        }
+        thumbs.forEach((thumb, index) =>
+            thumb.addEventListener("click", () => {
+                stopRotation();
+                swap(index);
+            }),
+        );
         const io = new IntersectionObserver(
             entries => {
-                const visible = entries.some(e => e.isIntersecting);
+                const visible = entries.some(entry => entry.isIntersecting);
                 if (visible && !stopped && !timer) {
-                    timer = setInterval(() => show((current + 1) % thumbs.length), 5000);
+                    timer = setInterval(rotate, 5000);
                 } else if (!visible && timer) {
                     clearInterval(timer);
                     timer = null;
@@ -111,16 +150,8 @@ const altFor = (theme: string) => screenshots.screenshotAlt.replace("{theme}", t
             { threshold: 0.3 },
         );
         io.observe(root);
-
-        thumbs.forEach((thumb, index) =>
-            thumb.addEventListener("click", () => {
-                stopRotation();
-                show(index);
-            }),
-        );
-
-        const preload = () => thumbs.slice(1).forEach(t => t.dataset.src && (new Image().src = t.dataset.src));
-        if ("requestIdleCallback" in window) requestIdleCallback(preload);
-        else setTimeout(preload, 2000);
+        window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", event => {
+            if (event.matches) stopRotation();
+        });
     }
 </script>

@@ -1,17 +1,22 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { androidCopySchema } from "./lib/launcherAndroidCopy";
+import { desktopCopySchema } from "./lib/launcherDesktopCopy";
 
 const iconItem = z.object({
     icon: z.string(),
     text: z.string(),
 });
 
+const perPlatform = <T extends z.ZodType>(schema: T) => z.object({ Desktop: schema, Android: schema });
+
 const landingSchema = z.object({
     hero: z.object({
         tagline: z.string(),
-        subtitle: z.string(),
-        installCta: z.string(),
+        subtitle: perPlatform(z.string()),
+        installCta: perPlatform(z.string()),
+        platformLabel: z.string(),
         downloadNote: z.string(),
         githubCta: z.string(),
         versionPrefix: z.string(),
@@ -19,22 +24,25 @@ const landingSchema = z.object({
     }),
     screenshots: z.object({
         heading: z.string(),
-        screenshotAlt: z.string(),
+        label: perPlatform(z.string()),
+        hint: z.string(),
     }),
     install: z.object({
         heading: z.string(),
         subheading: z.string(),
-        steps: z
-            .array(
-                z.object({
-                    icon: z.string(),
-                    title: z.string(),
-                    description: z.string(),
-                }),
-            )
-            .min(1),
-        smartScreenNote: z.string(),
-        downloadCta: z.string(),
+        steps: perPlatform(
+            z
+                .array(
+                    z.object({
+                        icon: z.string(),
+                        title: z.string(),
+                        description: z.string(),
+                    }),
+                )
+                .min(1),
+        ),
+        note: perPlatform(z.string()),
+        downloadCta: perPlatform(z.string()),
     }),
     footer: z.object({
         sourceCode: z.string(),
@@ -78,10 +86,7 @@ const dashboardSchema = z.object({
         allLabel: z.string(),
         versionsLabel: z.string(),
         countriesLabel: z.string(),
-        platforms: z.object({
-            Desktop: launcherPlatformCopy,
-            Android: launcherPlatformCopy,
-        }),
+        platforms: perPlatform(launcherPlatformCopy),
     }),
     downloadsNote: z.string(),
     uniqueUsers: z.object({
@@ -123,4 +128,15 @@ const pages = defineCollection({
     }),
 });
 
-export const collections = { pages };
+// UI strings of the launcher replicas, one JSON per locale and platform
+const launcherDesktop = defineCollection({
+    loader: glob({ pattern: "*.json", base: "./src/content/launcher/desktop" }),
+    schema: desktopCopySchema,
+});
+
+const launcherAndroid = defineCollection({
+    loader: glob({ pattern: "*.json", base: "./src/content/launcher/android" }),
+    schema: androidCopySchema,
+});
+
+export const collections = { pages, launcherDesktop, launcherAndroid };

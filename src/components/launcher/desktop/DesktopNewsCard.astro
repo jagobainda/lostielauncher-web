@@ -1,0 +1,26 @@
+---
+import { localized, type HomeEntry } from "../../../lib/launcherCatalog";
+import type { Locale } from "../../../lib/i18n";
+import ReplicaLinkText from "../ReplicaLinkText.astro";
+import DesktopFeedDate from "./DesktopFeedDate.astro";
+interface Props {
+    entry: HomeEntry;
+    locale: Locale;
+}
+const { entry, locale } = Astro.props;
+---
+
+<article class="mb-[10em] rounded-[8em] bg-(--lt-overlay-subtle) p-[16em]">
+    <div class="flex items-center justify-between">
+        <span class="inline-flex items-center rounded-[4em] bg-(--lt-primary-fg) px-[8em] py-[2em]">
+            <span class="text-[11em] font-semibold">{entry.kind}</span>
+        </span>
+        <DesktopFeedDate date={entry.date} locale={locale} year />
+    </div>
+    <div class="mt-[10em] mb-[4em]">
+        <span class="text-[15em] font-semibold">{localized(entry.title, locale)}</span>
+    </div>
+    <p class="text-[13em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">
+        <ReplicaLinkText platform="Desktop" text={localized(entry.body, locale)} />
+    </p>
+</article>

@@ -1,0 +1,23 @@
+---
+import type { LauncherPlatform } from "../../lib/downloads";
+import { DEFAULT_THEME, LAUNCHER_THEMES, themeStyle } from "../../lib/launcherReplica";
+interface Props {
+    platform: LauncherPlatform;
+}
+const { platform } = Astro.props;
+---
+
+{LAUNCHER_THEMES.map(theme => (
+    <button
+        type="button"
+        data-replica-theme={theme.name}
+        data-theme-style={themeStyle(theme)}
+        aria-pressed={theme.name === DEFAULT_THEME.name}
+        class:list={[
+            "block w-full rounded-[3em] px-[8em] py-[6em] text-left hover:bg-(--lt-overlay-light) aria-pressed:bg-(--lt-overlay-muted)",
+            { "cursor-pointer": platform === "Desktop" },
+        ]}
+    >
+        <span class="text-[12em]">{theme.name}</span>
+    </button>
+))}

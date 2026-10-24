@@ -1,0 +1,32 @@
+---
+import type { LauncherGame } from "../../../lib/launcherCatalog";
+import { REPLICA_INSTALLED } from "../../../lib/launcherCatalog";
+import type { AndroidCopy } from "../../../lib/types";
+import AndroidGameCard from "./AndroidGameCard.astro";
+import ReplicaEmptyState from "../ReplicaEmptyState.astro";
+
+interface Props {
+    games: LauncherGame[];
+    copy: AndroidCopy;
+}
+const { games, copy } = Astro.props;
+const installed = games.filter(game => REPLICA_INSTALLED[game.id]);
+---
+
+{installed.length ? (
+    <div class="android-scroll h-full overflow-y-auto p-[20em]">
+        {installed.map(game => (
+            <AndroidGameCard {game} {copy} kind="installed" />
+        ))}
+    </div>
+) : (
+    <ReplicaEmptyState platform="Android" icon="lucide:gamepad-2" text={copy.gamesNoContent}>
+        <button
+            type="button"
+            data-replica-nav="library"
+            class="mt-[12em] flex h-[34em] items-center rounded-[4em] bg-(--lt-primary-fg) px-[20em] text-(color:--lt-secondary-fg)"
+        >
+            <span class="text-[12em] font-semibold">{copy.gamesGoToLibrary}</span>
+        </button>
+    </ReplicaEmptyState>
+)}

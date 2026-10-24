@@ -1,15 +1,18 @@
 ---
 import { Icon } from "astro-icon/components";
 import Button from "../ui/Button.astro";
+import PlatformOnly from "../ui/PlatformOnly.astro";
 import StepCard from "../cards/StepCard.astro";
-import { INSTALLER_URL } from "../../lib/launcher";
+import { LAUNCHER_PLATFORMS } from "../../lib/downloads";
+import type { LauncherReleases } from "../../lib/launcher";
 import type { LandingData } from "../../lib/types";
 
 interface Props {
     install: LandingData["install"];
+    releases: LauncherReleases;
 }
 
-const { install } = Astro.props;
+const { install, releases } = Astro.props;
 ---
 
 <section id="install" class="py-24">
@@ -24,32 +27,48 @@ const { install } = Astro.props;
             {install.subheading}
         </p>
 
-        <ol class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4" data-steps>
-            {install.steps.map((step, i) => (
-                <StepCard step={i + 1} icon={step.icon} title={step.title} description={step.description} />
-            ))}
-        </ol>
+        {LAUNCHER_PLATFORMS.map(platform => (
+            <PlatformOnly platform={platform}>
+                <ol class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4" data-steps={platform}>
+                    {install.steps[platform].map((step, i) => (
+                        <StepCard step={i + 1} icon={step.icon} title={step.title} description={step.description} />
+                    ))}
+                </ol>
+            </PlatformOnly>
+        ))}
 
         <p
             class="mx-auto mt-12 flex max-w-3xl items-start gap-3 bg-(--bg-tertiary) p-4 text-sm leading-relaxed text-(--text-dim) shadow-px-sm"
             data-fade-in
         >
             <Icon name="pixelarticons:info-box" class="size-6 shrink-0 text-(--accent)" />
-            <span>{install.smartScreenNote}</span>
+            <span>
+                {LAUNCHER_PLATFORMS.map(platform => (
+                    <PlatformOnly platform={platform} as="span">
+                        {install.note[platform]}
+                    </PlatformOnly>
+                ))}
+            </span>
         </p>
 
         <div class="mt-14 text-center" data-fade-in>
-            <Button href={INSTALLER_URL} variant="primary">
-                <Icon name="pixelarticons:download" class="size-6" />
-                {install.downloadCta}
-            </Button>
+            {LAUNCHER_PLATFORMS.map(platform => (
+                <PlatformOnly platform={platform}>
+                    <Button href={releases[platform].downloadUrl} variant="primary">
+                        <Icon name="pixelarticons:download" class="size-6" />
+                        {install.downloadCta[platform]}
+                    </Button>
+                </PlatformOnly>
+            ))}
         </div>
     </div>
 </section>
 
 <script>
     import { fadeInOnScroll, staggerInOnScroll } from "../../scripts/animations";
+    import { currentPlatform } from "../../scripts/platform";
 
     fadeInOnScroll("#install [data-fade-in]");
-    staggerInOnScroll("[data-steps]", "[data-step-card]");
+    // A hidden list never intersects, so only the visible platform's steps are held back for the reveal
+    staggerInOnScroll(`[data-steps="${currentPlatform()}"]`, "[data-step-card]");
 </script>

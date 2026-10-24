@@ -1,0 +1,31 @@
+---
+import Icon from "./AndroidIcon.astro";
+import type { AndroidCopy } from "../../../lib/types";
+
+interface Props {
+    copy: AndroidCopy;
+}
+const { copy } = Astro.props;
+const destinations = [
+    { view: "home", icon: "lucide:house", title: copy.titleHome },
+    { view: "games", icon: "lucide:play", title: copy.titleGames },
+    { view: "library", icon: "lucide:download", title: copy.titleLibrary },
+    { view: "faqs", icon: "lucide:circle-question-mark", title: copy.titleFaqs },
+    { view: "settings", icon: "lucide:cog", title: copy.titleSettings },
+];
+---
+
+<nav class="flex h-[60em] shrink-0 bg-(--lt-secondary-bg)">
+    {destinations.map(({ view, icon, title }) => (
+        <button
+            type="button"
+            data-replica-nav={view}
+            aria-current={view === "library" ? "page" : undefined}
+            aria-label={title}
+            title={title}
+            class="relative flex h-full min-w-0 flex-1 items-center justify-center text-(color:--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light) aria-[current=page]:bg-(--lt-overlay-subtle) aria-[current=page]:text-(color:--lt-primary-fg) aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-0 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-[3em] aria-[current=page]:after:bg-(--lt-primary-fg)"
+        >
+            <Icon name={icon} class="size-[27em]" />
+        </button>
+    ))}
+</nav>

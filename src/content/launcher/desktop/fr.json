@@ -1,0 +1,61 @@
+{
+    "TitleHome": "Accueil",
+    "TitleGames": "Mes jeux",
+    "TitleLibrary": "Bibliothèque",
+    "TitleSettings": "Paramètres",
+    "TitleFaqs": "Questions fréquentes",
+    "FaqsSearchPlaceholder": "Rechercher dans les questions et réponses...",
+    "FaqsNoResults": "Aucun résultat pour votre recherche",
+    "BtnDownload": "Télécharger",
+    "BtnDownloaded": "Téléchargé",
+    "BtnUpdate": "Mettre à jour",
+    "BtnPlay": "Jouer",
+    "TooltipOpenFolder": "Ouvrir le dossier du jeu",
+    "TooltipUninstall": "Désinstaller le jeu",
+    "TooltipRefresh": "Actualiser",
+    "TooltipSwitchSpecialVersion": "Passer à la version spéciale",
+    "SettingsGeneral": "Général",
+    "SettingsAppearance": "Apparence",
+    "SettingsStartWithWindows": "Démarrer avec Windows",
+    "SettingsStartMinimized": "Démarrer minimisé",
+    "SettingsAutoUpdate": "Mises à jour automatiques",
+    "SettingsLanguage": "Langue",
+    "SettingsDownloadDir": "Répertoire de téléchargement",
+    "SettingsTheme": "Thème",
+    "BtnBrowse": "Parcourir...",
+    "SettingsCheckForUpdates": "Vérifier les mises à jour du launcher",
+    "SettingsGamesStoredIn": "Les jeux sont stockés dans :",
+    "LibraryNoContent": "Non disponible",
+    "GamesNoContent": "Aucun jeu installé",
+    "GamesGoToLibrary": "Aller à la bibliothèque",
+    "HomeNews": "Actualités",
+    "HomeNotifications": "Notifications",
+    "HomeNoContent": "Aucun contenu",
+    "faqs": [
+        {
+            "question": "Comment télécharger un jeu ?",
+            "answer": "Allez dans la Bibliothèque, choisissez le jeu souhaité et appuyez sur Télécharger. Une fois l'installation terminée, il apparaîtra dans Mes jeux, prêt à jouer."
+        },
+        {
+            "question": "Où les jeux sont-ils installés et comment changer de dossier ?",
+            "answer": "Les jeux sont installés dans le répertoire de téléchargement configuré. Vous pouvez le modifier dans Paramètres, sous Répertoire de téléchargement. Si vous avez déjà des jeux installés, vous devrez les déplacer manuellement vers le nouveau chemin."
+        },
+        {
+            "question": "Vais-je perdre mes sauvegardes en mettant à jour ou en désinstallant un jeu ?",
+            "answer": "Non. Les sauvegardes et le registre de temps de jeu sont toujours conservés, aussi bien lors d'une mise à jour que d'une désinstallation."
+        },
+        {
+            "question": "Qu'est-ce qu'une version spéciale et comment l'activer ?",
+            "answer": "C'est une version alternative d'un jeu qui se débloque avec une clé au format XXXX-XXXX-XXXX-XXXX-XXXX. Vous pouvez saisir la clé lors du téléchargement du jeu ou passer à la version spéciale depuis Mes jeux sans rien perdre."
+        },
+        {
+            "question": "Que signifie le mode hors ligne ?",
+            "answer": "Cela signifie que le serveur est en maintenance. Vous pouvez continuer à jouer à vos jeux installés ; les téléchargements, mises à jour et versions spéciales se réactiveront automatiquement à la fin de la maintenance."
+        },
+        {
+            "question": "J'ai trouvé un bug, où le signaler ?",
+            "answer": "Écrivez dans le canal #testeo-launcher du Discord de la communauté en expliquant ce qui s'est passé et ce que vous faisiez. Plus vous donnez de détails, plus il sera facile de le corriger."
+        }
+    ],
+    "BtnCancel": "Annuler"
+}

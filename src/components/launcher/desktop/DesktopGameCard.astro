@@ -1,0 +1,99 @@
+---
+import Icon from "./DesktopIcon.astro";
+import { formatGameSize } from "../../../lib/launcherReplica";
+import type { DesktopCopy } from "../../../lib/types";
+import { REPLICA_INSTALLED, type LauncherGame } from "../../../lib/launcherCatalog";
+interface Props {
+    game: LauncherGame;
+    copy: DesktopCopy;
+    mode: "library" | "games";
+}
+const { game, copy, mode } = Astro.props;
+const installed = REPLICA_INSTALLED[game.id];
+const update = Boolean(installed && installed !== game.version);
+const size = formatGameSize(game.sizeGb);
+const action =
+    mode === "games" ? copy.BtnPlay : update ? copy.BtnUpdate : installed ? copy.BtnDownloaded : copy.BtnDownload;
+const icon = mode === "games" ? "mdi:play" : update ? "mdi:update" : installed ? "mdi:check" : "mdi:download";
+const secondary = [
+    { icon: "mdi:key-variant", title: copy.TooltipSwitchSpecialVersion },
+    { icon: "mdi:folder-open", title: copy.TooltipOpenFolder },
+    { icon: "mdi:trash-can-outline", title: copy.TooltipUninstall },
+];
+---
+
+<div class="mb-[10em] grid grid-cols-[110em_minmax(0,1fr)_auto] items-center rounded-[6em] bg-(--lt-secondary-bg) p-[16em]">
+    <div class="flex h-[80em] w-[110em] items-center justify-center overflow-hidden rounded-[6em] bg-(--lt-tertiary-bg) p-[5em]">
+        {game.logoUrl ? (
+            <img
+                src={game.logoUrl}
+                alt=""
+                width="100"
+                height="70"
+                loading="lazy"
+                class="h-full w-full object-contain"
+            />
+        ) : (
+            <Icon name="mdi:pokeball" class="size-[32em] text-(color:--lt-overlay-medium)" />
+        )}
+    </div>
+    <div class="mx-[16em] min-w-0">
+        <div class="truncate">
+            <span class="text-[16em] font-bold">{game.name}</span>
+        </div>
+        <div class="mt-[6em] flex items-center text-(color:--lt-secondary-fg-dim)">
+            {mode === "library" && (
+                <>
+                    <Icon name="mdi:harddisk" class="size-[12em]" />
+                    <span class="mr-[1.166667em] ml-[0.333333em] text-[12em]">{size}</span>
+                </>
+            )}
+            <Icon name="mdi:tag-outline" class="size-[12em]" />
+            <span class="ml-[0.333333em] text-[12em]">{mode === "games" ? installed : game.version}</span>
+            {mode === "games" && update && (
+                <>
+                    <Icon name="mdi:arrow-right" class="mx-[8em] size-[10em] text-(color:--lt-primary-fg)" />
+                    <span class="text-[12em] font-semibold text-(color:--lt-primary-fg)">{game.version}</span>
+                </>
+            )}
+        </div>
+    </div>
+    <div class="flex items-center gap-[6em]">
+        <span
+            class:list={[
+                "flex h-[32em] items-center justify-center gap-[6em] rounded-[4em]",
+                mode === "library" && installed && !update
+                    ? "bg-(--lt-overlay-muted) px-[10em] opacity-60"
+                    : "min-w-[110em] bg-(--lt-primary-fg) hover:bg-(--lt-primary-fg-hover) active:bg-(--lt-primary-fg-pressed)",
+                mode === "library" && update && "bg-(--lt-success)! hover:opacity-85 active:opacity-70",
+                mode === "games" && update && "bg-(--lt-primary-fg)! opacity-50",
+            ]}
+        >
+            <Icon
+                name={icon}
+                class:list={["size-[13em]", mode === "library" && installed && !update && "text-(color:--lt-success)"]}
+            />
+            <span class:list={["text-[12em]", !(mode === "library" && installed && !update) && "font-semibold"]}>
+                {action}
+            </span>
+        </span>
+        {mode === "games" && (
+            <>
+                {update && (
+                    <span class="flex h-[32em] min-w-[110em] items-center justify-center gap-[6em] rounded-[4em] bg-(--lt-success) hover:opacity-85 active:opacity-70">
+                        <Icon name="mdi:update" class="size-[13em]" />
+                        <span class="text-[12em] font-semibold">{copy.BtnUpdate}</span>
+                    </span>
+                )}
+                {secondary.map(item => (
+                    <span
+                        title={item.title}
+                        class="flex h-[32em] items-center justify-center rounded-[4em] bg-(--lt-overlay-muted) px-[10em] hover:bg-(--lt-overlay-medium) active:bg-(--lt-overlay-light)"
+                    >
+                        <Icon name={item.icon} class="size-[14em]" />
+                    </span>
+                ))}
+            </>
+        )}
+    </div>
+</div>

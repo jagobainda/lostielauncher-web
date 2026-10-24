@@ -1,0 +1,43 @@
+---
+import { getLauncherReleases, formatDisplayVersion } from "../../../lib/launcher";
+import type { AndroidCopy } from "../../../lib/types";
+import type { Locale } from "../../../lib/i18n";
+import { LOCALE_LABELS } from "../../../lib/i18n";
+import { DEFAULT_THEME } from "../../../lib/launcherReplica";
+import AndroidSettingsSection from "./AndroidSettingsSection.astro";
+import AndroidSettingsRow from "./AndroidSettingsRow.astro";
+import AndroidLauncherComboBox from "./AndroidLauncherComboBox.astro";
+
+interface Props {
+    copy: AndroidCopy;
+    locale: Locale;
+}
+const { copy, locale } = Astro.props;
+const releases = await getLauncherReleases();
+const version = formatDisplayVersion(releases.Android.version);
+---
+
+<div class="android-scroll h-full overflow-y-auto px-[20em] pt-[20em] pb-[4em]">
+    <div class="mb-[24em]">
+        <AndroidSettingsSection title={copy.settingsGeneral}>
+            <AndroidSettingsRow icon="mdi:update" label={copy.settingsAutoUpdate}>
+                <span class="flex h-[24em] w-[44em] shrink-0 items-center rounded-[12em] bg-(--lt-overlay-muted) px-[3em]">
+                    <span class="size-[18em] rounded-full bg-(--lt-secondary-fg)"></span>
+                </span>
+            </AndroidSettingsRow>
+            <AndroidSettingsRow icon="mdi:refresh" label={version} divider>
+                <span class="flex h-[34em] shrink-0 items-center justify-center rounded-[4em] bg-(--lt-overlay-medium) px-[12em]">
+                    <span class="text-[13em] whitespace-nowrap">{copy.settingsCheckForUpdates}</span>
+                </span>
+            </AndroidSettingsRow>
+        </AndroidSettingsSection>
+    </div>
+    <AndroidSettingsSection title={copy.settingsAppearance}>
+        <AndroidSettingsRow icon="mdi:translate" label={copy.settingsLanguage}>
+            <AndroidLauncherComboBox kind="static" label={copy.settingsLanguage} value={LOCALE_LABELS[locale]} />
+        </AndroidSettingsRow>
+        <AndroidSettingsRow icon="mdi:palette" label={copy.settingsTheme} divider>
+            <AndroidLauncherComboBox kind="theme" label={copy.settingsTheme} value={DEFAULT_THEME.name} />
+        </AndroidSettingsRow>
+    </AndroidSettingsSection>
+</div>

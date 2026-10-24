@@ -1,0 +1,28 @@
+---
+import type { LauncherPlatform } from "../../lib/downloads";
+import DesktopIcon from "./desktop/DesktopIcon.astro";
+import AndroidIcon from "./android/AndroidIcon.astro";
+interface Props {
+    platform: LauncherPlatform;
+    icon: string;
+    text: string;
+    compact?: boolean;
+}
+const { platform, icon, text, compact = false } = Astro.props;
+const desktop = platform === "Desktop";
+const Icon = desktop ? DesktopIcon : AndroidIcon;
+const Text = desktop ? "span" : "p";
+---
+
+<div
+    class:list={[
+        "flex h-full flex-col items-center justify-center text-(color:--lt-secondary-fg-dim)",
+        { "min-h-[120em] px-[20em] text-center": !desktop },
+    ]}
+>
+    <Icon name={icon} class={compact ? "size-[36em]" : "size-[48em]"} />
+    <div class={compact ? "mt-[12em]" : "mt-[16em]"}>
+        <Text class={compact ? "text-[13em]" : "text-[14em]"}>{text}</Text>
+    </div>
+    <slot />
+</div>

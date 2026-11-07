@@ -13,7 +13,8 @@ const STAGGER_IN = {
 
 type Motion = keyof typeof FADE_IN;
 
-const OBSERVER_OPTIONS: IntersectionObserverInit = { threshold: 0, rootMargin: "0px 0px -10% 0px" };
+// No shrunken root margin: content at the end of the page could never scroll into it and would stay hidden or at 0
+const OBSERVER_OPTIONS: IntersectionObserverInit = { threshold: 0 };
 
 export const motionOK = (): boolean => window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
 

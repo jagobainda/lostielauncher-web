@@ -78,7 +78,7 @@ const nav = [
                             aria-label={item.label}
                             title={item.label}
                             aria-current={item.view === "library" ? "page" : undefined}
-                            class="relative aria-[current=page]:bg-(--lt-overlay-subtle) aria-[current=page]:text-(color:--lt-primary-fg) aria-[current=page]:before:absolute aria-[current=page]:before:inset-y-0 aria-[current=page]:before:left-0 aria-[current=page]:before:w-[3em] aria-[current=page]:before:bg-(--lt-primary-fg) flex size-[60em] cursor-pointer items-center justify-center text-(color:--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
+                            class="relative aria-[current=page]:bg-(--lt-overlay-subtle) aria-[current=page]:text-(--lt-primary-fg) aria-[current=page]:before:absolute aria-[current=page]:before:inset-y-0 aria-[current=page]:before:left-0 aria-[current=page]:before:w-[3em] aria-[current=page]:before:bg-(--lt-primary-fg) flex size-[60em] cursor-pointer items-center justify-center text-(--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
                         >
                             <Icon name={item.icon} class="size-[22em]" />
                         </button>
@@ -86,7 +86,7 @@ const nav = [
                     {index === 0 && (
                         <span
                             title="Saved Games"
-                            class="flex size-[60em] items-center justify-center text-(color:--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
+                            class="flex size-[60em] items-center justify-center text-(--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
                         >
                             <Icon name="lucide:save" class="size-[22em]" />
                         </span>

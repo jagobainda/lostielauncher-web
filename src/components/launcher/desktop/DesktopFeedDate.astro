@@ -10,6 +10,6 @@ const { date, locale, year = false } = Astro.props;
 const formatted = formatFeedDate(date, locale, year);
 ---
 
-<time datetime={date} class="text-[11em] text-(color:--lt-secondary-fg-dim)">
+<time datetime={date} class="text-[11em] text-(--lt-secondary-fg-dim)">
     {formatted}
 </time>

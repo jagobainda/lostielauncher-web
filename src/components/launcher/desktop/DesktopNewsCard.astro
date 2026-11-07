@@ -20,7 +20,7 @@ const { entry, locale } = Astro.props;
     <div class="mt-[10em] mb-[4em]">
         <span class="text-[15em] font-semibold">{localized(entry.title, locale)}</span>
     </div>
-    <p class="text-[13em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">
+    <p class="text-[13em] whitespace-pre-wrap text-(--lt-secondary-fg-dim)">
         <ReplicaLinkText platform="Desktop" text={localized(entry.body, locale)} />
     </p>
 </article>

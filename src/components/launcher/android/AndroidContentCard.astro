@@ -27,14 +27,14 @@ const body = localized(entry.body, locale);
                 <div class="rounded-[4em] bg-(--lt-primary-fg) px-[8em] py-[2em]">
                     <span class="text-[11em] font-semibold">{entry.kind}</span>
                 </div>
-                <time datetime={entry.date} class="text-[11em] text-(color:--lt-secondary-fg-dim)">
+                <time datetime={entry.date} class="text-[11em] text-(--lt-secondary-fg-dim)">
                     {formattedDate}
                 </time>
             </div>
             <div class="mt-[10em] mb-[4em]">
                 <h3 class="text-[15em] font-semibold">{title}</h3>
             </div>
-            <p class="text-[13em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">
+            <p class="text-[13em] whitespace-pre-wrap text-(--lt-secondary-fg-dim)">
                 <ReplicaLinkText platform="Android" text={body} />
             </p>
         </>
@@ -53,11 +53,11 @@ const body = localized(entry.body, locale);
             <div class="min-w-0 flex-1 self-center">
                 <h3 class="text-[13em] font-semibold">{title}</h3>
                 <div class="mt-[4em]">
-                    <p class="text-[12em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">{body}</p>
+                    <p class="text-[12em] whitespace-pre-wrap text-(--lt-secondary-fg-dim)">{body}</p>
                 </div>
             </div>
             <div class="pt-[2em]">
-                <time datetime={entry.date} class="text-[11em] whitespace-nowrap text-(color:--lt-secondary-fg-dim)">
+                <time datetime={entry.date} class="text-[11em] whitespace-nowrap text-(--lt-secondary-fg-dim)">
                     {formattedDate}
                 </time>
             </div>

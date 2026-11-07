@@ -26,7 +26,7 @@ const { icon, label, title, kind = "accent", stretch = false } = Astro.props;
 >
     <Icon
         name={icon}
-        class:list={[label ? "size-[13em]" : "size-[14em]", { "text-(color:--lt-success)": kind === "downloaded" }]}
+        class:list={[label ? "size-[13em]" : "size-[14em]", { "text-(--lt-success)": kind === "downloaded" }]}
     />
     {label && (
         <span

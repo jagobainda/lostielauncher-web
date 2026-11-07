@@ -13,13 +13,13 @@ const { copy } = Astro.props;
 <div data-replica-faqs data-replica-view="faqs" data-title={copy.TitleFaqs} hidden class="h-full p-[20em]">
     <div class="grid h-full grid-rows-[40em_1fr] gap-[16em]">
         <label class="flex items-center rounded-[6em] bg-(--lt-tertiary-bg) px-[12em]">
-            <Icon name="lucide:search" class="mr-[10em] size-[16em] shrink-0 text-(color:--lt-secondary-fg-dim)" />
+            <Icon name="lucide:search" class="mr-[10em] size-[16em] shrink-0 text-(--lt-secondary-fg-dim)" />
             <input
                 data-faq-search
                 type="text"
                 aria-label={copy.FaqsSearchPlaceholder}
                 placeholder={copy.FaqsSearchPlaceholder}
-                class="min-w-0 flex-1 border-0 bg-transparent text-[13em] text-(color:--lt-secondary-fg) placeholder:text-(color:--lt-secondary-fg-dim) focus:placeholder:text-transparent"
+                class="min-w-0 flex-1 border-0 bg-transparent text-[13em] text-(--lt-secondary-fg) placeholder:text-(--lt-secondary-fg-dim) focus:placeholder:text-transparent"
             />
             <button
                 data-faq-clear
@@ -27,7 +27,7 @@ const { copy } = Astro.props;
                 type="button"
                 aria-label={copy.BtnCancel}
                 title={copy.BtnCancel}
-                class="flex size-[24em] cursor-pointer items-center justify-center rounded-[4em] text-(color:--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
+                class="flex size-[24em] cursor-pointer items-center justify-center rounded-[4em] text-(--lt-secondary-fg-dim) hover:bg-(--lt-overlay-light)"
             >
                 <Icon name="lucide:x" class="size-[12em]" />
             </button>

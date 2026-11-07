@@ -11,7 +11,7 @@ const { url } = Astro.props;
     data-android-game-logo
     class="relative flex h-[80em] w-[110em] shrink-0 items-center justify-center overflow-hidden rounded-[6em] bg-(--lt-tertiary-bg) p-[5em]"
 >
-    <Icon name="mdi:pokeball" class="absolute size-[32em] text-(color:--lt-overlay-medium)" />
+    <Icon name="mdi:pokeball" class="absolute size-[32em] text-(--lt-overlay-medium)" />
     {url && <img src={url} width="100" height="70" loading="lazy" alt="" class="relative size-full object-contain" />}
 </div>
 

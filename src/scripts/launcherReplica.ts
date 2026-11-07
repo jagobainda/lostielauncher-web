@@ -112,7 +112,7 @@ export const initFaqSearch = (root: HTMLElement): void => {
                         const to = offsets[found + term.length]!;
                         fragment.append(value.slice(start, from));
                         const mark = document.createElement("mark");
-                        mark.className = "bg-transparent text-(color:--lt-primary-fg) font-bold underline";
+                        mark.className = "bg-transparent text-(--lt-primary-fg) font-bold underline";
                         mark.textContent = value.slice(from, to);
                         fragment.append(mark);
                         start = to;

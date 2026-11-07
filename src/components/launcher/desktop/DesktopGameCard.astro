@@ -34,14 +34,14 @@ const secondary = [
                 class="h-full w-full object-contain"
             />
         ) : (
-            <Icon name="mdi:pokeball" class="size-[32em] text-(color:--lt-overlay-medium)" />
+            <Icon name="mdi:pokeball" class="size-[32em] text-(--lt-overlay-medium)" />
         )}
     </div>
     <div class="mx-[16em] min-w-0">
         <div class="truncate">
             <span class="text-[16em] font-bold">{game.name}</span>
         </div>
-        <div class="mt-[6em] flex items-center text-(color:--lt-secondary-fg-dim)">
+        <div class="mt-[6em] flex items-center text-(--lt-secondary-fg-dim)">
             {mode === "library" && (
                 <>
                     <Icon name="mdi:harddisk" class="size-[12em]" />
@@ -52,8 +52,8 @@ const secondary = [
             <span class="ml-[0.333333em] text-[12em]">{mode === "games" ? installed : game.version}</span>
             {mode === "games" && update && (
                 <>
-                    <Icon name="mdi:arrow-right" class="mx-[8em] size-[10em] text-(color:--lt-primary-fg)" />
-                    <span class="text-[12em] font-semibold text-(color:--lt-primary-fg)">{game.version}</span>
+                    <Icon name="mdi:arrow-right" class="mx-[8em] size-[10em] text-(--lt-primary-fg)" />
+                    <span class="text-[12em] font-semibold text-(--lt-primary-fg)">{game.version}</span>
                 </>
             )}
         </div>
@@ -71,7 +71,7 @@ const secondary = [
         >
             <Icon
                 name={icon}
-                class:list={["size-[13em]", mode === "library" && installed && !update && "text-(color:--lt-success)"]}
+                class:list={["size-[13em]", mode === "library" && installed && !update && "text-(--lt-success)"]}
             />
             <span class:list={["text-[12em]", !(mode === "library" && installed && !update) && "font-semibold"]}>
                 {action}

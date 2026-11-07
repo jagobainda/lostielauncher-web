@@ -31,9 +31,9 @@ const copy = entry.data;
     role="group"
     aria-label={label}
     style={themeStyle(DEFAULT_THEME)}
-    class="android-replica w-full max-w-[372px] font-(family-name:--font-roboto) leading-[1.2] tracking-normal [container-type:inline-size]"
+    class="android-replica w-full max-w-93 font-(family-name:--font-roboto) leading-[1.2] tracking-normal @container"
 >
-    <div class="bg-(--ink) p-[6em] text-[length:calc(100cqw/372)]">
+    <div class="bg-(--ink) p-[6em] text-[calc(100cqw/372)]">
         <AndroidLauncherShell {copy}>
             <div data-replica-view="home" data-title={copy.titleHome} hidden class="h-full">
                 <AndroidHomeScreen {copy} {feed} {locale} />

@@ -26,9 +26,7 @@ const kind = ["info", "warning", "exclamation"].includes(entry.kind.toLowerCase(
             <span class="text-[13em] font-semibold">{localized(entry.title, locale)}</span>
         </div>
         <div class="mt-[4em]">
-            <p class="text-[12em] whitespace-pre-wrap text-(color:--lt-secondary-fg-dim)">
-                {localized(entry.body, locale)}
-            </p>
+            <p class="text-[12em] whitespace-pre-wrap text-(--lt-secondary-fg-dim)">{localized(entry.body, locale)}</p>
         </div>
     </div>
     <div class="mt-[2em] ml-[8em]">

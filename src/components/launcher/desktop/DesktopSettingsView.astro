@@ -24,17 +24,14 @@ const toggles = [
     <DesktopScrollArea>
         <div class="px-[20em] pt-[20em] pb-[4em]">
             <div class="mb-[8em] ml-[4em]">
-                <span class="text-[14em] font-semibold text-(color:--lt-primary-fg)">{copy.SettingsGeneral}</span>
+                <span class="text-[14em] font-semibold text-(--lt-primary-fg)">{copy.SettingsGeneral}</span>
             </div>
             <div class="mb-[24em] rounded-[6em] bg-(--lt-secondary-bg)">
                 {toggles.map(item => (
                     <>
                         <div class="mx-[16em] flex h-[52em] items-center justify-between">
                             <div class="flex items-center">
-                                <Icon
-                                    name={item.icon}
-                                    class="mr-[10em] size-[16em] text-(color:--lt-secondary-fg-dim)"
-                                />
+                                <Icon name={item.icon} class="mr-[10em] size-[16em] text-(--lt-secondary-fg-dim)" />
                                 <span class="text-[13em]">{item.label}</span>
                             </div>
                             <span class="flex h-[24em] w-[44em] items-center rounded-[12em] bg-(--lt-overlay-muted) px-[3em]">
@@ -46,7 +43,7 @@ const toggles = [
                 ))}
                 <div class="mx-[16em] flex items-center justify-between py-[14em]">
                     <div class="flex items-center">
-                        <Icon name="mdi:refresh" class="mr-[10em] size-[16em] text-(color:--lt-secondary-fg-dim)" />
+                        <Icon name="mdi:refresh" class="mr-[10em] size-[16em] text-(--lt-secondary-fg-dim)" />
                         <span class="text-[13em]">{version}</span>
                     </div>
                     <span class="flex h-[32em] items-center rounded-[4em] bg-(--lt-overlay-muted) px-[12em] hover:bg-(--lt-overlay-medium) active:bg-(--lt-overlay-light)">
@@ -56,10 +53,7 @@ const toggles = [
                 <div class="mx-[16em] h-[1em] bg-(--lt-overlay-light)"></div>
                 <div class="px-[16em] py-[14em]">
                     <div class="mb-[10em] flex items-center">
-                        <Icon
-                            name="mdi:folder-download"
-                            class="mr-[10em] size-[16em] text-(color:--lt-secondary-fg-dim)"
-                        />
+                        <Icon name="mdi:folder-download" class="mr-[10em] size-[16em] text-(--lt-secondary-fg-dim)" />
                         <span class="text-[13em]">{copy.SettingsDownloadDir}</span>
                     </div>
                     <div class="flex items-center gap-[8em]">
@@ -71,18 +65,18 @@ const toggles = [
                         </span>
                     </div>
                     <div class="mt-[8em] flex gap-[6em]">
-                        <span class="text-[12em] text-(color:--lt-secondary-fg-dim)">{copy.SettingsGamesStoredIn}</span>
+                        <span class="text-[12em] text-(--lt-secondary-fg-dim)">{copy.SettingsGamesStoredIn}</span>
                         <span class="text-[12em]">C:\Users\Player\LostieLauncher</span>
                     </div>
                 </div>
             </div>
             <div class="mb-[8em] ml-[4em]">
-                <span class="text-[14em] font-semibold text-(color:--lt-primary-fg)">{copy.SettingsAppearance}</span>
+                <span class="text-[14em] font-semibold text-(--lt-primary-fg)">{copy.SettingsAppearance}</span>
             </div>
             <div class="rounded-[6em] bg-(--lt-secondary-bg)">
                 <div class="mx-[16em] flex items-center justify-between py-[14em]">
                     <div class="flex items-center">
-                        <Icon name="mdi:translate" class="mr-[10em] size-[16em] text-(color:--lt-secondary-fg-dim)" />
+                        <Icon name="mdi:translate" class="mr-[10em] size-[16em] text-(--lt-secondary-fg-dim)" />
                         <span class="text-[13em]">{copy.SettingsLanguage}</span>
                     </div>
                     <span class="flex h-[34em] w-[160em] items-center justify-between rounded-[4em] bg-(--lt-tertiary-bg) pl-[10em] pr-[11em]">
@@ -93,7 +87,7 @@ const toggles = [
                 <div class="mx-[16em] h-[1em] bg-(--lt-overlay-light)"></div>
                 <div class="mx-[16em] flex items-center justify-between py-[14em]">
                     <div class="flex items-center">
-                        <Icon name="mdi:palette" class="mr-[10em] size-[16em] text-(color:--lt-secondary-fg-dim)" />
+                        <Icon name="mdi:palette" class="mr-[10em] size-[16em] text-(--lt-secondary-fg-dim)" />
                         <span class="text-[13em]">{copy.SettingsTheme}</span>
                     </div>
                     <details data-replica-theme-picker class="relative">

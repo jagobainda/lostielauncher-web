@@ -27,9 +27,9 @@ const copy = entry.data;
     role="group"
     aria-label={label}
     style={themeStyle(DEFAULT_THEME)}
-    class="desktop-replica w-full max-w-[1000px] font-sans [container-type:inline-size]"
+    class="desktop-replica w-full max-w-250 font-sans @container"
 >
-    <div class="text-[length:calc(100cqw/1000)] leading-[1.333333] text-left h-[650em] overflow-hidden border-[1em] border-(--lt-primary-fg) bg-(--lt-primary-bg) text-(color:--lt-secondary-fg)">
+    <div class="text-[0.1cqw] leading-[1.333333] text-left h-[650em] overflow-hidden border-[1em] border-(--lt-primary-fg) bg-(--lt-primary-bg) text-(--lt-secondary-fg)">
         <DesktopShell copy={copy}>
             <DesktopHomeView copy={copy} feed={feed} locale={locale} />
             <DesktopGamesView copy={copy} games={games} />

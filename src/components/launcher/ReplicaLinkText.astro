@@ -17,10 +17,7 @@ const segments = replicaLinkSegments(text);
             target="_blank"
             rel="noopener noreferrer"
             title={desktop ? segment.href : undefined}
-            class:list={[
-                "text-(color:--lt-primary-fg) underline",
-                { "hover:text-(color:--lt-primary-fg-hover)": desktop },
-            ]}
+            class:list={["text-(--lt-primary-fg) underline", { "hover:text-(--lt-primary-fg-hover)": desktop }]}
         >
             {segment.text}
         </a>

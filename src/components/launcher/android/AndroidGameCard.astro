@@ -20,7 +20,7 @@ const size = formatGameSize(game.sizeGb);
 
 <AndroidGameCardLayout logoUrl={game.logoUrl}>
     <h3 class="truncate text-[16em] font-bold">{game.name}</h3>
-    <div class="mt-[6em] flex flex-wrap items-center gap-x-[14em] text-(color:--lt-secondary-fg-dim)">
+    <div class="mt-[6em] flex flex-wrap items-center gap-x-[14em] text-(--lt-secondary-fg-dim)">
         {kind === "library" && (
             <div class="flex items-center gap-[4em]">
                 <Icon name="mdi:harddisk" class="size-[12em]" />
@@ -32,7 +32,7 @@ const size = formatGameSize(game.sizeGb);
             <span class="text-[12em]">{kind === "installed" ? installed : game.version}</span>
         </div>
         {kind === "installed" && hasUpdate && (
-            <div class="flex items-center gap-[8em] text-(color:--lt-primary-fg)">
+            <div class="flex items-center gap-[8em] text-(--lt-primary-fg)">
                 <Icon name="mdi:arrow-right" class="size-[10em]" />
                 <span class="text-[12em] font-semibold">{game.version}</span>
             </div>

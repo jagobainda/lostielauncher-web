@@ -13,6 +13,7 @@
     "TooltipOpenFolder": "Ouvrir le dossier du jeu",
     "TooltipUninstall": "Désinstaller le jeu",
     "TooltipRefresh": "Actualiser",
+    "TooltipOpenSavedGames": "Ouvrir le dossier des sauvegardes",
     "TooltipSwitchSpecialVersion": "Passer à la version spéciale",
     "SettingsGeneral": "Général",
     "SettingsAppearance": "Apparence",
@@ -54,7 +55,7 @@
         },
         {
             "question": "J'ai trouvé un bug, où le signaler ?",
-            "answer": "Écrivez dans le canal #testeo-launcher du Discord de la communauté en expliquant ce qui s'est passé et ce que vous faisiez. Plus vous donnez de détails, plus il sera facile de le corriger."
+            "answer": "Ouvrez une issue sur le dépôt GitHub du launcher en expliquant ce qui s'est passé et ce que vous faisiez. Plus vous donnez de détails, plus il sera facile de le corriger."
         }
     ],
     "BtnCancel": "Annuler"

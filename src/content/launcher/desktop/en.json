@@ -13,6 +13,7 @@
     "TooltipOpenFolder": "Open game folder",
     "TooltipUninstall": "Uninstall game",
     "TooltipRefresh": "Refresh",
+    "TooltipOpenSavedGames": "Open saved games folder",
     "TooltipSwitchSpecialVersion": "Switch to special version",
     "SettingsGeneral": "General",
     "SettingsAppearance": "Appearance",
@@ -54,7 +55,7 @@
         },
         {
             "question": "I found a bug, where do I report it?",
-            "answer": "Write in the #testeo-launcher channel of the community Discord explaining what happened and what you were doing. The more detail you give, the easier it will be to fix."
+            "answer": "Open an issue in the launcher's GitHub repository explaining what happened and what you were doing. The more detail you give, the easier it will be to fix."
         }
     ],
     "BtnCancel": "Cancel"

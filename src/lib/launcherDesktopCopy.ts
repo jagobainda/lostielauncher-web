@@ -16,6 +16,7 @@ export const desktopCopySchema = z.object({
     TooltipOpenFolder: z.string(),
     TooltipUninstall: z.string(),
     TooltipRefresh: z.string(),
+    TooltipOpenSavedGames: z.string(),
     TooltipSwitchSpecialVersion: z.string(),
     SettingsGeneral: z.string(),
     SettingsAppearance: z.string(),

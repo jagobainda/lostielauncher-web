@@ -13,6 +13,7 @@
     "TooltipOpenFolder": "Abrir carpeta del juego",
     "TooltipUninstall": "Desinstalar juego",
     "TooltipRefresh": "Actualizar",
+    "TooltipOpenSavedGames": "Abrir carpeta de partidas guardadas",
     "TooltipSwitchSpecialVersion": "Cambiar a versión especial",
     "SettingsGeneral": "General",
     "SettingsAppearance": "Apariencia",
@@ -54,7 +55,7 @@
         },
         {
             "question": "He encontrado un error, ¿dónde lo reporto?",
-            "answer": "Escribe en el canal #testeo-launcher del Discord de la comunidad contando qué ha pasado y qué estabas haciendo. Cuanto más detalle des, más fácil será arreglarlo."
+            "answer": "Abre un issue en el repositorio de GitHub del launcher contando qué ha pasado y qué estabas haciendo. Cuanto más detalle des, más fácil será arreglarlo."
         }
     ],
     "BtnCancel": "Cancelar"
